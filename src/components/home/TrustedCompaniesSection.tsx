@@ -2,18 +2,10 @@ import { useEffect, useState } from 'react'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 
 const companyLogos = [
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166497/czwia7hxms6vbeourjbg.png',
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166496/fnkqea64qupneagq6tsm.png',
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166496/jehdkefaqzbtjdfyg6vk.png',
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166496/atxw0ilmdrbmbgtwwhgo.png',
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166496/ytfrdtptnwk3ggzfhoap.png',
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166496/ggqiwqj4pcgbslg6m39v.png',
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166495/ifoyzalcpaejg5vun52t.png',
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166495/rqxwgkufl9elofdim8b4.png',
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166494/xx1x8milzkjhw3nbpqdz.png',
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166494/phyyutr2bpjgmfvlj7pg.png',
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166494/zqa5bb6lebtithvmzgxk.png',
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166494/tv9kj7qf0wdmvxuko8l7.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768167980/pi5au781emmzlrkhkrdz.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768167979/tw61y7zrf7gm8hpayl3l.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768167979/av0n5tdsx4o2z2ozqovj.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768167979/atxw0ilmdrbmbgtwwhgo.png',
 ]
 
 export function TrustedCompaniesSection() {
