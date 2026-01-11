@@ -15,6 +15,7 @@ import { ServicesSection } from '@/components/home/ServicesSection'
 import { PremiumSection } from '@/components/home/PremiumSection'
 import { JobsPage } from '@/components/pages/JobsPage'
 import type { UserType, JobPosting, CandidateProfile, User } from '@/lib/types'
+import { sampleJobs } from '@/lib/sample-jobs'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home')
@@ -104,11 +105,10 @@ function App() {
       toast.error('Please log in as a candidate to apply')
       return
     }
-
-    if (!jobs) return
-
+    // Search both persisted jobs and sample jobs
+    const allJobs: JobPosting[] = [...(jobs || []), ...sampleJobs]
     const applicationId = `app_${Date.now()}`
-    const job = jobs.find(j => j.id === jobId)
+    const job = allJobs.find(j => j.id === jobId)
     
     if (job) {
       const { calculateMatchScore } = await import('@/lib/matching')
@@ -148,6 +148,8 @@ function App() {
     toast.success('Logged out successfully')
   }
 
+  const effectiveJobs = (jobs && jobs.length > 0) ? jobs : sampleJobs
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header 
@@ -164,7 +166,7 @@ function App() {
           <>
             <HeroSection onNavigate={setCurrentPage} />
             <LiveJobsSection 
-              jobs={jobs || []} 
+              jobs={effectiveJobs} 
               onNavigate={setCurrentPage}
               onViewJob={handleViewJob}
             />
@@ -187,7 +189,7 @@ function App() {
 
         {currentPage === 'jobs' && (
           <JobsPage
-            jobs={jobs || []}
+            jobs={effectiveJobs}
             candidateProfile={candidateProfile || undefined}
             onViewJob={handleViewJob}
             onApply={handleApplyJob}

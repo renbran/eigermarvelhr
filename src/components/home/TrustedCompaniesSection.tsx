@@ -28,13 +28,13 @@ export function TrustedCompaniesSection() {
   }, [api])
 
   return (
-    <section className="py-12 sm:py-16 bg-background border-y border-border">
+    <section className="py-12 sm:py-16 bg-black border-y border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 break-words">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 break-words">
             Trusted by Leading UAE Companies
           </h2>
-          <p className="text-muted-foreground break-words px-4">
+          <p className="text-gray-400 break-words px-4">
             Connecting top talent with premier employers across the MENA region
           </p>
         </div>
@@ -50,8 +50,8 @@ export function TrustedCompaniesSection() {
                 key={idx}
                 className="basis-1/2 md:basis-1/4"
               >
-                <div className="bg-card border-2 border-border/50 rounded-xl p-6 flex items-center justify-center hover:shadow-xl hover:border-accent/50 transition-all min-h-[120px] group">
-                  <div className="w-28 h-12 sm:w-32 sm:h-14">
+                <div className="bg-white rounded-xl p-6 flex items-center justify-center shadow-sm hover:shadow-md transition-all min-h-[120px] group">
+                  <div className="w-32 h-16 sm:w-40 sm:h-20">
                     <img
                       src={logo}
                       alt={`Company logo ${idx + 1}`}
