@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Briefcase, MapPin, CurrencyDollar, Clock, CrownSimple } from '@phosphor-icons/react'
 import { formatSalaryRange } from '@/lib/matching'
+import { getCompanyLogo } from '@/lib/company-logos'
 import type { JobPosting } from '@/lib/types'
 
 interface JobCardProps {
@@ -17,6 +18,7 @@ interface JobCardProps {
 export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, compact }: JobCardProps) {
   const daysAgo = Math.floor((Date.now() - new Date(job.createdAt).getTime()) / (1000 * 60 * 60 * 24))
   const timeText = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo} days ago`
+  const companyLogo = job.companyLogoUrl || getCompanyLogo(job.employerName)
 
   return (
     <Card className="hover:shadow-lg transition-all hover:border-primary/30 relative group">
@@ -30,8 +32,16 @@ export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, co
 
       <CardHeader>
         <div className="flex items-start gap-3">
-          <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center flex-shrink-0">
-            <Briefcase size={24} weight="bold" className="text-primary" />
+          <div className="w-12 h-12 bg-foreground rounded-lg flex items-center justify-center flex-shrink-0 p-1.5">
+            {companyLogo ? (
+              <img 
+                src={companyLogo} 
+                alt={`${job.employerName || 'Company'} logo`}
+                className="w-full h-full object-contain"
+              />
+            ) : (
+              <Briefcase size={24} weight="bold" className="text-background" />
+            )}
           </div>
           <div className="flex-1 min-w-0">
             <CardTitle className="text-base sm:text-lg font-bold break-words pr-20">{job.title}</CardTitle>

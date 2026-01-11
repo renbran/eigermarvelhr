@@ -1,0 +1,13 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="120" rx="24" fill="#0D0D0D"/>
+  <path d="M60 30L80 45V75L60 90L40 75V45L60 30Z" fill="url(#gold-gradient-4)" opacity="0.3"/>
+  <path d="M60 30L80 45V75L60 90L40 75V45L60 30Z" stroke="url(#gold-gradient-4)" stroke-width="2.5" fill="none"/>
+  <path d="M50 55L55 60L70 45" stroke="url(#gold-gradient-4)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="gold-gradient-4" x1="40" y1="30" x2="80" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E6BE4E"/>
+      <stop offset="50%" stop-color="#F8E08E"/>
+      <stop offset="100%" stop-color="#C9A741"/>
+    </linearGradient>
+  </defs>
+</svg>

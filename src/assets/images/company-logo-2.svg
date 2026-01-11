@@ -1,0 +1,11 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="120" rx="24" fill="#0F0F0F"/>
+  <path d="M40 35H80V45L60 60L80 75V85H40V75L60 60L40 45V35Z" fill="url(#gold-gradient-2)"/>
+  <defs>
+    <linearGradient id="gold-gradient-2" x1="40" y1="35" x2="80" y2="85" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E8B84D"/>
+      <stop offset="50%" stop-color="#F5D98B"/>
+      <stop offset="100%" stop-color="#D4A236"/>
+    </linearGradient>
+  </defs>
+</svg>

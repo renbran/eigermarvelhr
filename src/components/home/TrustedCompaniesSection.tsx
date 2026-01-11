@@ -1,24 +1,22 @@
 import { Badge } from '@/components/ui/badge'
-import { 
-  Airplane, 
-  Buildings, 
-  WifiHigh, 
-  Globe, 
-  Drop, 
-  Boat, 
-  ShoppingCart, 
-  Package 
-} from '@phosphor-icons/react'
+import companyLogo1 from '@/assets/images/company-logo.svg'
+import companyLogo2 from '@/assets/images/company-logo-2.svg'
+import companyLogo3 from '@/assets/images/company-logo-3.svg'
+import companyLogo4 from '@/assets/images/company-logo-4.svg'
+import companyLogo5 from '@/assets/images/company-logo-5.svg'
+import companyLogo6 from '@/assets/images/company-logo-6.svg'
+import companyLogo7 from '@/assets/images/company-logo-7.svg'
+import companyLogo8 from '@/assets/images/company-logo-8.svg'
 
 const companies = [
-  { name: 'Emirates Group', hiring: true, icon: Airplane },
-  { name: 'Emaar Properties', hiring: false, icon: Buildings },
-  { name: 'Etisalat', hiring: true, icon: WifiHigh },
-  { name: 'Dubai Airports', hiring: false, icon: Globe },
-  { name: 'ADNOC', hiring: true, icon: Drop },
-  { name: 'DP World', hiring: false, icon: Boat },
-  { name: 'Majid Al Futtaim', hiring: true, icon: ShoppingCart },
-  { name: 'Aramex', hiring: false, icon: Package }
+  { name: 'Emirates Group', hiring: true, logo: companyLogo1 },
+  { name: 'Emaar Properties', hiring: false, logo: companyLogo2 },
+  { name: 'Etisalat', hiring: true, logo: companyLogo3 },
+  { name: 'Dubai Airports', hiring: false, logo: companyLogo4 },
+  { name: 'ADNOC', hiring: true, logo: companyLogo5 },
+  { name: 'DP World', hiring: false, logo: companyLogo6 },
+  { name: 'Majid Al Futtaim', hiring: true, logo: companyLogo7 },
+  { name: 'Aramex', hiring: false, logo: companyLogo8 }
 ]
 
 export function TrustedCompaniesSection() {
@@ -35,25 +33,28 @@ export function TrustedCompaniesSection() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {companies.map((company, idx) => {
-            const Icon = company.icon
-            return (
-              <div
-                key={idx}
-                className="relative bg-secondary rounded-lg p-4 sm:p-6 flex flex-col items-center justify-center gap-2 hover:shadow-md transition-all min-h-[140px]"
-              >
-                <Icon size={32} weight="fill" className="text-accent flex-shrink-0" />
-                <span className="text-xs sm:text-sm font-semibold text-foreground text-center break-words w-full px-2">
-                  {company.name}
-                </span>
-                {company.hiring && (
-                  <Badge className="text-[10px] bg-accent/20 text-accent border-accent/30 whitespace-nowrap">
-                    Actively Hiring
-                  </Badge>
-                )}
+          {companies.map((company, idx) => (
+            <div
+              key={idx}
+              className="relative bg-secondary rounded-lg p-4 sm:p-6 flex flex-col items-center justify-center gap-3 hover:shadow-lg transition-all min-h-[160px] group"
+            >
+              <div className="w-16 h-16 flex-shrink-0 transition-transform group-hover:scale-110">
+                <img 
+                  src={company.logo} 
+                  alt={`${company.name} logo`}
+                  className="w-full h-full object-contain"
+                />
               </div>
-            )
-          })}
+              <span className="text-xs sm:text-sm font-semibold text-foreground text-center break-words w-full px-2">
+                {company.name}
+              </span>
+              {company.hiring && (
+                <Badge className="text-[10px] bg-accent/20 text-accent border-accent/30 whitespace-nowrap">
+                  Actively Hiring
+                </Badge>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>

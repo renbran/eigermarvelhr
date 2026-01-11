@@ -1,0 +1,16 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="120" rx="24" fill="#0E0E0E"/>
+  <circle cx="60" cy="60" r="25" fill="none" stroke="url(#gold-gradient-8)" stroke-width="3"/>
+  <path d="M60 35L70 50H50L60 35Z" fill="url(#gold-gradient-8)"/>
+  <path d="M85 60L70 70V50L85 60Z" fill="url(#gold-gradient-8)"/>
+  <path d="M60 85L50 70H70L60 85Z" fill="url(#gold-gradient-8)"/>
+  <path d="M35 60L50 50V70L35 60Z" fill="url(#gold-gradient-8)"/>
+  <circle cx="60" cy="60" r="8" fill="url(#gold-gradient-8)"/>
+  <defs>
+    <linearGradient id="gold-gradient-8" x1="35" y1="35" x2="85" y2="85" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E5BA48"/>
+      <stop offset="50%" stop-color="#FAE89C"/>
+      <stop offset="100%" stop-color="#D0A73D"/>
+    </linearGradient>
+  </defs>
+</svg>
