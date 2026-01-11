@@ -1,12 +1,3 @@
-import companyLogo1 from '@/assets/images/company-logo.svg'
-import companyLogo2 from '@/assets/images/company-logo-2.svg'
-import companyLogo3 from '@/assets/images/company-logo-3.svg'
-import companyLogo4 from '@/assets/images/company-logo-4.svg'
-import companyLogo5 from '@/assets/images/company-logo-5.svg'
-import companyLogo6 from '@/assets/images/company-logo-6.svg'
-import companyLogo7 from '@/assets/images/company-logo-7.svg'
-import companyLogo8 from '@/assets/images/company-logo-8.svg'
-
 import aiNeuralNetwork from '@/assets/images/01-ai-neural-network.png'
 import cloudIntegration from '@/assets/images/02-cloud-integration.png'
 import cloudStorage from '@/assets/images/03-cloud-storage.png'
@@ -15,18 +6,10 @@ import securityShieldLeft from '@/assets/images/05-security-shield-left.png'
 import securityShieldRight from '@/assets/images/06-security-shield-right.png'
 import globalTransform from '@/assets/images/07-global-transform.png'
 import dataAnalytics from '@/assets/images/08-data-analytics.png'
+import automationGears from '@/assets/images/09-automation-gears.png'
+import rocketLaunch from '@/assets/images/10-rocket-launch.png'
 import achievementTrophy from '@/assets/images/11-achievement-trophy.png'
-
-export const companyLogos = [
-  companyLogo1,
-  companyLogo2,
-  companyLogo3,
-  companyLogo4,
-  companyLogo5,
-  companyLogo6,
-  companyLogo7,
-  companyLogo8,
-]
+import growthChart from '@/assets/images/12-growth-chart.png'
 
 export const iconStyleLogos = [
   aiNeuralNetwork,
@@ -37,18 +20,10 @@ export const iconStyleLogos = [
   securityShieldRight,
   globalTransform,
   dataAnalytics,
+  automationGears,
+  rocketLaunch,
   achievementTrophy,
-]
-
-export const companyNames = [
-  'Emirates Group',
-  'Emaar Properties',
-  'Etisalat',
-  'Dubai Airports',
-  'ADNOC',
-  'DP World',
-  'Majid Al Futtaim',
-  'Aramex',
+  growthChart,
 ]
 
 export const industryIconMapping: Record<string, string> = {
@@ -61,30 +36,23 @@ export const industryIconMapping: Record<string, string> = {
   'Consulting': globalTransform,
   'Marketing': lightningSpeed,
   'Sales': achievementTrophy,
-  'Engineering': aiNeuralNetwork,
+  'Engineering': automationGears,
   'Healthcare': securityShieldLeft,
   'Education': globalTransform,
-  'Retail': cloudStorage,
-  'Manufacturing': lightningSpeed,
-  'Logistics': cloudIntegration,
+  'Retail': growthChart,
+  'Manufacturing': automationGears,
+  'Logistics': rocketLaunch,
   'Construction': securityShieldRight,
   'Real Estate': dataAnalytics,
   'Hospitality': achievementTrophy,
+  'Analytics': growthChart,
+  'AI': aiNeuralNetwork,
+  'Automation': automationGears,
+  'Innovation': rocketLaunch,
 }
 
 export const getCompanyLogo = (companyName?: string, industry?: string): string | undefined => {
   if (!companyName && !industry) return undefined
-  
-  if (companyName) {
-    const index = companyNames.findIndex(name => 
-      companyName.toLowerCase().includes(name.toLowerCase()) ||
-      name.toLowerCase().includes(companyName.toLowerCase())
-    )
-    
-    if (index !== -1) {
-      return companyLogos[index]
-    }
-  }
   
   if (industry) {
     const industryKey = Object.keys(industryIconMapping).find(key =>

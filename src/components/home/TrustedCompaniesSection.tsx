@@ -1,22 +1,15 @@
 import { Badge } from '@/components/ui/badge'
-import aiNeuralNetwork from '@/assets/images/01-ai-neural-network.png'
-import cloudIntegration from '@/assets/images/02-cloud-integration.png'
-import cloudStorage from '@/assets/images/03-cloud-storage.png'
-import lightningSpeed from '@/assets/images/04-lightning-speed.png'
-import securityShieldLeft from '@/assets/images/05-security-shield-left.png'
-import securityShieldRight from '@/assets/images/06-security-shield-right.png'
-import globalTransform from '@/assets/images/07-global-transform.png'
-import dataAnalytics from '@/assets/images/08-data-analytics.png'
+import { Buildings, Briefcase } from '@phosphor-icons/react'
 
 const companies = [
-  { name: 'Emirates Group', hiring: true, logo: aiNeuralNetwork },
-  { name: 'Emaar Properties', hiring: false, logo: cloudIntegration },
-  { name: 'Etisalat', hiring: true, logo: cloudStorage },
-  { name: 'Dubai Airports', hiring: false, logo: lightningSpeed },
-  { name: 'ADNOC', hiring: true, logo: securityShieldLeft },
-  { name: 'DP World', hiring: false, logo: securityShieldRight },
-  { name: 'Majid Al Futtaim', hiring: true, logo: globalTransform },
-  { name: 'Aramex', hiring: false, logo: dataAnalytics }
+  { name: 'Emirates Group', hiring: true },
+  { name: 'Emaar Properties', hiring: false },
+  { name: 'Etisalat', hiring: true },
+  { name: 'Dubai Airports', hiring: false },
+  { name: 'ADNOC', hiring: true },
+  { name: 'DP World', hiring: false },
+  { name: 'Majid Al Futtaim', hiring: true },
+  { name: 'Aramex', hiring: false }
 ]
 
 export function TrustedCompaniesSection() {
@@ -36,16 +29,14 @@ export function TrustedCompaniesSection() {
           {companies.map((company, idx) => (
             <div
               key={idx}
-              className="relative bg-gradient-to-br from-foreground to-foreground/90 rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center gap-3 hover:shadow-xl transition-all min-h-[160px] group overflow-hidden"
+              className="relative bg-gradient-to-br from-foreground to-foreground/90 rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center gap-3 hover:shadow-xl transition-all min-h-[140px] group overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="w-16 h-16 flex-shrink-0 transition-transform group-hover:scale-110 relative z-10 filter brightness-0 invert">
-                <img 
-                  src={company.logo} 
-                  alt={`${company.name} logo`}
-                  className="w-full h-full object-contain"
-                />
-              </div>
+              <Buildings 
+                size={40} 
+                weight="bold" 
+                className="text-background relative z-10 transition-transform group-hover:scale-110" 
+              />
               <span className="text-xs sm:text-sm font-semibold text-background text-center break-words w-full px-2 relative z-10">
                 {company.name}
               </span>

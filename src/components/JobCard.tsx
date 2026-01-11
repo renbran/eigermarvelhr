@@ -33,19 +33,25 @@ export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, co
       )}
 
       <CardHeader>
-        <div className="flex items-start gap-3">
-          <div className="company-logo-container w-14 h-14 bg-gradient-to-br from-foreground to-foreground/80 rounded-xl flex items-center justify-center flex-shrink-0 p-2 shadow-md relative overflow-hidden group-hover:shadow-lg transition-all">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="flex items-start gap-4">
+          <div className="company-logo-container w-16 h-16 bg-gradient-to-br from-foreground via-foreground/95 to-foreground/85 rounded-xl flex items-center justify-center flex-shrink-0 p-3 shadow-lg relative overflow-hidden group-hover:shadow-xl transition-all border-2 border-foreground/10">
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/30 via-accent/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-accent/10 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity" />
             {companyLogo ? (
               <img 
                 src={companyLogo} 
                 alt={`${job.employerName || 'Company'} logo`}
-                className="w-full h-full object-contain relative z-10 group-hover:scale-110 transition-transform drop-shadow-lg"
-                style={{ filter: 'brightness(0) invert(1)' }}
+                className="w-full h-full object-contain relative z-10 group-hover:scale-110 transition-transform duration-300 drop-shadow-2xl"
+                style={{ filter: 'brightness(0) invert(1) drop-shadow(0 0 8px rgba(214, 184, 92, 0.3))' }}
               />
             ) : (
-              <Briefcase size={28} weight="bold" className="text-background relative z-10" />
+              <Briefcase size={32} weight="bold" className="text-background relative z-10" />
             )}
+            <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" 
+                 style={{ 
+                   boxShadow: 'inset 0 0 20px rgba(214, 184, 92, 0.2), 0 0 15px rgba(214, 184, 92, 0.15)' 
+                 }} 
+            />
           </div>
           <div className="flex-1 min-w-0">
             <CardTitle className="text-base sm:text-lg font-bold break-words pr-20 group-hover:text-accent transition-colors">{job.title}</CardTitle>
