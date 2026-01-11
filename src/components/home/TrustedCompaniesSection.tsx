@@ -1,22 +1,14 @@
 import { Badge } from '@/components/ui/badge'
-import aiNeuralNetwork from '@/assets/images/01-ai-neural-network.png'
-import cloudIntegration from '@/assets/images/02-cloud-integration.png'
-import cloudStorage from '@/assets/images/03-cloud-storage.png'
-import lightningSpeed from '@/assets/images/04-lightning-speed.png'
-import securityShieldLeft from '@/assets/images/05-security-shield-left.png'
-import securityShieldRight from '@/assets/images/06-security-shield-right.png'
-import globalTransform from '@/assets/images/07-global-transform.png'
-import dataAnalytics from '@/assets/images/08-data-analytics.png'
 
 const companies = [
-  { name: 'Emirates Group', hiring: true, logo: aiNeuralNetwork },
-  { name: 'Emaar Properties', hiring: false, logo: cloudIntegration },
-  { name: 'Etisalat', hiring: true, logo: cloudStorage },
-  { name: 'Dubai Airports', hiring: false, logo: lightningSpeed },
-  { name: 'ADNOC', hiring: true, logo: securityShieldLeft },
-  { name: 'DP World', hiring: false, logo: securityShieldRight },
-  { name: 'Majid Al Futtaim', hiring: true, logo: globalTransform },
-  { name: 'Aramex', hiring: false, logo: dataAnalytics }
+  { name: 'Emirates Group', hiring: true, logo: 'https://logos-world.net/wp-content/uploads/2020/03/Emirates-Logo.png' },
+  { name: 'Emaar Properties', hiring: false, logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Emaar_Properties_logo.svg/2560px-Emaar_Properties_logo.svg.png' },
+  { name: 'Etisalat', hiring: true, logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Etisalat_logo.svg/2560px-Etisalat_logo.svg.png' },
+  { name: 'Dubai Airports', hiring: false, logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Dubai_Airports_logo.svg/2560px-Dubai_Airports_logo.svg.png' },
+  { name: 'ADNOC', hiring: true, logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/ADNOC_Logo.svg/2560px-ADNOC_Logo.svg.png' },
+  { name: 'DP World', hiring: false, logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/DP_World_logo.svg/2560px-DP_World_logo.svg.png' },
+  { name: 'Majid Al Futtaim', hiring: true, logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Majid_Al_Futtaim_Holding_logo.svg/2560px-Majid_Al_Futtaim_Holding_logo.svg.png' },
+  { name: 'Aramex', hiring: false, logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Aramex_logo.svg/2560px-Aramex_logo.svg.png' }
 ]
 
 export function TrustedCompaniesSection() {
@@ -36,21 +28,19 @@ export function TrustedCompaniesSection() {
           {companies.map((company, idx) => (
             <div
               key={idx}
-              className="relative bg-gradient-to-br from-foreground to-foreground/90 rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center gap-3 hover:shadow-xl transition-all min-h-[140px] group overflow-hidden"
+              className="relative bg-card border-2 border-border/50 rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center gap-3 hover:shadow-xl hover:border-accent/50 transition-all min-h-[140px] group overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-accent/10 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-accent/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               
-              <div className="w-16 h-16 relative z-10 flex items-center justify-center">
+              <div className="w-24 h-16 relative z-10 flex items-center justify-center">
                 <img 
                   src={company.logo} 
                   alt={`${company.name} logo`}
-                  className="w-full h-full object-contain transition-transform group-hover:scale-110 duration-300 drop-shadow-2xl"
-                  style={{ filter: 'brightness(0) invert(1) drop-shadow(0 0 12px rgba(214, 184, 92, 0.4))' }}
+                  className="w-full h-full object-contain transition-transform group-hover:scale-105 duration-300"
                 />
               </div>
               
-              <span className="text-xs sm:text-sm font-semibold text-background text-center break-words w-full px-2 relative z-10">
+              <span className="text-xs sm:text-sm font-semibold text-foreground text-center break-words w-full px-2 relative z-10">
                 {company.name}
               </span>
               {company.hiring && (
@@ -61,7 +51,7 @@ export function TrustedCompaniesSection() {
               
               <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" 
                    style={{ 
-                     boxShadow: 'inset 0 0 25px rgba(214, 184, 92, 0.15), 0 0 20px rgba(214, 184, 92, 0.1)' 
+                     boxShadow: 'inset 0 0 30px rgba(214, 184, 92, 0.08)' 
                    }} 
               />
             </div>
