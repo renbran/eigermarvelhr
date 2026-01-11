@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { List, X, User as UserIcon, SignOut } from '@phosphor-icons/react'
 import type { User, CandidateProfile } from '@/lib/types'
-import logoIcon from '@/assets/images/xodpIwUd.jpg'
+import logoIcon from '@/assets/images/logo-icon.png'
 
 interface HeaderProps {
   onNavigate: (page: string) => void
@@ -52,28 +52,28 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
     <header className="bg-primary/98 backdrop-blur-md text-primary-foreground sticky top-0 z-50 shadow-lg border-b border-accent/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 sm:gap-8 min-w-0">
             <button 
               onClick={() => onNavigate('home')} 
-              className="flex items-center gap-3 hover:opacity-80 transition-all duration-300 hover:scale-105"
+              className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all duration-300 hover:scale-105 min-w-0"
             >
               <img 
                 src={logoIcon} 
                 alt="Eiger Marvel Logo" 
-                className="h-10 w-10 rounded-lg object-cover shadow-md"
+                className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg object-cover shadow-md flex-shrink-0"
               />
-              <div className="flex flex-col leading-tight">
-                <span className="text-xl font-bold tracking-tight">Eiger Marvel</span>
-                <span className="text-xs gradient-gold-shine font-semibold">Exceed Your Expectations</span>
+              <div className="flex flex-col leading-tight min-w-0">
+                <span className="text-base sm:text-xl font-bold tracking-tight break-words">Eiger Marvel</span>
+                <span className="text-[10px] sm:text-xs gradient-gold-shine font-semibold whitespace-nowrap">Exceed Your Expectations</span>
               </div>
             </button>
 
-            <nav className="hidden md:flex items-center gap-6">
+            <nav className="hidden md:flex items-center gap-4 lg:gap-6">
               {navItems.map(item => (
                 <button
                   key={item.value}
                   onClick={() => onNavigate(item.value)}
-                  className={`text-sm font-semibold transition-all duration-300 relative py-2 ${
+                  className={`text-xs lg:text-sm font-semibold transition-all duration-300 relative py-2 whitespace-nowrap ${
                     currentPage === item.value 
                       ? 'text-accent' 
                       : 'text-primary-foreground/90 hover:text-accent'
@@ -93,19 +93,19 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
             </nav>
           </div>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2 sm:gap-3 flex-shrink-0">
             {currentUser ? (
-              <div className="flex items-center gap-3">
-                <div className="text-right">
-                  <p className="text-sm font-semibold">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="text-right min-w-0">
+                  <p className="text-xs sm:text-sm font-semibold truncate max-w-[150px]">
                     {candidateProfile?.fullName || currentUser.email}
                   </p>
                   {currentUser.isPremium && (
-                    <p className="text-xs text-accent">Premium Member</p>
+                    <p className="text-xs text-accent whitespace-nowrap">Premium Member</p>
                   )}
                 </div>
-                <Avatar className="h-9 w-9 border-2 border-accent cursor-pointer" onClick={() => onNavigate('dashboard')}>
-                  <AvatarFallback className="bg-accent/20 text-accent font-semibold">
+                <Avatar className="h-8 w-8 sm:h-9 sm:w-9 border-2 border-accent cursor-pointer flex-shrink-0" onClick={() => onNavigate('dashboard')}>
+                  <AvatarFallback className="bg-accent/20 text-accent font-semibold text-xs">
                     {candidateProfile ? getInitials(candidateProfile.fullName) : <UserIcon />}
                   </AvatarFallback>
                 </Avatar>
@@ -124,7 +124,7 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
                   variant="ghost" 
                   size="sm"
                   onClick={() => onAuthClick('login')}
-                  className="text-primary-foreground hover:text-accent hover:bg-accent/10 font-semibold transition-all"
+                  className="text-primary-foreground hover:text-accent hover:bg-accent/10 font-semibold transition-all text-xs sm:text-sm whitespace-nowrap"
                   data-auth="login"
                 >
                   Login
@@ -132,7 +132,7 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
                 <Button 
                   size="sm"
                   onClick={() => onAuthClick('register')}
-                  className="bg-gradient-to-r from-accent to-accent/90 text-accent-foreground hover:from-accent/90 hover:to-accent/80 font-semibold shadow-md hover:shadow-xl transition-all hover:scale-105"
+                  className="bg-gradient-to-r from-accent to-accent/90 text-accent-foreground hover:from-accent/90 hover:to-accent/80 font-semibold shadow-md hover:shadow-xl transition-all hover:scale-105 text-xs sm:text-sm whitespace-nowrap"
                   data-auth="register"
                 >
                   Register
@@ -142,7 +142,7 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
           </div>
 
           <button
-            className="md:hidden hover:bg-primary-foreground/10 p-2 rounded-lg transition-colors"
+            className="md:hidden hover:bg-primary-foreground/10 p-2 rounded-lg transition-colors flex-shrink-0"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={24} /> : <List size={24} />}
@@ -159,7 +159,7 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
                     onNavigate(item.value)
                     setMobileMenuOpen(false)
                   }}
-                  className={`text-left text-sm font-semibold py-2 px-4 rounded-lg transition-all ${
+                  className={`text-left text-sm font-semibold py-2 px-4 rounded-lg transition-all break-words ${
                     currentPage === item.value 
                       ? 'bg-gradient-to-r from-accent to-accent/90 text-accent-foreground shadow-md' 
                       : 'text-primary-foreground hover:bg-primary-foreground/10'
@@ -177,7 +177,7 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
                 {currentUser ? (
                   <>
                     <div className="px-4 py-2">
-                      <p className="text-sm font-semibold">
+                      <p className="text-sm font-semibold break-words">
                         {candidateProfile?.fullName || currentUser.email}
                       </p>
                       {currentUser.isPremium && (

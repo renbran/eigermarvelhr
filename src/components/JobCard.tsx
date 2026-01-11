@@ -22,7 +22,7 @@ export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, co
     <Card className="hover:shadow-lg transition-all hover:border-primary/30 relative group">
       {matchScore !== undefined && matchScore >= 70 && (
         <div className="absolute top-4 right-4 z-10">
-          <Badge className="bg-accent text-accent-foreground font-bold match-score-reveal">
+          <Badge className="bg-accent text-accent-foreground font-bold match-score-reveal whitespace-nowrap">
             {matchScore}% Match
           </Badge>
         </div>
@@ -34,11 +34,11 @@ export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, co
             <Briefcase size={24} weight="bold" className="text-primary" />
           </div>
           <div className="flex-1 min-w-0">
-            <CardTitle className="text-lg font-bold truncate pr-20">{job.title}</CardTitle>
-            <CardDescription className="flex items-center gap-1">
-              {job.employerName || 'Eiger Marvel Client'}
+            <CardTitle className="text-base sm:text-lg font-bold break-words pr-20">{job.title}</CardTitle>
+            <CardDescription className="flex items-center gap-1 break-words">
+              <span className="break-words">{job.employerName || 'Eiger Marvel Client'}</span>
               {isPremium && (
-                <CrownSimple size={14} weight="fill" className="text-accent" />
+                <CrownSimple size={14} weight="fill" className="text-accent flex-shrink-0" />
               )}
             </CardDescription>
           </div>
@@ -47,34 +47,34 @@ export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, co
 
       <CardContent className="space-y-3">
         <div className="flex flex-wrap gap-2">
-          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-            <MapPin size={16} weight="bold" />
-            <span>{job.location}</span>
+          <div className="flex items-center gap-1 text-xs sm:text-sm text-muted-foreground">
+            <MapPin size={16} weight="bold" className="flex-shrink-0" />
+            <span className="break-words">{job.location}</span>
           </div>
-          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-            <CurrencyDollar size={16} weight="bold" />
+          <div className="flex items-center gap-1 text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
+            <CurrencyDollar size={16} weight="bold" className="flex-shrink-0" />
             <span>{formatSalaryRange(job.salaryMin, job.salaryMax)}</span>
           </div>
-          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-            <Clock size={16} weight="bold" />
+          <div className="flex items-center gap-1 text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
+            <Clock size={16} weight="bold" className="flex-shrink-0" />
             <span>{timeText}</span>
           </div>
         </div>
 
         {!compact && (
-          <p className="text-sm text-muted-foreground line-clamp-2">
+          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 break-words">
             {job.description}
           </p>
         )}
 
         <div className="flex flex-wrap gap-2">
           {job.requiredSkills.slice(0, 4).map((skill, idx) => (
-            <Badge key={idx} variant="secondary" className="text-xs">
+            <Badge key={idx} variant="secondary" className="text-xs break-words">
               {skill}
             </Badge>
           ))}
           {job.requiredSkills.length > 4 && (
-            <Badge variant="secondary" className="text-xs">
+            <Badge variant="secondary" className="text-xs whitespace-nowrap">
               +{job.requiredSkills.length - 4} more
             </Badge>
           )}
@@ -84,14 +84,14 @@ export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, co
       <CardFooter className="flex gap-2">
         <Button 
           variant="outline" 
-          className="flex-1"
+          className="flex-1 text-xs sm:text-sm"
           onClick={() => onViewDetails(job.id)}
         >
           View Details
         </Button>
         {onApply && (
           <Button 
-            className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90 font-semibold"
+            className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90 font-semibold text-xs sm:text-sm"
             onClick={() => onApply(job.id)}
           >
             Quick Apply

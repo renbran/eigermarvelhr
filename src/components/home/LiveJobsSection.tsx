@@ -15,22 +15,22 @@ export function LiveJobsSection({ jobs, onNavigate, onViewJob }: LiveJobsSection
   return (
     <section className="py-16 sm:py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+          <div className="w-full sm:w-auto">
             <div className="flex items-center gap-2 mb-2">
-              <Lightning size={24} weight="fill" className="text-accent" />
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
+              <Lightning size={24} weight="fill" className="text-accent flex-shrink-0" />
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground break-words">
                 Live Job Opportunities
               </h2>
             </div>
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground break-words">
               {jobs.length} active positions waiting for the right talent
             </p>
           </div>
           <Button
             variant="outline"
             onClick={() => onNavigate('jobs')}
-            className="hidden sm:flex items-center gap-2"
+            className="hidden sm:flex items-center gap-2 flex-shrink-0 whitespace-nowrap"
           >
             View All Jobs
             <ArrowRight size={16} weight="bold" />
@@ -39,7 +39,7 @@ export function LiveJobsSection({ jobs, onNavigate, onViewJob }: LiveJobsSection
 
         {displayJobs.length === 0 ? (
           <div className="text-center py-12 bg-secondary rounded-lg">
-            <p className="text-muted-foreground">No jobs available at the moment. Check back soon!</p>
+            <p className="text-sm sm:text-base text-muted-foreground break-words px-4">No jobs available at the moment. Check back soon!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

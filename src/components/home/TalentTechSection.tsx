@@ -102,13 +102,13 @@ export function TalentTechSection() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-accent/20 text-accent px-4 py-2 rounded-full mb-4 border border-accent/30">
-              <Lightning size={20} weight="fill" />
-              <span className="text-sm font-semibold uppercase tracking-wide">Coming Soon</span>
+              <Lightning size={20} weight="fill" className="flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-semibold uppercase tracking-wide whitespace-nowrap">Coming Soon</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 break-words px-4">
               The Future of HR: Integrated Technology Solutions
             </h2>
-            <p className="text-lg text-white/90 max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-white/90 max-w-3xl mx-auto break-words px-4">
               Eiger Marvel + SGC TECH AI - Combining elite recruitment with AI-native ERP solutions
             </p>
           </div>
@@ -132,24 +132,24 @@ export function TalentTechSection() {
                   <div className={`absolute inset-0 bg-gradient-to-br ${bundle.color} opacity-40 pointer-events-none`} />
                   
                   <CardHeader className="relative">
-                    <div className="w-14 h-14 bg-gradient-to-br from-accent to-accent/70 rounded-xl flex items-center justify-center mb-4 shadow-md">
+                    <div className="w-14 h-14 bg-gradient-to-br from-accent to-accent/70 rounded-xl flex items-center justify-center mb-4 shadow-md flex-shrink-0">
                       <Icon size={32} weight="bold" className="text-accent-foreground" />
                     </div>
-                    <CardTitle className="text-xl font-bold text-foreground">{bundle.title}</CardTitle>
-                    <CardDescription className="text-sm font-semibold text-muted-foreground">{bundle.subtitle}</CardDescription>
+                    <CardTitle className="text-lg sm:text-xl font-bold text-foreground break-words">{bundle.title}</CardTitle>
+                    <CardDescription className="text-xs sm:text-sm font-semibold text-muted-foreground break-words">{bundle.subtitle}</CardDescription>
                   </CardHeader>
 
                   <CardContent className="relative space-y-4">
                     <div>
-                      <h4 className="font-bold text-lg mb-2 text-foreground">{bundle.headline}</h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{bundle.value}</p>
+                      <h4 className="font-bold text-base sm:text-lg mb-2 text-foreground break-words">{bundle.headline}</h4>
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed break-words">{bundle.value}</p>
                     </div>
 
                     <div className="space-y-2">
                       {bundle.benefits.map((benefit, idx) => (
                         <div key={idx} className="flex items-start gap-2">
                           <Check size={20} weight="bold" className="text-accent flex-shrink-0 mt-0.5" />
-                          <span className="text-sm text-foreground">{benefit}</span>
+                          <span className="text-xs sm:text-sm text-foreground break-words">{benefit}</span>
                         </div>
                       ))}
                     </div>
@@ -157,7 +157,7 @@ export function TalentTechSection() {
 
                   <CardFooter className="relative">
                     <Button 
-                      className="w-full bg-gradient-to-r from-accent to-accent/90 text-accent-foreground hover:from-accent/90 hover:to-accent/80 font-semibold shadow-md hover:shadow-xl transition-all"
+                      className="w-full bg-gradient-to-r from-accent to-accent/90 text-accent-foreground hover:from-accent/90 hover:to-accent/80 font-semibold shadow-md hover:shadow-xl transition-all text-xs sm:text-sm break-words"
                       onClick={() => {
                         setSelectedBundle(bundle.id)
                         setShowWaitlist(true)
@@ -172,7 +172,7 @@ export function TalentTechSection() {
           </div>
           
           <div className="text-center mt-12">
-            <p className="text-white/80 text-sm">
+            <p className="text-white/80 text-xs sm:text-sm break-words px-4">
               Transforming businesses across the MENA region with integrated talent and technology solutions
             </p>
           </div>
@@ -182,8 +182,8 @@ export function TalentTechSection() {
       <Dialog open={showWaitlist} onOpenChange={setShowWaitlist}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">Join the Waitlist</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-xl sm:text-2xl font-bold break-words">Join the Waitlist</DialogTitle>
+            <DialogDescription className="break-words">
               Be the first to know when TalentTech launches. Our team will contact you within 24 hours.
             </DialogDescription>
           </DialogHeader>

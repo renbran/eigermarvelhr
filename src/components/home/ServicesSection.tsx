@@ -34,10 +34,10 @@ export function ServicesSection() {
     <section className="py-16 sm:py-20 bg-secondary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 break-words px-4">
             Core HR Services
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto break-words px-4">
             Comprehensive consultancy solutions tailored to MENA market requirements
           </p>
         </div>
@@ -48,11 +48,11 @@ export function ServicesSection() {
             return (
               <Card key={idx} className="hover:shadow-lg transition-all hover:border-primary/30">
                 <CardHeader>
-                  <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-4 flex-shrink-0">
                     <Icon size={28} weight="bold" className="text-accent" />
                   </div>
-                  <CardTitle className="text-lg font-bold">{service.title}</CardTitle>
-                  <CardDescription className="leading-relaxed">
+                  <CardTitle className="text-base sm:text-lg font-bold break-words">{service.title}</CardTitle>
+                  <CardDescription className="leading-relaxed break-words text-sm">
                     {service.description}
                   </CardDescription>
                 </CardHeader>
