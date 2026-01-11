@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { List, X, User as UserIcon, SignOut } from '@phosphor-icons/react'
 import type { User, CandidateProfile } from '@/lib/types'
+import logoIcon from '@/assets/images/xodpIwUd.jpg'
 
 interface HeaderProps {
   onNavigate: (page: string) => void
@@ -54,10 +55,17 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
           <div className="flex items-center gap-8">
             <button 
               onClick={() => onNavigate('home')} 
-              className="flex flex-col leading-tight hover:opacity-80 transition-all duration-300 hover:scale-105"
+              className="flex items-center gap-3 hover:opacity-80 transition-all duration-300 hover:scale-105"
             >
-              <span className="text-xl font-bold tracking-tight">Eiger Marvel</span>
-              <span className="text-xs gradient-gold-shine font-semibold">Exceed Your Expectations</span>
+              <img 
+                src={logoIcon} 
+                alt="Eiger Marvel Logo" 
+                className="h-10 w-10 rounded-lg object-cover shadow-md"
+              />
+              <div className="flex flex-col leading-tight">
+                <span className="text-xl font-bold tracking-tight">Eiger Marvel</span>
+                <span className="text-xs gradient-gold-shine font-semibold">Exceed Your Expectations</span>
+              </div>
             </button>
 
             <nav className="hidden md:flex items-center gap-6">
