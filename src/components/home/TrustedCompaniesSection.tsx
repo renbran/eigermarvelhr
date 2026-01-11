@@ -1,25 +1,32 @@
-import { Badge } from '@/components/ui/badge'
-import companyLogo1 from '@/assets/images/company-logo.svg'
-import companyLogo2 from '@/assets/images/company-logo-2.svg'
-import companyLogo3 from '@/assets/images/company-logo-3.svg'
-import companyLogo4 from '@/assets/images/company-logo-4.svg'
-import companyLogo5 from '@/assets/images/company-logo-5.svg'
-import companyLogo6 from '@/assets/images/company-logo-6.svg'
-import companyLogo7 from '@/assets/images/company-logo-7.svg'
-import companyLogo8 from '@/assets/images/company-logo-8.svg'
+import { useEffect, useState } from 'react'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 
-const companies = [
-  { name: 'Emirates Group', hiring: true, logo: companyLogo1 },
-  { name: 'Emaar Properties', hiring: false, logo: companyLogo2 },
-  { name: 'Etisalat', hiring: true, logo: companyLogo3 },
-  { name: 'Dubai Airports', hiring: false, logo: companyLogo4 },
-  { name: 'ADNOC', hiring: true, logo: companyLogo5 },
-  { name: 'DP World', hiring: false, logo: companyLogo6 },
-  { name: 'Majid Al Futtaim', hiring: true, logo: companyLogo7 },
-  { name: 'Aramex', hiring: false, logo: companyLogo8 }
+const companyLogos = [
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166497/czwia7hxms6vbeourjbg.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166496/fnkqea64qupneagq6tsm.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166496/jehdkefaqzbtjdfyg6vk.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166496/atxw0ilmdrbmbgtwwhgo.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166496/ytfrdtptnwk3ggzfhoap.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166496/ggqiwqj4pcgbslg6m39v.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166495/ifoyzalcpaejg5vun52t.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166495/rqxwgkufl9elofdim8b4.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166494/xx1x8milzkjhw3nbpqdz.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166494/phyyutr2bpjgmfvlj7pg.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166494/zqa5bb6lebtithvmzgxk.png',
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1768166494/tv9kj7qf0wdmvxuko8l7.png',
 ]
 
 export function TrustedCompaniesSection() {
+  const [api, setApi] = useState<import('@/components/ui/carousel').CarouselApi | null>(null)
+
+  useEffect(() => {
+    if (!api) return
+    const interval = setInterval(() => {
+      api.scrollNext()
+    }, 5000) // slower autoplay: 5s between slides
+    return () => clearInterval(interval)
+  }, [api])
+
   return (
     <section className="py-12 sm:py-16 bg-background border-y border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,39 +39,31 @@ export function TrustedCompaniesSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {companies.map((company, idx) => (
-            <div
-              key={idx}
-              className="relative bg-card border-2 border-border/50 rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center gap-3 hover:shadow-xl hover:border-accent/50 transition-all min-h-[140px] group overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-accent/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              
-              <div className="w-24 h-16 relative z-10 flex items-center justify-center">
-                <img 
-                  src={company.logo} 
-                  alt={`${company.name} logo`}
-                  className="w-full h-full object-contain transition-transform group-hover:scale-105 duration-300"
-                />
-              </div>
-              
-              <span className="text-xs sm:text-sm font-semibold text-foreground text-center break-words w-full px-2 relative z-10">
-                {company.name}
-              </span>
-              {company.hiring && (
-                <Badge className="text-[10px] bg-accent text-accent-foreground border-accent/30 whitespace-nowrap relative z-10 shadow-md">
-                  Actively Hiring
-                </Badge>
-              )}
-              
-              <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" 
-                   style={{ 
-                     boxShadow: 'inset 0 0 30px rgba(214, 184, 92, 0.08)' 
-                   }} 
-              />
-            </div>
-          ))}
-        </div>
+        <Carousel
+          setApi={setApi}
+          opts={{ loop: true, align: 'start' }}
+          className="relative"
+        >
+          <CarouselContent className="items-center">
+            {companyLogos.map((logo, idx) => (
+              <CarouselItem
+                key={idx}
+                className="basis-1/2 md:basis-1/4"
+              >
+                <div className="bg-card border-2 border-border/50 rounded-xl p-6 flex items-center justify-center hover:shadow-xl hover:border-accent/50 transition-all min-h-[120px] group">
+                  <div className="w-28 h-12 sm:w-32 sm:h-14">
+                    <img
+                      src={logo}
+                      alt={`Company logo ${idx + 1}`}
+                      className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
       </div>
     </section>
   )
