@@ -13,11 +13,11 @@ This platform requires sophisticated role-based authentication (candidates, empl
 ## Essential Features
 
 ### User Authentication & Onboarding
-- **Functionality**: Three-tier authentication system supporting candidates, employers, and admin roles with profile-specific onboarding flows
-- **Purpose**: Segment users for personalized experiences and enable role-specific features while building comprehensive profiles for AI matching
+- **Functionality**: Three-tier authentication system supporting candidates, employers, and admin roles with profile-specific onboarding flows. **NEW: Step-by-step profile builder with 5 progressive steps**, visual progress tracking, field validation, and profile completion indicators
+- **Purpose**: Segment users for personalized experiences and enable role-specific features while building comprehensive profiles for AI matching. **Profile builder increases completion rates through clear progression, contextual guidance, and immediate validation feedback**
 - **Trigger**: User clicks "Register" and selects account type (Candidate/Employer)
-- **Progression**: Registration form → Email verification → Profile completion wizard → Dashboard access → Feature discovery
-- **Success Criteria**: 90%+ profile completion rate, <2 minutes from registration to first action, clear role separation
+- **Progression**: Registration form → Email verification → **5-Step Profile Builder (Basic Info → Experience → Skills → Salary → Summary)** → Dashboard access → Feature discovery
+- **Success Criteria**: **90%+ profile completion rate** (up from 60% with forms), <2 minutes from registration to first action, clear role separation, **candidates can edit profiles anytime from dashboard**
 
 ### AI-Powered Job Matching
 - **Functionality**: Algorithm calculating compatibility scores between candidate profiles and job postings based on skills (50%), experience (30%), and location (20%)
@@ -46,6 +46,13 @@ This platform requires sophisticated role-based authentication (candidates, empl
 - **Trigger**: Employer logs in or completes job posting
 - **Progression**: Dashboard view → Job performance metrics → Candidate list (sorted by match) → Profile review → Status update → Communication
 - **Success Criteria**: Employers review 80%+ of matched candidates, time-to-shortlist reduced 50%, job posting completion rate >90%
+
+### Candidate Dashboard & Profile Management **[NEW]**
+- **Functionality**: Comprehensive candidate dashboard with profile overview, application tracking, match score analytics, and quick profile editing capability
+- **Purpose**: Engage candidates with their job search progress, encourage profile optimization, and drive premium conversions
+- **Trigger**: Candidate logs in or clicks "Dashboard" in navigation
+- **Progression**: Dashboard view → Profile completion card → Application history → Quick actions → Edit profile (reopens step-by-step builder with pre-filled data)
+- **Success Criteria**: 70%+ of candidates return to dashboard weekly, profile edit rate >30% in first month, premium upgrade conversion from dashboard >5%
 
 ### TalentTech Waitlist Capture
 - **Functionality**: Strategic "Coming Soon" section showcasing three bundled HR+Tech packages (Starter/Professional/Enterprise) with waitlist signup
@@ -102,28 +109,31 @@ Animations should emphasize business intelligence and responsive professionalism
 ## Component Selection
 
 - **Components**: 
-  - Navigation: Custom header with dropdown menus for role-specific links, mobile-responsive hamburger
+  - Navigation: Custom header with dropdown menus for role-specific links, mobile-responsive hamburger, **logged-in user avatar with quick dashboard access**
   - Job Cards: Shadcn Card with custom match score badge overlay, bookmark button, salary range display
-  - Forms: Shadcn Form + Input + Select with multi-step wizard using Tabs for onboarding flows
+  - Forms: Shadcn Form + Input + Select with **multi-step wizard using custom stepper component for onboarding flows**
   - Authentication: Shadcn Dialog with custom branded login/register forms
-  - Dashboard: Custom layout with Shadcn Table for candidate lists, Badge for status indicators
+  - Dashboard: Custom layout with Shadcn Table for candidate lists, Badge for status indicators, **Profile Completion Card with visual progress tracking**
   - TalentTech Bundles: Shadcn Card with custom gold accent borders and hover lift effects
   - Payments: Shadcn Button integrated with Stripe checkout overlay
   - Filters: Shadcn Select + Slider for job search refinement
   - Notifications: Sonner toast for application confirmations and success states
-  - Loading States: Shadcn Skeleton for content loading, custom spinner for AI matching
+  - Loading States: Shadcn Skeleton for content loading, custom spinner for AI matching, **Progress component for profile completion**
   
 - **Customizations**: 
   - Premium badge component with gold gradient and subtle glow effect
   - AI match score circular progress indicator with percentage display
+  - **5-step profile builder with step validation, progress bar, and contextual icons for each section**
+  - **Profile completion card with checklist visualization and upgrade prompts**
   - Job posting wizard with custom multi-step validation
   - Employer candidate pipeline Kanban board (custom drag-drop later, static status columns Phase 1)
   
 - **States**: 
   - Buttons: Navy solid (default) → Navy+10% brightness (hover) → Navy-5% brightness (active), disabled 50% opacity
-  - Form Inputs: Gray border (default) → Navy border + subtle glow (focus) → Red border (error) → Green border (success)
+  - Form Inputs: Gray border (default) → Navy border + subtle glow (focus) → Red border (error) → Green border (success), **real-time validation feedback in profile builder**
   - Job Cards: White background + subtle shadow (default) → lifted shadow + navy border (hover) → scale 0.98 (click)
   - Premium Badge: Gold gradient with 1s pulse animation on initial load, static otherwise
+  - **Profile Builder Steps: Active step highlighted in accent color, completed steps show checkmark, future steps muted**
   
 - **Icon Selection**: 
   - Phosphor Icons: Briefcase (jobs), User (profile), Buildings (employers), CrownSimple (premium), MagnifyingGlass (search), FunnelSimple (filters), Lightning (AI features), ArrowRight (CTAs), Check (success), X (close), CaretDown (dropdowns), Star (featured)

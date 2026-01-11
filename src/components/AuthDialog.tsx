@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { toast } from 'sonner'
-import type { UserType } from '@/lib/types'
+import type { UserType, User } from '@/lib/types'
 
 interface AuthDialogProps {
   isOpen: boolean
@@ -44,9 +44,9 @@ export function AuthDialog({ isOpen, onClose, mode, onSuccess }: AuthDialogProps
         const allKeys = await spark.kv.keys()
         const userKeys = allKeys.filter(key => key.startsWith('user:'))
         
-        let foundUser = null
+        let foundUser: User | null = null
         for (const key of userKeys) {
-          const user = await spark.kv.get<any>(key)
+          const user = await spark.kv.get<User>(key)
           if (user && user.email === email) {
             foundUser = user
             break

@@ -1,23 +1,51 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { List, X } from '@phosphor-icons/react'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { List, X, User as UserIcon, SignOut } from '@phosphor-icons/react'
+import type { User, CandidateProfile } from '@/lib/types'
 
 interface HeaderProps {
   onNavigate: (page: string) => void
   currentPage: string
   onAuthClick: (type: 'login' | 'register') => void
+  currentUser?: User | null
+  candidateProfile?: CandidateProfile | null
+  onLogout?: () => void
 }
 
-export function Header({ onNavigate, currentPage, onAuthClick }: HeaderProps) {
+export function Header({ onNavigate, currentPage, onAuthClick, currentUser, candidateProfile, onLogout }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const navItems = [
+  const baseNavItems = [
     { label: 'Home', value: 'home' },
     { label: 'Jobs', value: 'jobs' },
     { label: 'For Employers', value: 'employers' },
     { label: 'TalentTech', value: 'talenttech', badge: 'Coming Soon' },
     { label: 'Contact', value: 'contact' }
   ]
+
+  const candidateNavItems = [
+    { label: 'Dashboard', value: 'dashboard' },
+    ...baseNavItems
+  ]
+
+  const navItems = currentUser?.userType === 'candidate' ? candidateNavItems : baseNavItems
+
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2)
+  }
+
+  const handleLogout = async () => {
+    if (onLogout) {
+      onLogout()
+    }
+    setMobileMenuOpen(false)
+  }
 
   return (
     <header className="bg-primary/98 backdrop-blur-md text-primary-foreground sticky top-0 z-50 shadow-lg border-b border-accent/20">
@@ -58,21 +86,51 @@ export function Header({ onNavigate, currentPage, onAuthClick }: HeaderProps) {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            <Button 
-              variant="ghost" 
-              size="sm"
-              onClick={() => onAuthClick('login')}
-              className="text-primary-foreground hover:text-accent hover:bg-accent/10 font-semibold transition-all"
-            >
-              Login
-            </Button>
-            <Button 
-              size="sm"
-              onClick={() => onAuthClick('register')}
-              className="bg-gradient-to-r from-accent to-accent/90 text-accent-foreground hover:from-accent/90 hover:to-accent/80 font-semibold shadow-md hover:shadow-xl transition-all hover:scale-105"
-            >
-              Register
-            </Button>
+            {currentUser ? (
+              <div className="flex items-center gap-3">
+                <div className="text-right">
+                  <p className="text-sm font-semibold">
+                    {candidateProfile?.fullName || currentUser.email}
+                  </p>
+                  {currentUser.isPremium && (
+                    <p className="text-xs text-accent">Premium Member</p>
+                  )}
+                </div>
+                <Avatar className="h-9 w-9 border-2 border-accent cursor-pointer" onClick={() => onNavigate('dashboard')}>
+                  <AvatarFallback className="bg-accent/20 text-accent font-semibold">
+                    {candidateProfile ? getInitials(candidateProfile.fullName) : <UserIcon />}
+                  </AvatarFallback>
+                </Avatar>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={handleLogout}
+                  className="text-primary-foreground hover:text-destructive hover:bg-destructive/10"
+                >
+                  <SignOut className="h-4 w-4" />
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => onAuthClick('login')}
+                  className="text-primary-foreground hover:text-accent hover:bg-accent/10 font-semibold transition-all"
+                  data-auth="login"
+                >
+                  Login
+                </Button>
+                <Button 
+                  size="sm"
+                  onClick={() => onAuthClick('register')}
+                  className="bg-gradient-to-r from-accent to-accent/90 text-accent-foreground hover:from-accent/90 hover:to-accent/80 font-semibold shadow-md hover:shadow-xl transition-all hover:scale-105"
+                  data-auth="register"
+                >
+                  Register
+                </Button>
+              </>
+            )}
           </div>
 
           <button
@@ -108,27 +166,53 @@ export function Header({ onNavigate, currentPage, onAuthClick }: HeaderProps) {
                 </button>
               ))}
               <div className="flex flex-col gap-2 mt-2 pt-4 border-t border-primary-foreground/20">
-                <Button 
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    onAuthClick('login')
-                    setMobileMenuOpen(false)
-                  }}
-                  className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10"
-                >
-                  Login
-                </Button>
-                <Button 
-                  size="sm"
-                  onClick={() => {
-                    onAuthClick('register')
-                    setMobileMenuOpen(false)
-                  }}
-                  className="bg-gradient-to-r from-accent to-accent/90 text-accent-foreground hover:from-accent/90 hover:to-accent/80 font-semibold shadow-md"
-                >
-                  Register
-                </Button>
+                {currentUser ? (
+                  <>
+                    <div className="px-4 py-2">
+                      <p className="text-sm font-semibold">
+                        {candidateProfile?.fullName || currentUser.email}
+                      </p>
+                      {currentUser.isPremium && (
+                        <p className="text-xs text-accent">Premium Member</p>
+                      )}
+                    </div>
+                    <Button 
+                      variant="outline"
+                      size="sm"
+                      onClick={handleLogout}
+                      className="border-destructive text-destructive hover:bg-destructive/10"
+                    >
+                      <SignOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button 
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        onAuthClick('login')
+                        setMobileMenuOpen(false)
+                      }}
+                      className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10"
+                      data-auth="login"
+                    >
+                      Login
+                    </Button>
+                    <Button 
+                      size="sm"
+                      onClick={() => {
+                        onAuthClick('register')
+                        setMobileMenuOpen(false)
+                      }}
+                      className="bg-gradient-to-r from-accent to-accent/90 text-accent-foreground hover:from-accent/90 hover:to-accent/80 font-semibold shadow-md"
+                      data-auth="register"
+                    >
+                      Register
+                    </Button>
+                  </>
+                )}
               </div>
             </nav>
           </div>

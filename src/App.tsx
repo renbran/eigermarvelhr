@@ -5,6 +5,8 @@ import { toast } from 'sonner'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { AuthDialog } from '@/components/AuthDialog'
+import { ProfileBuilderDialog } from '@/components/onboarding/ProfileBuilderDialog'
+import { CandidateDashboard } from '@/components/pages/CandidateDashboard'
 import { HeroSection } from '@/components/home/HeroSection'
 import { LiveJobsSection } from '@/components/home/LiveJobsSection'
 import { TrustedCompaniesSection } from '@/components/home/TrustedCompaniesSection'
@@ -18,6 +20,9 @@ function App() {
   const [currentPage, setCurrentPage] = useState('home')
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login')
   const [showAuth, setShowAuth] = useState(false)
+  const [showProfileBuilder, setShowProfileBuilder] = useState(false)
+  const [isEditingProfile, setIsEditingProfile] = useState(false)
+  const [newCandidateId, setNewCandidateId] = useState<string | null>(null)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [candidateProfile, setCandidateProfile] = useState<CandidateProfile | null>(null)
   
@@ -50,8 +55,44 @@ function App() {
   }
 
   const handleAuthSuccess = async (userId: string, userType: UserType) => {
+    if (userType === 'candidate') {
+      const profile = await spark.kv.get<CandidateProfile>(`candidate_profile:${userId}`)
+      
+      if (!profile) {
+        setNewCandidateId(userId)
+        setShowAuth(false)
+        setShowProfileBuilder(true)
+      } else {
+        await loadCurrentUser()
+        setShowAuth(false)
+      }
+    } else {
+      await loadCurrentUser()
+      setShowAuth(false)
+    }
+  }
+
+  const handleProfileComplete = async (profile: CandidateProfile) => {
+    setShowProfileBuilder(false)
+    setIsEditingProfile(false)
     await loadCurrentUser()
-    setShowAuth(false)
+    
+    if (isEditingProfile) {
+      toast.success('Profile updated successfully!')
+    } else {
+      toast.success('Welcome to Eiger Marvel!', {
+        description: 'Your profile is complete. Start exploring job opportunities.'
+      })
+      setCurrentPage('dashboard')
+    }
+  }
+
+  const handleEditProfile = () => {
+    if (currentUser) {
+      setIsEditingProfile(true)
+      setNewCandidateId(currentUser.id)
+      setShowProfileBuilder(true)
+    }
   }
 
   const handleViewJob = (jobId: string) => {
@@ -99,12 +140,23 @@ function App() {
     toast.info('Premium upgrade - Stripe integration ready for production')
   }
 
+  const handleLogout = async () => {
+    await spark.kv.delete('currentUser')
+    setCurrentUser(null)
+    setCandidateProfile(null)
+    setCurrentPage('home')
+    toast.success('Logged out successfully')
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header 
         onNavigate={setCurrentPage}
         currentPage={currentPage}
         onAuthClick={handleAuthClick}
+        currentUser={currentUser}
+        candidateProfile={candidateProfile}
+        onLogout={handleLogout}
       />
 
       <main className="flex-1">
@@ -121,6 +173,16 @@ function App() {
             <ServicesSection />
             <PremiumSection onUpgrade={handleUpgradePremium} />
           </>
+        )}
+
+        {currentPage === 'dashboard' && currentUser && candidateProfile && (
+          <CandidateDashboard
+            user={currentUser}
+            profile={candidateProfile}
+            onEditProfile={handleEditProfile}
+            onUpgradePremium={handleUpgradePremium}
+            onNavigate={setCurrentPage}
+          />
         )}
 
         {currentPage === 'jobs' && (
@@ -186,6 +248,15 @@ function App() {
         mode={authMode}
         onSuccess={handleAuthSuccess}
       />
+
+      {newCandidateId && (
+        <ProfileBuilderDialog
+          isOpen={showProfileBuilder}
+          userId={newCandidateId}
+          onComplete={handleProfileComplete}
+          existingProfile={isEditingProfile ? candidateProfile || undefined : undefined}
+        />
+      )}
 
       <Toaster position="top-right" />
     </div>
