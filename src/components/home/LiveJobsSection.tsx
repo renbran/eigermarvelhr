@@ -13,17 +13,17 @@ export function LiveJobsSection({ jobs, onNavigate, onViewJob }: LiveJobsSection
   const displayJobs = jobs.slice(0, 6)
 
   return (
-    <section className="py-16 sm:py-20 bg-background">
+    <section className="py-16 sm:py-20 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
           <div className="w-full sm:w-auto">
             <div className="flex items-center gap-2 mb-2">
               <Lightning size={24} weight="fill" className="text-accent flex-shrink-0" />
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground break-words">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white break-words">
                 Live Job Opportunities
               </h2>
             </div>
-            <p className="text-sm sm:text-base text-muted-foreground break-words">
+            <p className="text-sm sm:text-base text-gray-400 break-words">
               {jobs.length} active positions waiting for the right talent
             </p>
           </div>
@@ -38,8 +38,8 @@ export function LiveJobsSection({ jobs, onNavigate, onViewJob }: LiveJobsSection
         </div>
 
         {displayJobs.length === 0 ? (
-          <div className="text-center py-12 bg-secondary rounded-lg">
-            <p className="text-sm sm:text-base text-muted-foreground break-words px-4">No jobs available at the moment. Check back soon!</p>
+          <div className="text-center py-12 bg-white/5 backdrop-blur-md rounded-lg border border-white/10">
+            <p className="text-sm sm:text-base text-gray-400 break-words px-4">No jobs available at the moment. Check back soon!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

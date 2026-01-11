@@ -21,8 +21,8 @@ export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, co
   const companyLogo = job.companyLogoUrl || getCompanyLogo(job.employerName, job.industry)
 
   return (
-    <Card className="hover:shadow-lg transition-all hover:border-accent/40 relative group overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+    <Card className="hover:shadow-2xl hover:shadow-accent/20 transition-all hover:border-accent/60 relative group overflow-hidden bg-white/5 backdrop-blur-md border-white/10">
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
       
       {matchScore !== undefined && matchScore >= 70 && (
         <div className="absolute top-4 right-4 z-10">
@@ -54,8 +54,8 @@ export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, co
             />
           </div>
           <div className="flex-1 min-w-0">
-            <CardTitle className="text-base sm:text-lg font-bold break-words pr-20 group-hover:text-accent transition-colors">{job.title}</CardTitle>
-            <CardDescription className="flex items-center gap-1 break-words">
+            <CardTitle className="text-base sm:text-lg font-bold break-words pr-20 group-hover:text-accent transition-colors text-white">{job.title}</CardTitle>
+            <CardDescription className="flex items-center gap-1 break-words text-gray-400">
               <span className="break-words">{job.employerName || 'Eiger Marvel Client'}</span>
               {isPremium && (
                 <CrownSimple size={14} weight="fill" className="text-accent flex-shrink-0 premium-badge" />
@@ -67,22 +67,22 @@ export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, co
 
       <CardContent className="space-y-3">
         <div className="flex flex-wrap gap-2">
-          <div className="flex items-center gap-1 text-xs sm:text-sm text-muted-foreground">
+          <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-400">
             <MapPin size={16} weight="bold" className="flex-shrink-0" />
             <span className="break-words">{job.location}</span>
           </div>
-          <div className="flex items-center gap-1 text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
+          <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-400 whitespace-nowrap">
             <CurrencyDollar size={16} weight="bold" className="flex-shrink-0" />
             <span>{formatSalaryRange(job.salaryMin, job.salaryMax)}</span>
           </div>
-          <div className="flex items-center gap-1 text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
+          <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-400 whitespace-nowrap">
             <Clock size={16} weight="bold" className="flex-shrink-0" />
             <span>{timeText}</span>
           </div>
         </div>
 
         {!compact && (
-          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 break-words">
+          <p className="text-xs sm:text-sm text-gray-300 line-clamp-2 break-words">
             {job.description}
           </p>
         )}

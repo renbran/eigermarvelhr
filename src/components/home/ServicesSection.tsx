@@ -31,13 +31,13 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section className="py-16 sm:py-20 bg-secondary">
+    <section className="py-16 sm:py-20 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 break-words px-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 break-words px-4">
             Core HR Services
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto break-words px-4">
+          <p className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto break-words px-4">
             Comprehensive consultancy solutions tailored to MENA market requirements
           </p>
         </div>
@@ -46,13 +46,13 @@ export function ServicesSection() {
           {services.map((service, idx) => {
             const Icon = service.icon
             return (
-              <Card key={idx} className="hover:shadow-lg transition-all hover:border-primary/30">
+              <Card key={idx} className="hover:shadow-2xl hover:shadow-accent/20 transition-all hover:border-accent/60 bg-white/5 backdrop-blur-md border-white/10">
                 <CardHeader>
-                  <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-4 flex-shrink-0">
+                  <div className="w-12 h-12 bg-accent/30 rounded-lg flex items-center justify-center mb-4 flex-shrink-0 shadow-lg">
                     <Icon size={28} weight="bold" className="text-accent" />
                   </div>
-                  <CardTitle className="text-base sm:text-lg font-bold break-words">{service.title}</CardTitle>
-                  <CardDescription className="leading-relaxed break-words text-sm">
+                  <CardTitle className="text-base sm:text-lg font-bold break-words text-white">{service.title}</CardTitle>
+                  <CardDescription className="leading-relaxed break-words text-sm text-gray-400">
                     {service.description}
                   </CardDescription>
                 </CardHeader>

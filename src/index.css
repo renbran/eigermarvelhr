@@ -101,6 +101,17 @@
   100% { background-position: 200% center; }
 }
 
+.premium-shadow {
+  filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.9));
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 @keyframes floatImage {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-15px); }

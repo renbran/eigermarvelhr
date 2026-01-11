@@ -8,14 +8,14 @@ interface HeroSectionProps {
 
 export function HeroSection({ onNavigate }: HeroSectionProps) {
   return (
-    <section className="relative bg-background text-foreground overflow-hidden">
+    <section className="relative bg-black text-white overflow-hidden">
       <div className="relative w-full h-[600px] sm:h-[700px] lg:h-[800px]">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black" />
         
         <img 
           src={teamPhoto} 
           alt="Eiger Marvel Team" 
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-center premium-shadow"
         />
         
         <div className="absolute inset-0 flex items-end pb-12 sm:pb-16 lg:pb-20">
@@ -38,7 +38,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
                   size="lg"
                   variant="outline"
                   onClick={() => onNavigate('employers')}
-                  className="border-2 border-white bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-foreground font-bold text-sm sm:text-base px-6 sm:px-8 transition-all hover:scale-105 shadow-xl whitespace-normal break-words"
+                  className="border-2 border-white/40 bg-white/5 backdrop-blur-md text-white hover:bg-white hover:text-black font-bold text-sm sm:text-base px-6 sm:px-8 transition-all hover:scale-105 shadow-2xl whitespace-normal break-words"
                 >
                   <Buildings size={20} className="mr-2 flex-shrink-0" weight="bold" />
                   <span className="break-words">Hire Top Talent</span>
