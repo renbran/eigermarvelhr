@@ -42,7 +42,7 @@ export function TrustedCompaniesSection() {
                 key={idx}
                 className="basis-1/2 md:basis-1/4"
               >
-                <div className="bg-white rounded-xl p-6 flex items-center justify-center shadow-sm hover:shadow-md transition-all min-h-[120px] group">
+                <div className="bg-transparent rounded-xl p-6 flex items-center justify-center border border-white/10 hover:border-white/20 shadow-sm hover:shadow-md transition-all min-h-[120px] group">
                   <div className="w-32 h-16 sm:w-40 sm:h-20">
                     <img
                       src={logo}
