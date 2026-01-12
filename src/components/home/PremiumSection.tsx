@@ -21,7 +21,7 @@ export function PremiumSection({ onUpgrade }: PremiumSectionProps) {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 break-words px-4">
             10x Your Career Visibility
           </h2>
-          <p className="text-base sm:text-lg text-gray-400 break-words px-4">
+          <p className="text-base sm:text-lg text-gray-200 break-words px-4">
             Premium candidates get hired 3x faster with enhanced visibility and AI matching
           </p>
         </div>
@@ -32,16 +32,16 @@ export function PremiumSection({ onUpgrade }: PremiumSectionProps) {
               <h3 className="text-base sm:text-lg font-bold mb-4 break-words text-white">Free Membership</h3>
               <div className="space-y-3">
                 <div className="flex items-start gap-2">
-                  <Check size={20} weight="bold" className="text-gray-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm break-words text-gray-300">Basic profile visibility</span>
+                  <Check size={20} weight="bold" className="text-gray-300 flex-shrink-0 mt-0.5" />
+                  <span className="text-xs sm:text-sm break-words text-gray-200">Basic profile visibility</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Check size={20} weight="bold" className="text-gray-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm break-words text-gray-300">Weekly AI job matches</span>
+                  <Check size={20} weight="bold" className="text-gray-300 flex-shrink-0 mt-0.5" />
+                  <span className="text-xs sm:text-sm break-words text-gray-200">Weekly AI job matches</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Check size={20} weight="bold" className="text-gray-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm break-words text-gray-300">Standard application process</span>
+                  <Check size={20} weight="bold" className="text-gray-300 flex-shrink-0 mt-0.5" />
+                  <span className="text-xs sm:text-sm break-words text-gray-200">Standard application process</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <X size={20} weight="bold" className="text-gray-600 flex-shrink-0 mt-0.5" />
@@ -71,35 +71,35 @@ export function PremiumSection({ onUpgrade }: PremiumSectionProps) {
               <div className="space-y-3">
                 <div className="flex items-start gap-2">
                   <Check size={20} weight="bold" className="text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm font-semibold break-words">Featured profile with premium badge</span>
+                  <span className="text-xs sm:text-sm font-semibold break-words text-gray-100">Featured profile with premium badge</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Check size={20} weight="bold" className="text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm font-semibold break-words">Daily AI-powered job matches</span>
+                  <span className="text-xs sm:text-sm font-semibold break-words text-gray-100">Daily AI-powered job matches</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Check size={20} weight="bold" className="text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm font-semibold break-words">Priority placement in search results</span>
+                  <span className="text-xs sm:text-sm font-semibold break-words text-gray-100">Priority placement in search results</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Check size={20} weight="bold" className="text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm font-semibold break-words">15% AI match score boost</span>
+                  <span className="text-xs sm:text-sm font-semibold break-words text-gray-100">15% AI match score boost</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Check size={20} weight="bold" className="text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm font-semibold break-words">Detailed application analytics</span>
+                  <span className="text-xs sm:text-sm font-semibold break-words text-gray-100">Detailed application analytics</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Check size={20} weight="bold" className="text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm font-semibold break-words">Direct employer messaging</span>
+                  <span className="text-xs sm:text-sm font-semibold break-words text-gray-100">Direct employer messaging</span>
                 </div>
               </div>
               <div className="mt-6">
                 <div className="text-xl sm:text-2xl font-bold gradient-gold-shine mb-1 break-words">AED 299/month</div>
-                <p className="text-xs text-gray-400 break-words">Average ROI within first placement</p>
+                <p className="text-xs text-gray-300 break-words">Average ROI within first placement</p>
               </div>
               <Button 
-                className="w-full mt-6 bg-gradient-to-r from-accent to-accent/90 text-accent-foreground hover:from-accent/90 hover:to-accent/80 font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105 text-sm sm:text-base"
+                className="w-full mt-6 bg-gradient-to-r from-accent to-accent/90 text-black hover:from-accent/90 hover:to-accent/80 font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105 text-sm sm:text-base"
                 onClick={onUpgrade}
               >
                 Upgrade to Premium
