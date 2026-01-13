@@ -1,6 +1,9 @@
 import { getStripe, PREMIUM_CONFIG } from './stripe-config'
 import type { PaymentIntent, Subscription, User } from './types'
 
+// Payment simulation configuration
+const PAYMENT_SUCCESS_RATE = 0.95 // 95% success rate for demo purposes
+
 /**
  * Simulates creating a payment intent with Stripe
  * In production, this would call a backend API that creates a Stripe Payment Intent
@@ -34,8 +37,8 @@ export async function processPayment(
     // Simulate payment processing
     await new Promise(resolve => setTimeout(resolve, 2000))
     
-    // Simulate 95% success rate for demo
-    const success = Math.random() > 0.05
+    // Simulate payment success/failure based on configured rate
+    const success = Math.random() < PAYMENT_SUCCESS_RATE
     
     if (!success) {
       throw new Error('Payment declined. Please check your card details and try again.')

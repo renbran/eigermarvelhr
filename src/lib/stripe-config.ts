@@ -1,13 +1,17 @@
 import { loadStripe, Stripe } from '@stripe/stripe-js'
 
 // Stripe publishable key - in production, this should come from environment variables
-// For demo purposes, using test mode key placeholder
-const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_placeholder'
+const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+
+// Validate Stripe key is available
+if (!STRIPE_PUBLISHABLE_KEY && import.meta.env.PROD) {
+  console.error('VITE_STRIPE_PUBLISHABLE_KEY is not set. Stripe integration will not work.')
+}
 
 let stripePromise: Promise<Stripe | null> | null = null
 
 export const getStripe = () => {
-  if (!stripePromise) {
+  if (!stripePromise && STRIPE_PUBLISHABLE_KEY) {
     stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY)
   }
   return stripePromise
