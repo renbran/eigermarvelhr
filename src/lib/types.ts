@@ -83,3 +83,27 @@ export interface MatchScoreBreakdown {
   totalScore: number
   isPremium: boolean
 }
+
+export type PaymentStatus = 'idle' | 'processing' | 'succeeded' | 'failed' | 'cancelled'
+
+export interface PaymentIntent {
+  id: string
+  userId: string
+  amount: number
+  currency: string
+  status: PaymentStatus
+  stripePaymentIntentId?: string
+  errorMessage?: string
+  createdAt: Date
+  completedAt?: Date
+}
+
+export interface Subscription {
+  id: string
+  userId: string
+  status: 'active' | 'expired' | 'cancelled' | 'grace_period'
+  startDate: Date
+  expiryDate: Date
+  autoRenew: boolean
+  paymentIntentId?: string
+}
