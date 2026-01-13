@@ -7,6 +7,7 @@ import { Footer } from '@/components/Footer'
 import { AuthDialog } from '@/components/AuthDialog'
 import { ProfileBuilderDialog } from '@/components/onboarding/ProfileBuilderDialog'
 import { CandidateDashboard } from '@/components/pages/CandidateDashboard'
+import { PremiumUpgradePage } from '@/components/pages/PremiumUpgradePage'
 import { HeroSection } from '@/components/home/HeroSection'
 import { LiveJobsSection } from '@/components/home/LiveJobsSection'
 import { TrustedCompaniesSection } from '@/components/home/TrustedCompaniesSection'
@@ -137,7 +138,17 @@ function App() {
       return
     }
     
-    toast.info('Premium upgrade - Stripe integration ready for production')
+    if (currentUser.isPremium) {
+      toast.info('You are already a premium member!')
+      return
+    }
+    
+    setCurrentPage('premium-upgrade')
+  }
+
+  const handleUpgradeSuccess = async () => {
+    await loadCurrentUser()
+    setCurrentPage('dashboard')
   }
 
   const handleLogout = async () => {
@@ -184,6 +195,14 @@ function App() {
             onEditProfile={handleEditProfile}
             onUpgradePremium={handleUpgradePremium}
             onNavigate={setCurrentPage}
+          />
+        )}
+
+        {currentPage === 'premium-upgrade' && currentUser && (
+          <PremiumUpgradePage
+            user={currentUser}
+            onBack={() => setCurrentPage(currentUser.userType === 'candidate' ? 'dashboard' : 'home')}
+            onUpgradeSuccess={handleUpgradeSuccess}
           />
         )}
 
