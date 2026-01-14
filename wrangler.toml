@@ -5,3 +5,7 @@ type = "javascript"
 
 [site]
 bucket = "./dist"
+
+[[routes]]
+pattern = "emgc.sgctech.ai4"
+zone_name = "sgctech.ai4"
