@@ -129,4 +129,20 @@ export const sampleJobs: JobPosting[] = [
     status: 'active',
     createdAt: new Date(),
   },
+  {
+    id: '8885',
+    employerId: 'eiger-marvel',
+    employerName: 'Eiger Marvel Consultancy',
+    title: 'Senior Full Stack Developer',
+    description:
+      'We are seeking a talented Senior Full Stack Developer to join our innovative team at Eiger Marvel. You will be responsible for designing, developing, and maintaining robust web applications using modern technologies. Responsibilities: Develop and maintain full-stack web applications using React and Node.js, Design and implement RESTful APIs and microservices, Collaborate with UX/UI designers and product managers, Write clean, scalable, and well-documented code, Conduct code reviews and mentor junior developers, Optimize application performance and security.',
+    requiredSkills: ['React', 'TypeScript', 'Node.js', 'System Design', 'AWS/GCP'],
+    minExperience: 7,
+    salaryMin: 150000,
+    salaryMax: 200000,
+    location: 'Dubai, UAE',
+    industry: 'Technology',
+    status: 'active',
+    createdAt: new Date(),
+  },
 ]

@@ -277,6 +277,63 @@ class SyncManager {
   }
 
   /**
+   * Initialize sync (alias for initialize)
+   */
+  async initializeSync(): Promise<void> {
+    return this.initialize();
+  }
+
+  /**
+   * Sync Odoo data (alias for performFullSync)
+   */
+  async syncOdooData(): Promise<void> {
+    return this.performFullSync();
+  }
+
+  /**
+   * Manually sync from Odoo to website
+   */
+  async syncFromOdoo(): Promise<any> {
+    try {
+      const data = await odooService.syncFromOdoo();
+      const jobs = this.mapOdooJobsToWebsite(data.jobs);
+      const applications = this.mapOdooApplicantsToWebsite(data.applicants);
+      
+      this.storeLocalData('jobs', jobs);
+      this.storeLocalData('applications', applications);
+      
+      return { jobs, applications };
+    } catch (error) {
+      console.error('Failed to sync from Odoo:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Manually sync to Odoo from website
+   */
+  async syncToOdoo(data: any): Promise<any> {
+    try {
+      // Create applicants in Odoo
+      if (data.applications && Array.isArray(data.applications)) {
+        for (const app of data.applications) {
+          await odooService.createJobApplicant({
+            name: app.candidateName,
+            email: app.email,
+            phone: app.phone,
+            job_id: app.jobId,
+            description: app.coverLetter,
+          });
+        }
+      }
+      return { success: true, itemsSynced: data.applications?.length || 0 };
+    } catch (error) {
+      console.error('Failed to sync to Odoo:', error);
+      throw error;
+    }
+  }
+
+  /**
    * Clear all cached data
    */
   clearCache(): void {

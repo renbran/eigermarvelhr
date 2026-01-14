@@ -1,0 +1,22 @@
+{
+  "id": 8885,
+  "name": "Senior Full Stack Developer",
+  "job_title": "Senior Full Stack Developer",
+  "no_of_recruitment": 3,
+  "department_id": 1,
+  "company_id": 1,
+  "job_location": "Dubai, UAE",
+  "description": "\n    <p><strong>About the Role:</strong></p>\n    <p>We are seeking a talented Senior Full Stack Developer to join our innovative team at Eiger Marvel. You will be responsible for designing, developing, and maintaining robust web applications using modern technologies.</p>\n    \n    <p><strong>Responsibilities:</strong></p>\n    <ul>\n      <li>Develop and maintain full-stack web applications using React and Node.js</li>\n      <li>Design and implement RESTful APIs and microservices</li>\n      <li>Collaborate with UX/UI designers and product managers</li>\n      <li>Write clean, scalable, and well-documented code</li>\n      <li>Conduct code reviews and mentor junior developers</li>\n      <li>Optimize application performance and security</li>\n    </ul>\n    \n    <p><strong>Requirements:</strong></p>\n    <ul>\n      <li>7+ years of professional development experience</li>\n      <li>Expert knowledge in React, TypeScript, and Node.js</li>\n      <li>Strong understanding of system design and architecture</li>\n      <li>Experience with cloud platforms (AWS, GCP, or Azure)</li>\n      <li>Excellent communication and leadership skills</li>\n      <li>Bachelor's degree in Computer Science or related field</li>\n    </ul>\n    \n    <p><strong>Benefits:</strong></p>\n    <ul>\n      <li>Competitive salary package (AED 150,000 - 200,000 annually)</li>\n      <li>Health insurance and wellness benefits</li>\n      <li>Professional development opportunities</li>\n      <li>Flexible working arrangements</li>\n      <li>Collaborative and innovative work environment</li>\n    </ul>\n  ",
+  "job_type": "Full-time",
+  "job_category": "Technology",
+  "salary_currency_id": 2,
+  "salary_expectation": "150000-200000",
+  "job_requirements": "7+ years experience in Full Stack Development",
+  "is_published": true,
+  "status": "recruit",
+  "created_at": "2026-01-14T21:04:28.413Z",
+  "sync_status": "completed",
+  "sync_direction": "completed_odoo_to_website",
+  "synced_at": "2026-01-14T21:05:02.738Z",
+  "website_url": "https://eigermarvelhr.com/jobs/8885"
+}
