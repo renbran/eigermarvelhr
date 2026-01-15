@@ -4,7 +4,7 @@
  */
 
 export default {
-  async fetch(request) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     
     // Log request for debugging
