@@ -234,7 +234,7 @@ class UAEVisaProcessing(models.Model):
         self.activity_schedule(
             'mail.mail_activity_data_todo',
             summary=_('Collect visa documents'),
-            due_date=fields.Date.today() + timedelta(days=3),
+            date_deadline=fields.Date.today() + timedelta(days=3),
             user_id=self.env.user.id
         )
 

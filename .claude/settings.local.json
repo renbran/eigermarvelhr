@@ -5,7 +5,9 @@
       "Bash(move investigate-odoo-views.js investigate-odoo-views.cjs)",
       "Bash(node:*)",
       "Bash(ren investigate-odoo-views.js investigate-odoo-views.cjs)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(ssh -i ~/Desktop/.ssh/id_rsa -o StrictHostKeyChecking=no root@65.20.72.53 -p 22 \"rm -f /var/odoo/staging-eigermarvelhr.com/src/.git/shallow.lock && echo ''Lock file removed successfully''\")",
+      "Bash(ssh -o StrictHostKeyChecking=no root@65.20.72.53 -p 22 \"systemctl status odoo* 2>/dev/null || systemctl list-units --type=service | grep -i odoo\")"
     ]
   }
 }
