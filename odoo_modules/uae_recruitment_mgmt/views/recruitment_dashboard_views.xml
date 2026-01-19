@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Dashboard Form View -->
+    <record id="view_recruitment_dashboard_form" model="ir.ui.view">
+        <field name="name">recruitment.dashboard.form</field>
+        <field name="model">recruitment.dashboard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Recruitment Dashboard</h1>
+                    </div>
+
+                    <!-- Key Metrics Section -->
+                    <div class="row mt-4 mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-muted">Active Job Orders</h6>
+                                    <h2 class="card-text text-primary" id="active_jobs">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-muted">Total Candidates</h6>
+                                    <h2 class="card-text text-info" id="total_candidates">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-muted">This Month Placements</h6>
+                                    <h2 class="card-text text-success" id="month_placements">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-muted">Month Revenue</h6>
+                                    <h2 class="card-text text-warning" id="month_revenue">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Secondary Metrics -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-muted">In Progress Visa</h6>
+                                    <h2 class="card-text text-danger" id="visa_in_progress">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-muted">Completed Visa</h6>
+                                    <h2 class="card-text text-success" id="visa_completed">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-muted">Active Clients</h6>
+                                    <h2 class="card-text text-primary" id="active_clients">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-muted">Verified Clients</h6>
+                                    <h2 class="card-text text-info" id="verified_clients">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Placements -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Recent Placements</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Candidate</th>
+                                        <th>Client</th>
+                                        <th>Job</th>
+                                        <th>Salary</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent_placements">
+                                    <tr><td colspan="5" class="text-center text-muted">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Job Statistics -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Job Order Statistics</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <strong>Total:</strong> <span id="job_total">-</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Active:</strong> <span id="job_active">-</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Posted:</strong> <span id="job_posted">-</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Filled:</strong> <span id="job_filled">-</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Avg. Time to Fill:</strong> <span id="job_avg_time">-</span> days
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Candidate Statistics -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Candidate Statistics</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <strong>New:</strong> <span id="candidate_new">-</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>In Interview:</strong> <span id="candidate_interview">-</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Offered:</strong> <span id="candidate_offered">-</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>High Match (75%+):</strong> <span id="candidate_high_match" class="badge badge-success">-</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Good Match (50-74%):</strong> <span id="candidate_good_match" class="badge badge-warning">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Revenue Section -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Revenue Analytics</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <h6 class="text-muted">Total Revenue</h6>
+                                        <h3 class="text-success" id="revenue_total">-</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <h6 class="text-muted">Commission</h6>
+                                        <h3 class="text-primary" id="revenue_commission">-</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <h6 class="text-muted">Avg. Commission</h6>
+                                        <h3 class="text-info" id="revenue_avg_commission">-</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_recruitment_dashboard" model="ir.actions.act_window">
+        <field name="name">Recruitment Dashboard</field>
+        <field name="res_model">recruitment.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_recruitment_dashboard_form"/>
+        <field name="target">main</field>
+    </record>
+
+</odoo>
+

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- SERVER ACTIONS FOR AUTOMATIONS -->
+        
+        <!-- Server Action: Placement Confirmed → Update Applicant to Hired -->
+        <record id="server_action_placement_confirmed" model="ir.actions.server">
+            <field name="name">Update Applicant on Placement Confirmed</field>
+            <field name="model_id" ref="model_recruitment_placement"/>
+            <field name="state">code</field>
+            <field name="code">
+# Update applicant stage to hired
+if record.applicant_id:
+    hired_stage = env['hr.recruitment.stage'].search([('name', '=', 'Hired')], limit=1)
+    if not hired_stage:
+        hired_stage = env['hr.recruitment.stage'].search([('fold', '=', True)], limit=1, order='sequence desc')
+    
+    if hired_stage:
+        record.applicant_id.write({'stage_id': hired_stage.id})
+    
+    # Send notification
+    record.applicant_id.message_post(
+        body='Congratulations! Placement confirmed with %s' % record.client_id.name,
+        subject='Placement Confirmed'
+    )
+
+# Recompute job positions
+if record.job_order_id:
+    record.job_order_id._compute_positions_filled()
+            </field>
+        </record>
+
+        <!-- AUTO-TRANSITION: Placement Confirmed → Update Applicant to Hired -->
+        <record id="base_automation_placement_confirmed" model="base.automation">
+            <field name="name">Placement Confirmed: Update Applicant</field>
+            <field name="model_id" ref="model_recruitment_placement"/>
+            <field name="trigger">on_create_or_write</field>
+            <field name="filter_pre_domain">[('state', '!=', 'confirmed')]</field>
+            <field name="filter_domain">[('state', '=', 'confirmed')]</field>
+            <field name="action_server_ids" eval="[(4, ref('server_action_placement_confirmed'))]"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: Job Fully Filled → Close Job -->
+        <record id="server_action_job_fully_filled" model="ir.actions.server">
+            <field name="name">Auto-Close Filled Job</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="state">code</field>
+            <field name="code">
+record.write({'state': 'filled'})
+record.message_post(
+    body='Job automatically closed - all %s positions have been filled' % record.positions_required,
+    subject='Job Fully Filled'
+)
+
+# Notify client
+if record.client_id.portal_user_id:
+    record.client_id.message_post(
+        body='Good news! Job order %s is now fully filled' % record.name,
+        partner_ids=[record.client_id.partner_id.id]
+    )
+            </field>
+        </record>
+
+        <!-- AUTO-TRANSITION: Job Fully Filled → Close Job -->
+        <record id="base_automation_job_fully_filled" model="base.automation">
+            <field name="name">Job Fully Filled: Auto-Close</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="trigger">on_create_or_write</field>
+            <field name="filter_domain">[('positions_remaining', '&lt;=', 0), ('state', 'in', ['active', 'posted'])]</field>
+            <field name="action_server_ids" eval="[(4, ref('server_action_job_fully_filled'))]"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: New Job Order Posted → Sync to Website -->
+        <record id="server_action_job_posted_sync" model="ir.actions.server">
+            <field name="name">Sync Job to Website</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="state">code</field>
+            <field name="code">
+record.action_sync_to_website()
+            </field>
+        </record>
+
+        <!-- AUTO-SEND: New Job Order Posted → Sync to Website -->
+        <record id="base_automation_job_posted_sync" model="base.automation">
+            <field name="name">Job Posted: Sync to Website</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="trigger">on_create_or_write</field>
+            <field name="filter_pre_domain">[('state', '!=', 'posted')]</field>
+            <field name="filter_domain">[('state', '=', 'posted')]</field>
+            <field name="action_server_ids" eval="[(4, ref('server_action_job_posted_sync'))]"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: Visa Completed → Notify Stakeholders -->
+        <record id="server_action_visa_completed" model="ir.actions.server">
+            <field name="name">Notify on Visa Completion</field>
+            <field name="model_id" ref="model_uae_visa_processing"/>
+            <field name="state">code</field>
+            <field name="code">
+# Update placement
+if record.placement_id:
+    record.placement_id.write({'visa_status': 'completed'})
+
+# Update applicant
+if record.applicant_id:
+    record.applicant_id.write({
+        'visa_status': 'employment',
+        'emirates_id': record.emirates_id_number
+    })
+
+# Send email notification
+template = env.ref('uae_recruitment_mgmt.email_template_visa_completed', raise_if_not_found=False)
+if template:
+    template.send_mail(record.id)
+            </field>
+        </record>
+
+        <!-- AUTO-NOTIFICATION: Visa Completed → Notify Stakeholders -->
+        <record id="base_automation_visa_completed" model="base.automation">
+            <field name="name">Visa Completed: Notify Stakeholders</field>
+            <field name="model_id" ref="model_uae_visa_processing"/>
+            <field name="trigger">on_create_or_write</field>
+            <field name="filter_pre_domain">[('state', '!=', 'completed')]</field>
+            <field name="filter_domain">[('state', '=', 'completed')]</field>
+            <field name="action_server_ids" eval="[(4, ref('server_action_visa_completed'))]"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: Candidate Applied → Notify Recruiter -->
+        <record id="server_action_new_applicant" model="ir.actions.server">
+            <field name="name">Notify on New Applicant</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code">
+# Compute AI match score if job assigned
+if record.job_order_ids:
+    record._compute_ai_match()
+
+# Notify recruiter
+if record.user_id:
+    record.activity_schedule(
+        'mail.mail_activity_data_todo',
+        summary='New applicant: %s for %s' % (record.partner_name, record.job_id.name if record.job_id else 'General Application'),
+        user_id=record.user_id.id
+    )
+            </field>
+        </record>
+
+        <!-- AUTO-NOTIFICATION: Candidate Applied → Notify Recruiter -->
+        <record id="base_automation_new_applicant" model="base.automation">
+            <field name="name">New Applicant: Notify Recruiter</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="trigger">on_create</field>
+            <field name="action_server_ids" eval="[(4, ref('server_action_new_applicant'))]"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: Resume Attached → Trigger AI Parsing -->
+        <record id="server_action_resume_attached" model="ir.actions.server">
+            <field name="name">Parse Resume with AI</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code">
+# Only parse if resume not already parsed
+if not record.resume_summary and record.attachment_ids:
+    record.action_parse_resume()
+            </field>
+        </record>
+
+        <!-- AUTO-PARSE: Resume Attached → Trigger AI Parsing -->
+        <record id="base_automation_resume_attached" model="base.automation">
+            <field name="name">Resume Attached: Trigger AI Parsing</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="trigger">on_create_or_write</field>
+            <field name="filter_domain">[('attachment_ids', '!=', False), ('resume_summary', '=', False)]</field>
+            <field name="action_server_ids" eval="[(4, ref('server_action_resume_attached'))]"/>
+            <field name="active" eval="False"/>  <!-- Disabled by default to avoid API costs -->
+        </record>
+
+        <!-- Server Action: Client Verified → Send Welcome Email -->
+        <record id="server_action_client_verified" model="ir.actions.server">
+            <field name="name">Send Client Welcome Email</field>
+            <field name="model_id" ref="model_recruitment_client"/>
+            <field name="state">code</field>
+            <field name="code">
+# Send welcome email
+template = env.ref('uae_recruitment_mgmt.email_template_client_verified', raise_if_not_found=False)
+if template:
+    template.send_mail(record.id)
+
+# Schedule follow-up
+record.activity_schedule(
+    'mail.mail_activity_data_call',
+    summary='Follow up with new client: %s' % record.name,
+    user_id=record.create_uid.id
+)
+            </field>
+        </record>
+
+        <!-- CLIENT PORTAL WELCOME -->
+        <record id="base_automation_client_verified" model="base.automation">
+            <field name="name">Client Verified: Send Welcome Email</field>
+            <field name="model_id" ref="model_recruitment_client"/>
+            <field name="trigger">on_create_or_write</field>
+            <field name="filter_pre_domain">[('state', '!=', 'verified')]</field>
+            <field name="filter_domain">[('state', '=', 'verified')]</field>
+            <field name="action_server_ids" eval="[(4, ref('server_action_client_verified'))]"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: Placement Confirmed → Generate Invoice -->
+        <record id="server_action_placement_invoice" model="ir.actions.server">
+            <field name="name">Generate Invoice on Placement</field>
+            <field name="model_id" ref="model_recruitment_placement"/>
+            <field name="state">code</field>
+            <field name="code">
+# Create invoice if not already created
+existing_invoice = env['account.move'].search([
+    ('partner_id', '=', record.client_id.partner_id.id),
+    ('narration', 'ilike', record.name)
+], limit=1)
+
+if not existing_invoice:
+    try:
+        invoice = record._create_invoice()
+        record.message_post(
+            body='Invoice created: %s' % invoice.name,
+            subject='Invoice Generated'
+        )
+    except Exception as e:
+        record.message_post(
+            body='Invoice creation failed: %s' % str(e),
+            subject='Invoice Error'
+        )
+            </field>
+        </record>
+
+        <!-- INVOICE GENERATION ON PLACEMENT CONFIRM -->
+        <record id="base_automation_placement_invoice" model="base.automation">
+            <field name="name">Placement Confirmed: Generate Invoice</field>
+            <field name="model_id" ref="model_recruitment_placement"/>
+            <field name="trigger">on_create_or_write</field>
+            <field name="filter_pre_domain">[('state', '!=', 'confirmed')]</field>
+            <field name="filter_domain">[('state', '=', 'confirmed')]</field>
+            <field name="action_server_ids" eval="[(4, ref('server_action_placement_invoice'))]"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: AI Matching for Active Jobs -->
+        <record id="server_action_ai_matching" model="ir.actions.server">
+            <field name="name">Run AI Candidate Matching</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="state">code</field>
+            <field name="code">
+if record.state == 'active' and record.ai_matching_enabled:
+    # Find matching candidates
+    record.action_find_matching_candidates()
+    # Log activity
+    record.message_post(
+        body='AI matching completed. Candidates with match score >= %d%% identified.' % record.ai_match_threshold,
+        subtype_xmlid='mail.mt_note'
+    )
+            </field>
+        </record>
+
+        <!-- AUTO-MATCH: Active Job with AI Matching -->
+        <record id="base_automation_ai_matching" model="base.automation">
+            <field name="name">Active Job: AI Candidate Matching</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="trigger">on_create_or_write</field>
+            <field name="filter_domain">[('state', '=', 'active'), ('ai_matching_enabled', '=', True)]</field>
+            <field name="action_server_ids" eval="[(4, ref('server_action_ai_matching'))]"/>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

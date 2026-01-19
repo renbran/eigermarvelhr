@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Recruitment User Group -->
+    <record id="group_recruitment_user" model="res.groups">
+        <field name="name">Recruitment User</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Recruitment Manager Group -->
+    <record id="group_recruitment_manager" model="res.groups">
+        <field name="name">Recruitment Manager</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="implied_ids" eval="[(4, ref('group_recruitment_user'))]"/>
+    </record>
+
+    <!-- Recruitment Officer Group -->
+    <record id="group_recruitment_officer" model="res.groups">
+        <field name="name">Recruitment Officer</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+    <!-- HR Team Group -->
+    <record id="group_hr_team" model="res.groups">
+        <field name="name">HR Team</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+    <!-- Rules -->
+
+    <!-- Clients: Managers can see all, others see only their records -->
+    <record id="rule_recruitment_client_own" model="ir.rule">
+        <field name="name">Recruitment Client Own</field>
+        <field name="model_id" ref="model_recruitment_client"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="rule_recruitment_client_manager" model="ir.rule">
+        <field name="name">Recruitment Client Manager</field>
+        <field name="model_id" ref="model_recruitment_client"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_recruitment_manager'))]"/>
+        <field name="perm_write">True</field>
+        <field name="perm_unlink">True</field>
+    </record>
+
+    <!-- Job Orders: Managers can see all, others see assigned -->
+    <record id="rule_recruitment_job_order_manager" model="ir.rule">
+        <field name="name">Recruitment Job Order Manager</field>
+        <field name="model_id" ref="model_recruitment_job_order"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_recruitment_manager'))]"/>
+        <field name="perm_write">True</field>
+        <field name="perm_unlink">True</field>
+    </record>
+
+    <!-- Placements -->
+    <record id="rule_recruitment_placement_manager" model="ir.rule">
+        <field name="name">Recruitment Placement Manager</field>
+        <field name="model_id" ref="model_recruitment_placement"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_recruitment_manager'))]"/>
+        <field name="perm_write">True</field>
+        <field name="perm_unlink">True</field>
+    </record>
+
+    <!-- Visa Processing -->
+    <record id="rule_uae_visa_processing_manager" model="ir.rule">
+        <field name="name">UAE Visa Processing Manager</field>
+        <field name="model_id" ref="model_uae_visa_processing"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_recruitment_manager'))]"/>
+        <field name="perm_write">True</field>
+        <field name="perm_unlink">True</field>
+    </record>
+
+</odoo>

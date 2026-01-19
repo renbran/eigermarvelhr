@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Client Onboarding Wizard -->
+        <record id="view_client_onboarding_wizard_form" model="ir.ui.view">
+            <field name="name">Client Onboarding Wizard</field>
+            <field name="model">recruitment.client.onboarding.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Client Onboarding Wizard">
+                    <group>
+                        <h2>Welcome to Client Onboarding</h2>
+                        <field name="company_name"/>
+                        <field name="email"/>
+                        <field name="phone"/>
+                        <field name="service_type"/>
+                        <field name="contingency_percentage" invisible="service_type != 'contingency'"/>
+                        <field name="retainer_amount" invisible="service_type != 'retainer'"/>
+                    </group>
+                    <footer>
+                        <button name="action_create_client" type="object" string="Create Client" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_client_onboarding_wizard" model="ir.actions.act_window">
+            <field name="name">Client Onboarding</field>
+            <field name="res_model">recruitment.client.onboarding.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- Bulk Candidate Import Wizard -->
+        <record id="view_bulk_candidate_import_wizard_form" model="ir.ui.view">
+            <field name="name">Bulk Candidate Import Wizard</field>
+            <field name="model">bulk.candidate.import</field>
+            <field name="arch" type="xml">
+                <form string="Bulk Candidate Import">
+                    <group>
+                        <h2>Import Candidates from File</h2>
+                        <field name="import_file" filename="file_name"/>
+                        <field name="file_name" invisible="1"/>
+                        <field name="import_type"/>
+                            <field name="job_order_id" invisible="import_type != 'specific_job'"/>
+                    </group>
+                    <footer>
+                        <button name="action_import_candidates" type="object" string="Import" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_bulk_candidate_import_wizard" model="ir.actions.act_window">
+            <field name="name">Bulk Candidate Import</field>
+            <field name="res_model">bulk.candidate.import</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- Interview Scheduler Wizard -->
+        <record id="view_interview_scheduler_wizard_form" model="ir.ui.view">
+            <field name="name">Interview Scheduler Wizard</field>
+            <field name="model">interview.scheduler</field>
+            <field name="arch" type="xml">
+                <form string="Schedule Interviews">
+                    <group>
+                        <h2>Schedule Interviews</h2>
+                        <field name="candidate_ids" widget="many2many_tags"/>
+                        <field name="interview_date"/>
+                        <field name="interview_time"/>
+                        <field name="interview_mode"/>
+                        <field name="interviewer_id"/>
+                            <field name="meeting_link" invisible="interview_mode != 'virtual'"/>
+                    </group>
+                    <footer>
+                        <button name="action_schedule_interviews" type="object" string="Schedule Interviews" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_interview_scheduler_wizard" model="ir.actions.act_window">
+            <field name="name">Schedule Interviews</field>
+            <field name="res_model">interview.scheduler</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- Offer Generator Wizard -->
+        <record id="view_offer_generator_wizard_form" model="ir.ui.view">
+            <field name="name">Offer Generator Wizard</field>
+            <field name="model">offer.generator</field>
+            <field name="arch" type="xml">
+                <form string="Generate Job Offers">
+                    <group>
+                        <h2>Generate Job Offers</h2>
+                        <field name="placement_id"/>
+                        <field name="offered_salary"/>
+                        <field name="currency_id"/>
+                        <field name="probation_period"/>
+                        <field name="joining_bonus"/>
+                        <field name="benefits_description"/>
+                    </group>
+                    <footer>
+                        <button name="action_generate_offer" type="object" string="Generate &amp; Send Offer" class="btn-success"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_offer_generator_wizard" model="ir.actions.act_window">
+            <field name="name">Generate Offers</field>
+            <field name="res_model">offer.generator</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- SERVER ACTIONS FOR SCHEDULED JOBS -->
+
+        <!-- Server Action: Sync Job Orders to Website -->
+        <record id="server_action_sync_jobs_to_website" model="ir.actions.server">
+            <field name="name">Sync Jobs to Website</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="state">code</field>
+            <field name="code">
+model.search([('state', 'in', ['active', 'posted']), ('sync_status', 'in', ['not_synced', 'out_of_sync', 'error'])]).action_sync_to_website()
+            </field>
+        </record>
+
+        <!-- CRON: Sync Job Orders to Website -->
+        <record id="ir_cron_sync_jobs_to_website" model="ir.cron">
+            <field name="name">Recruitment: Sync Jobs to Website</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="code">model.search([('state', 'in', ['active', 'posted']), ('sync_status', 'in', ['not_synced', 'out_of_sync', 'error'])]).action_sync_to_website()</field>
+            <field name="interval_number">30</field>
+            <field name="interval_type">minutes</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: Refresh AI Match Scores -->
+        <record id="server_action_refresh_ai_match_scores" model="ir.actions.server">
+            <field name="name">Refresh AI Match Scores</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code">
+# Refresh match scores for active applicants
+applicants = model.search([('job_order_ids', '!=', False)])
+for applicant in applicants:
+    applicant._compute_ai_match()
+            </field>
+        </record>
+
+        <!-- CRON: Refresh AI Match Scores -->
+        <record id="ir_cron_refresh_ai_match_scores" model="ir.cron">
+            <field name="name">Recruitment: Refresh AI Match Scores</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="code">
+applicants = model.search([('job_order_ids', '!=', False)])
+for applicant in applicants:
+    applicant._compute_ai_match()
+            </field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: Auto-find Matching Candidates -->
+        <record id="server_action_auto_match_candidates" model="ir.actions.server">
+            <field name="name">Auto-Match Candidates to Jobs</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="state">code</field>
+            <field name="code">
+# Auto-match for active jobs
+jobs = model.search([('state', 'in', ['active', 'posted']), ('ai_matching_enabled', '=', True)])
+for job in jobs:
+    job.action_find_matching_candidates()
+            </field>
+        </record>
+
+        <!-- CRON: Auto-find Matching Candidates -->
+        <record id="ir_cron_auto_match_candidates" model="ir.cron">
+            <field name="name">Recruitment: Auto-Match Candidates to Jobs</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="code">
+jobs = model.search([('state', 'in', ['active', 'posted']), ('ai_matching_enabled', '=', True)])
+for job in jobs:
+    job.action_find_matching_candidates()
+            </field>
+            <field name="interval_number">6</field>
+            <field name="interval_type">hours</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: Send Scheduled Reminders -->
+        <record id="server_action_send_reminders" model="ir.actions.server">
+            <field name="name">Send Scheduled Reminders</field>
+            <field name="model_id" ref="model_recruitment_placement"/>
+            <field name="state">code</field>
+            <field name="code">
+# Send reminders for placements with upcoming documents due
+placements = model.search([
+    ('state', 'in', ['confirmed', 'active']),
+    ('documents_due_date', '!=', False),
+    ('documents_received', '=', False)
+])
+for placement in placements:
+    if placement.days_until_documents_due and placement.days_until_documents_due &lt;= 3 and placement.days_until_documents_due &gt;= 0:
+        placement.message_post(
+            body='Reminder: Documents are due in %d days' % placement.days_until_documents_due,
+            subject='Documents Due Soon',
+            subtype_xmlid='mail.mt_comment'
+        )
+            </field>
+        </record>
+
+        <!-- CRON: Send Scheduled Reminders -->
+        <record id="ir_cron_send_reminders" model="ir.cron">
+            <field name="name">Recruitment: Send Document Reminders</field>
+            <field name="model_id" ref="model_recruitment_placement"/>
+            <field name="code">
+placements = model.search([
+    ('state', 'in', ['confirmed', 'active']),
+    ('documents_due_date', '!=', False),
+    ('documents_received', '=', False)
+])
+for placement in placements:
+    if placement.days_until_documents_due and placement.days_until_documents_due &lt;= 3 and placement.days_until_documents_due &gt;= 0:
+        placement.message_post(
+            body='Reminder: Documents are due in %d days' % placement.days_until_documents_due,
+            subject='Documents Due Soon',
+            subtype_xmlid='mail.mt_comment'
+        )
+            </field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: Clean Up Old Job Postings -->
+        <record id="server_action_cleanup_old_jobs" model="ir.actions.server">
+            <field name="name">Clean Up Old Job Postings</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="state">code</field>
+            <field name="code">
+# Archive jobs that have been filled for more than 90 days - simple cleanup
+old_jobs = model.search([('state', '=', 'filled'), ('active', '=', True)], limit=100)
+for job in old_jobs:
+    job.write({'active': False})
+            </field>
+        </record>
+
+        <!-- CRON: Clean Up Old Job Postings -->
+        <record id="ir_cron_cleanup_old_jobs" model="ir.cron">
+            <field name="name">Recruitment: Clean Up Old Job Postings</field>
+            <field name="model_id" ref="model_recruitment_job_order"/>
+            <field name="code">
+# Archive filled jobs
+old_jobs = model.search([('state', '=', 'filled'), ('active', '=', True)], limit=100)
+for job in old_jobs:
+    job.write({'active': False})
+            </field>
+            <field name="interval_number">7</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Server Action: Sync Applicant Data to Website -->
+        <record id="server_action_sync_applicants_to_website" model="ir.actions.server">
+            <field name="name">Sync Applicants to Website</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code">
+# Sync recently updated applicants
+recent_applicants = model.search([('job_order_ids', '!=', False)], order='write_date desc', limit=50)
+# Sync logic here (e.g., API call to website)
+pass
+            </field>
+        </record>
+
+        <!-- CRON: Sync Applicant Data to Website -->
+        <record id="ir_cron_sync_applicants_to_website" model="ir.cron">
+            <field name="name">Recruitment: Sync Applicants to Website</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="code">
+# Sync recently updated applicants
+recent_applicants = model.search([('job_order_ids', '!=', False)], order='write_date desc', limit=50)
+# Sync logic here (e.g., API call to website)
+pass
+            </field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="active" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
+

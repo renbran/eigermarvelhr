@@ -1,0 +1,218 @@
+/* UAE Recruitment Management - Backend Styles */
+
+:root {
+    --primary-color: #1e3a8a;
+    --secondary-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+}
+
+/* Recruitment Dashboard */
+.recruitment-dashboard {
+    padding: 20px;
+    background-color: #f9fafb;
+}
+
+.recruitment-dashboard .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.recruitment-dashboard .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.kpi-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid var(--primary-color);
+}
+
+.kpi-card.success {
+    border-left-color: var(--secondary-color);
+}
+
+.kpi-card.warning {
+    border-left-color: var(--warning-color);
+}
+
+.kpi-card.danger {
+    border-left-color: var(--danger-color);
+}
+
+.kpi-card .kpi-label {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.kpi-card .kpi-value {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.kpi-card .kpi-change {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.kpi-card .kpi-change.positive {
+    color: var(--secondary-color);
+}
+
+.kpi-card .kpi-change.negative {
+    color: var(--danger-color);
+}
+
+/* Recruitment List Views */
+.recruitment-list-view .o_list_table {
+    background: white;
+}
+
+.recruitment-list-view .o_list_record_selector {
+    padding: 10px;
+}
+
+/* Recruitment Form Views */
+.recruitment-form .form-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    border-top: 3px solid var(--primary-color);
+}
+
+.recruitment-form .form-section.secondary {
+    border-top-color: var(--secondary-color);
+}
+
+.recruitment-form .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Status Badges */
+.o_badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.o_badge.badge-success {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.o_badge.badge-warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.o_badge.badge-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.o_badge.badge-info {
+    background-color: #dbeafe;
+    color: #0c2d6b;
+}
+
+/* Buttons */
+.recruitment-form .btn-action {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.recruitment-form .btn-action:hover {
+    background-color: #059669;
+}
+
+.recruitment-form .btn-action.secondary {
+    background-color: var(--primary-color);
+}
+
+.recruitment-form .btn-action.secondary:hover {
+    background-color: #1e40af;
+}
+
+/* Alerts and Messages */
+.recruitment-alert {
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.recruitment-alert.info {
+    background-color: #dbeafe;
+    color: #0c2d6b;
+    border-left: 4px solid #3b82f6;
+}
+
+.recruitment-alert.warning {
+    background-color: #fef3c7;
+    color: #92400e;
+    border-left: 4px solid #f59e0b;
+}
+
+.recruitment-alert.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-left: 4px solid #ef4444;
+}
+
+.recruitment-alert.success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border-left: 4px solid #10b981;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .recruitment-dashboard .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .recruitment-dashboard .dashboard-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .kpi-card .kpi-value {
+        font-size: 24px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .recruitment-dashboard {
+        background-color: white;
+    }
+
+    .kpi-card {
+        page-break-inside: avoid;
+    }
+}

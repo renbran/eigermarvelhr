@@ -15,6 +15,7 @@ import { TalentTechSection } from '@/components/home/TalentTechSection'
 import { ServicesSection } from '@/components/home/ServicesSection'
 import { PremiumSection } from '@/components/home/PremiumSection'
 import { JobsPage } from '@/components/pages/JobsPage'
+import { OdooSyncStatus } from '@/components/OdooSyncStatus'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import type { UserType, JobPosting, CandidateProfile, User } from '@/lib/types'
 import { sampleJobs } from '@/lib/sample-jobs'
@@ -217,6 +218,13 @@ function App() {
         candidateProfile={candidateProfile}
         onLogout={handleLogout}
       />
+
+      {/* Development: Show Odoo Sync Status */}
+      {import.meta.env.DEV && (
+        <div className="bg-gray-50 border-b border-gray-200 px-4 py-3 max-w-full overflow-auto">
+          <OdooSyncStatus />
+        </div>
+      )}
 
       <main className="flex-1">
         {currentPage === 'home' && (

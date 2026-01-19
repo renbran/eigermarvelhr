@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Placement Kanban View -->
+    <record id="view_recruitment_placement_kanban" model="ir.ui.view">
+        <field name="name">recruitment.placement.kanban</field>
+        <field name="model">recruitment.placement</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" records_per_row="3">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="applicant_id"/>
+                <field name="state"/>
+                <field name="gross_salary"/>
+                <field name="commission_amount"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_content">
+                                <h4><strong><t t-if="record.applicant_id.value" t-esc="record.applicant_id.value"/><t t-else="">-</t></strong></h4>
+                                <div class="text-muted small">
+                                    <div><t t-if="record.name.value" t-esc="record.name.value"/><t t-else="">-</t></div>
+                                    <t t-if="record.gross_salary"><div>Salary: <t t-esc="record.gross_salary.value"/></div></t>
+                                    <t t-if="record.commission_amount"><div>Commission: <span class="badge badge-success"><t t-esc="record.commission_amount.value"/></span></div></t>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_footer">
+                                <a type="edit" role="button" class="btn btn-primary btn-sm">Edit</a>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Placement List View -->
+    <record id="view_recruitment_placement_list" model="ir.ui.view">
+        <field name="name">recruitment.placement.list</field>
+        <field name="model">recruitment.placement</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1">
+                <field name="name"/>
+                <field name="applicant_id"/>
+                <field name="client_id"/>
+                <field name="job_order_id"/>
+                <field name="placement_date"/>
+                <field name="gross_salary"/>
+                <field name="commission_amount" sum="Commission Total"/>
+                <field name="state" widget="badge" decoration-success="state=='completed'" decoration-warning="state=='confirmed'" decoration-danger="state=='cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Placement Form View -->
+    <record id="view_recruitment_placement_form" model="ir.ui.view">
+        <field name="name">recruitment.placement.form</field>
+        <field name="model">recruitment.placement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object" class="oe_highlight" string="Confirm Placement" invisible="state != 'draft'"/>
+                    <button name="action_complete" type="object" class="oe_highlight" string="Complete Placement" invisible="state != 'confirmed'"/>
+                    <button name="action_start_visa_processing" type="object" string="Start Visa Processing" invisible="state != 'confirmed'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state not in ['draft', 'confirmed']"/>
+                    <field name="state" widget="statusbar" options="{'clickable': False}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/> - <field name="applicant_id"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="applicant_id" required="1"/>
+                            <field name="client_id" required="1"/>
+                            <field name="job_order_id"/>
+                        </group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="placement_date" required="1"/>
+                            <field name="employee_id"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Salary &amp; Commission">
+                            <group>
+                                <group>
+                                    <field name="gross_salary" required="1"/>
+                                    <field name="currency_id"/>
+                                    <field name="benefits"/>
+                                </group>
+                                <group>
+                                    <field name="commission_percentage"/>
+                                    <field name="commission_amount" readonly="1"/>
+                                    <field name="final_amount" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Dates &amp; Timeline">
+                            <group>
+                                <group>
+                                    <field name="placement_date"/>
+                                    <field name="joining_date"/>
+                                </group>
+                                <group>
+                                    <field name="confirmation_date" readonly="1"/>
+                                    <field name="contract_end_date"/>
+                                    <field name="confirmation_period_days" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Visa &amp; Compliance">
+                            <group>
+                                <group>
+                                    <field name="visa_status"/>
+                                    <field name="visa_processing_id" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Internal Notes">
+                            <field name="internal_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Placement Graph View (Revenue) -->
+    <record id="view_recruitment_placement_graph" model="ir.ui.view">
+        <field name="name">recruitment.placement.graph</field>
+        <field name="model">recruitment.placement</field>
+        <field name="arch" type="xml">
+            <graph string="Placement Revenue" type="bar">
+                <field name="client_id" type="row"/>
+                <field name="commission_amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Placement Pivot View -->
+    <record id="view_recruitment_placement_pivot" model="ir.ui.view">
+        <field name="name">recruitment.placement.pivot</field>
+        <field name="model">recruitment.placement</field>
+        <field name="arch" type="xml">
+            <pivot string="Placement Analysis">
+                <field name="state" type="row"/>
+                <field name="commission_amount" type="measure"/>
+                <field name="gross_salary" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_recruitment_placement" model="ir.actions.act_window">
+        <field name="name">Placements</field>
+        <field name="res_model">recruitment.placement</field>
+        <field name="view_mode">kanban,list,form,graph,pivot</field>
+
+    </record>
+
+    <!-- Search View -->
+    <record id="view_recruitment_placement_search" model="ir.ui.view">
+        <field name="name">recruitment.placement.search</field>
+        <field name="model">recruitment.placement</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="applicant_id"/>
+                <field name="client_id"/>
+                <separator/>
+                <filter name="active_placements" string="Active" domain="[('state', 'in', ['confirmed', 'completed'])]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_client" string="Client" context="{'group_by': 'client_id'}"/>
+                    <filter name="group_by_date" string="Placement Date" context="{'group_by': 'placement_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
+

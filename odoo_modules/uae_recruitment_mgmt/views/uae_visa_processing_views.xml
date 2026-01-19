@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Visa Processing Kanban View -->
+    <record id="view_uae_visa_processing_kanban" model="ir.ui.view">
+        <field name="name">uae.visa.processing.kanban</field>
+        <field name="model">uae.visa.processing</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" records_per_row="4">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="applicant_id"/>
+                <field name="state"/>
+                <field name="visa_type"/>
+                <field name="application_date"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_content">
+                                <h4><strong><t t-if="record.applicant_id.value" t-esc="record.applicant_id.value"/><t t-else="">-</t></strong></h4>
+                                <div class="text-muted small">
+                                    <div><t t-if="record.name.value" t-esc="record.name.value"/><t t-else="">-</t></div>
+                                    <t t-if="record.visa_type"><div>Type: <t t-esc="record.visa_type.value"/></div></t>
+                                    <t t-if="record.application_date"><div>Applied: <t t-esc="record.application_date.value"/></div></t>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_footer">
+                                <a type="edit" role="button" class="btn btn-primary btn-sm">View</a>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Visa Processing List View -->
+    <record id="view_uae_visa_processing_list" model="ir.ui.view">
+        <field name="name">uae.visa.processing.list</field>
+        <field name="model">uae.visa.processing</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1">
+                <field name="name"/>
+                <field name="applicant_id"/>
+                <field name="placement_id"/>
+                <field name="visa_type"/>
+                <field name="state" widget="badge"/>
+                <field name="application_date"/>
+                <field name="expected_completion"/>
+                <field name="documents_complete" widget="boolean"/>
+                <field name="medical_exam_date"/>
+                <field name="total_cost"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Visa Processing Form View -->
+    <record id="view_uae_visa_processing_form" model="ir.ui.view">
+        <field name="name">uae.visa.processing.form</field>
+        <field name="model">uae.visa.processing</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_collect_documents" type="object" class="oe_highlight" string="Collect Documents" invisible="state != 'draft'"/>
+                    <button name="action_submit_to_immigration" type="object" class="oe_highlight" string="Submit to Immigration" invisible="state != 'documents'"/>
+                    <button name="action_schedule_medical" type="object" string="Schedule Medical" invisible="state not in ['submission', 'approval']"/>
+                    <button name="action_approve" type="object" string="Approve" invisible="state != 'medical'"/>
+                    <button name="action_complete" type="object" class="oe_highlight" string="Complete" invisible="state != 'emirates_id'"/>
+                    <button name="action_reject" type="object" string="Reject" invisible="state not in ['draft', 'documents', 'submission']"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" options="{'clickable': False}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/> - <field name="applicant_id"/></h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="applicant_id" required="1"/>
+                            <field name="placement_id"/>
+                            <field name="client_id"/>
+                        </group>
+                        <group>
+                            <field name="visa_type" required="1"/>
+                            <field name="is_priority"/>
+                            <field name="pro_company"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Timeline">
+                            <group>
+                                <group>
+                                    <field name="application_date"/>
+                                    <field name="expected_completion"/>
+                                </group>
+                                <group>
+                                    <field name="actual_completion"/>
+                                    <field name="processing_days" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Document Checklist">
+                            <group>
+                                <group col="2">
+                                    <field name="passport_copy" widget="boolean"/>
+                                    <field name="passport_photo" widget="boolean"/>
+                                </group>
+                                <group col="2">
+                                    <field name="educational_certificates" widget="boolean"/>
+                                </group>
+                                <group col="2">
+                                    <field name="experience_certificates" widget="boolean"/>
+                                </group>
+                                <group col="2">
+                                    <field name="medical_fitness" widget="boolean"/>
+                                </group>
+                                <group col="2">
+                                    <field name="police_clearance" widget="boolean"/>
+                                </group>
+                                <group col="2">
+                                    <field name="noc_letter" widget="boolean"/>
+                                </group>
+                                <group col="2">
+                                    <field name="employment_contract" widget="boolean"/>
+                                </group>
+                            </group>
+                            <field name="documents_complete" readonly="1"/>
+                        </page>
+
+                        <page string="Medical Exam">
+                            <group>
+                                <group>
+                                    <field name="medical_exam_date"/>
+                                    <field name="medical_exam_location"/>
+                                </group>
+                                <group>
+                                    <field name="medical_exam_passed"/>
+                                    <field name="medical_exam_notes"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Emirates ID">
+                            <group>
+                                <group>
+                                    <field name="emirates_id_number"/>
+                                    <field name="emirates_id_collection_date"/>
+                                    <field name="emirates_id_expiry"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Costs">
+                            <group>
+                                <group>
+                                    <field name="visa_cost"/>
+                                    <field name="medical_cost"/>
+                                    <field name="emirates_id_cost"/>
+                                    <field name="other_costs"/>
+                                </group>
+                                <group>
+                                    <field name="total_cost" readonly="1" class="font-weight-bold"/>
+                                    <field name="currency_id"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Internal Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_uae_visa_processing" model="ir.actions.act_window">
+        <field name="name">Visa Processing</field>
+        <field name="res_model">uae.visa.processing</field>
+        <field name="view_mode">kanban,list,form</field>
+
+    </record>
+
+    <!-- Search View -->
+    <record id="view_uae_visa_processing_search" model="ir.ui.view">
+        <field name="name">uae.visa.processing.search</field>
+        <field name="model">uae.visa.processing</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="applicant_id"/>
+                <field name="placement_id"/>
+                <separator/>
+                <filter name="in_progress" string="In Progress" domain="[('state', 'in', ['documents', 'submission', 'approval', 'medical', 'emirates_id'])]"/>
+                <filter name="completed" string="Completed" domain="[('state', '=', 'completed')]"/>
+                <filter name="rejected" string="Rejected" domain="[('state', '=', 'rejected')]"/>
+                <filter name="medical_pending" string="Medical Pending" domain="[('medical_exam_date', '=', False)]"/>
+                <filter name="high_priority" string="High Priority" domain="[('is_priority', '=', True)]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_visa_type" string="Visa Type" context="{'group_by': 'visa_type'}"/>
+                    <filter name="group_by_client" string="Client" context="{'group_by': 'client_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
+

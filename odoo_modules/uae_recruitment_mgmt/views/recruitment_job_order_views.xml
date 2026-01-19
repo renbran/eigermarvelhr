@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Job Order Kanban View -->
+    <record id="view_recruitment_job_order_kanban" model="ir.ui.view">
+        <field name="name">recruitment.job.order.kanban</field>
+        <field name="model">recruitment.job.order</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" records_per_row="3">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="client_id"/>
+                <field name="job_level"/>
+                <field name="applicant_count"/>
+                <field name="positions_remaining"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_content">
+                                <h4><strong><t t-if="record.name" t-esc="record.name.value"/></strong></h4>
+                                <div class="text-muted small">
+                                    <div><t t-if="record.job_level.value" t-esc="record.job_level.value"/><t t-else="">-</t></div>
+                                    <div><t t-if="record.applicant_count.value" t-esc="record.applicant_count.value"/><t t-else="">0</t> applicants</div>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_footer">
+                                <a type="edit" role="button" class="btn btn-primary btn-sm">Edit</a>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Job Order List View -->
+    <record id="view_recruitment_job_order_list" model="ir.ui.view">
+        <field name="name">recruitment.job.order.list</field>
+        <field name="model">recruitment.job.order</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="client_id"/>
+                <field name="job_level"/>
+                <field name="location"/>
+                <field name="positions_required"/>
+                <field name="positions_filled"/>
+                <field name="applicant_count"/>
+                <field name="state" widget="badge" decoration-success="state=='filled'" decoration-warning="state=='active'" decoration-danger="state=='cancelled'"/>
+                <field name="website_published" widget="boolean"/>
+                <field name="sync_status" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Job Order Form View -->
+    <record id="view_recruitment_job_order_form" model="ir.ui.view">
+        <field name="name">recruitment.job.order.form</field>
+        <field name="model">recruitment.job.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_post" type="object" class="oe_highlight" string="Post Job" invisible="state != 'draft'"/>
+                    <button name="action_activate" type="object" class="oe_highlight" string="Activate" invisible="state != 'posted'"/>
+                    <button name="action_hold" type="object" string="Hold" invisible="state != 'active'"/>
+                    <button name="action_close" type="object" string="Close" invisible="state != 'active'"/>
+                    <button name="action_sync_to_website" type="object" string="Sync to Website"/>
+                    <button name="action_find_matching_candidates" type="object" string="Find Matching Candidates"/>
+                    <field name="state" widget="statusbar" options="{'clickable': False}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="reference" readonly="1"/>
+                            <field name="client_id" required="1"/>
+                            <field name="job_level" required="1"/>
+                        </group>
+                        <group>
+                            <field name="location" required="1"/>
+                            <field name="work_type"/>
+                            <field name="created_date"/>
+                            <field name="closing_date"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Job Details">
+                            <group>
+                                <group>
+                                    <field name="department_id"/>
+                                    <field name="positions_required" required="1"/>
+                                    <field name="positions_filled"/>
+                                    <field name="positions_remaining"/>
+                                </group>
+                                <group>
+                                    <field name="salary_min"/>
+                                    <field name="salary_max"/>
+                                    <field name="currency_id"/>
+                                </group>
+                            </group>
+                            <field name="description" widget="html" required="1"/>
+                        </page>
+
+                        <page string="Requirements">
+                            <group>
+                                <group>
+                                    <field name="experience_years_min"/>
+                                    <field name="experience_years_max"/>
+                                    <field name="education_level"/>
+                                </group>
+                                <group>
+                                    <field name="languages"/>
+                                    <field name="certifications"/>
+                                </group>
+                            </group>
+                            <field name="skills_ids" widget="many2many_tags"/>
+                            <field name="benefits"/>
+                        </page>
+
+                        <page string="AI &amp; Matching">
+                            <group>
+                                <group>
+                                    <field name="ai_matching_enabled"/>
+                                    <field name="ai_match_threshold"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Visa &amp; Company">
+                            <group>
+                                <group>
+                                    <field name="visa_sponsorship"/>
+                                    <field name="visa_type"/>
+                                    <field name="company_id"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Website">
+                            <group>
+                                <group>
+                                    <field name="website_published"/>
+                                    <field name="website_id" readonly="1"/>
+                                    <field name="sync_status" readonly="1"/>
+                                    <field name="last_sync_date" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Applicants">
+                            <field name="applicant_ids" readonly="1" nolabel="1"/>
+                        </page>
+
+                        <page string="Internal Notes">
+                            <field name="internal_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_recruitment_job_order" model="ir.actions.act_window">
+        <field name="name">Job Orders</field>
+        <field name="res_model">recruitment.job.order</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_recruitment_job_order_search" model="ir.ui.view">
+        <field name="name">recruitment.job.order.search</field>
+        <field name="model">recruitment.job.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Job Title"/>
+                <field name="reference"/>
+                <field name="client_id"/>
+                <separator/>
+                <filter name="active_jobs" string="Active" domain="[('state', 'in', ['active', 'posted'])]"/>
+                <!-- Temporarily disabled: domain filter with > operator -->
+                <filter name="high_priority" string="High Priority" domain="[('state', '=', 'active')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_client" string="Client" context="{'group_by': 'client_id'}"/>
+                    <filter name="group_by_level" string="Job Level" context="{'group_by': 'job_level'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

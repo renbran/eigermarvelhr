@@ -1,8 +1,9 @@
 /**
- * Odoo Service - Handles all communication with Odoo MCP Server
- * Connects to eigermarvelhr instance (v18)
+ * Odoo Service - Handles all communication with Odoo v18 instance
+ * Connects to eigermarvelhr instance via direct RPC
  */
 
+import OdooConnection, { type OdooConnectionConfig } from './odoo-connection';
 import {
   ODOO_MODELS,
   ODOO_FIELDS,
@@ -16,36 +17,63 @@ import {
   SyncLog,
 } from './odoo-models';
 
-const ODOO_CONFIG = {
-  instance: 'eigermarvelhr',
-  url: 'https://eigermarvelhr.com',
-  db: 'eigermarvel',
-  username: 'admin',
+// Get config from environment variables
+const ODOO_CONFIG: OdooConnectionConfig = {
+  url: import.meta.env.VITE_ODOO_URL || 'https://eigermarvelhr.com',
+  database: import.meta.env.VITE_ODOO_DATABASE || 'eigermarvel',
+  username: import.meta.env.VITE_ODOO_USERNAME || 'admin',
+  password: import.meta.env.VITE_ODOO_PASSWORD || 'admin',
   version: 'v18',
 };
 
-interface OdooMCPRequest {
-  method: string;
-  model: string;
-  args?: unknown[];
-  kwargs?: Record<string, unknown>;
-}
-
 class OdooService {
+  private connection: OdooConnection | null = null;
   private syncLogs: SyncLog[] = [];
   private isSyncing = false;
+  private connectionAttempts = 0;
 
   /**
-   * Initialize Odoo MCP connection
+   * Initialize Odoo connection
    */
   async initConnection(): Promise<boolean> {
     try {
-      console.log(`Connecting to Odoo MCP: ${ODOO_CONFIG.instance}`);
-      // Connection will be handled by the MCP server
-      return true;
+      console.log(`[OdooService] Initializing connection to ${ODOO_CONFIG.database}...`);
+      
+      this.connection = new OdooConnection(ODOO_CONFIG);
+      const authenticated = await this.connection.authenticate();
+      
+      if (authenticated) {
+        console.log('[OdooService] ✓ Connection established and authenticated');
+        this.connectionAttempts = 0;
+        return true;
+      }
+      
+      throw new Error('Authentication failed');
     } catch (error) {
-      console.error('Failed to initialize Odoo connection:', error);
+      console.error('[OdooService] Failed to initialize connection:', error);
+      this.connectionAttempts++;
+      
+      // Retry logic with exponential backoff
+      if (this.connectionAttempts < 3) {
+        const waitTime = Math.pow(2, this.connectionAttempts) * 1000;
+        console.log(`[OdooService] Retrying in ${waitTime}ms...`);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+        return this.initConnection();
+      }
+      
       return false;
+    }
+  }
+
+  /**
+   * Ensure connection is active
+   */
+  private async ensureConnection(): Promise<void> {
+    if (!this.connection?.isAuthenticated()) {
+      await this.initConnection();
+      if (!this.connection?.isAuthenticated()) {
+        throw new Error('Failed to establish Odoo connection');
+      }
     }
   }
 
@@ -54,18 +82,29 @@ class OdooService {
    */
   async fetchJobs(filters: Record<string, unknown> = {}): Promise<OdooJob[]> {
     try {
-      const defaultFilters = [['active', '=', true]];
-      const allFilters = Object.keys(filters).length > 0 ? filters : defaultFilters;
+      await this.ensureConnection();
+      
+      const domain = Object.keys(filters).length > 0 
+        ? filters 
+        : [['active', '=', true]];
 
-      const response = await this.callOdooMethod('search_read', ODOO_MODELS.JOB, {
-        domain: allFilters,
-        fields: ODOO_FIELDS.JOB,
-        limit: 100,
-      });
+      const jobs = await this.connection!.rpcCall<OdooJob[]>(
+        ODOO_MODELS.JOB,
+        'search_read',
+        [],
+        {
+          domain,
+          fields: ODOO_FIELDS.JOB,
+          limit: 100,
+        },
+      );
 
-      return response;
+      console.log(`[OdooService] Fetched ${jobs.length} jobs from Odoo`);
+      this.logSync('Job', 0, 'read', 'success');
+      return jobs;
     } catch (error) {
       this.logSync('Job', 0, 'read', 'failed', String(error));
+      console.error('[OdooService] Failed to fetch jobs:', error);
       throw error;
     }
   }
@@ -75,18 +114,29 @@ class OdooService {
    */
   async fetchJobApplicants(filters: Record<string, unknown> = {}): Promise<OdooJobApplicant[]> {
     try {
-      const defaultFilters = [['active', '=', true]];
-      const allFilters = Object.keys(filters).length > 0 ? filters : defaultFilters;
+      await this.ensureConnection();
+      
+      const domain = Object.keys(filters).length > 0 
+        ? filters 
+        : [['active', '=', true]];
 
-      const response = await this.callOdooMethod('search_read', ODOO_MODELS.JOB_APPLICANT, {
-        domain: allFilters,
-        fields: ODOO_FIELDS.JOB_APPLICANT,
-        limit: 500,
-      });
+      const applicants = await this.connection!.rpcCall<OdooJobApplicant[]>(
+        ODOO_MODELS.JOB_APPLICANT,
+        'search_read',
+        [],
+        {
+          domain,
+          fields: ODOO_FIELDS.JOB_APPLICANT,
+          limit: 500,
+        },
+      );
 
-      return response;
+      console.log(`[OdooService] Fetched ${applicants.length} job applicants from Odoo`);
+      this.logSync('JobApplicant', 0, 'read', 'success');
+      return applicants;
     } catch (error) {
       this.logSync('JobApplicant', 0, 'read', 'failed', String(error));
+      console.error('[OdooService] Failed to fetch applicants:', error);
       throw error;
     }
   }
@@ -96,18 +146,29 @@ class OdooService {
    */
   async fetchEmployees(filters: Record<string, unknown> = {}): Promise<OdooEmployee[]> {
     try {
-      const defaultFilters = [['active', '=', true]];
-      const allFilters = Object.keys(filters).length > 0 ? filters : defaultFilters;
+      await this.ensureConnection();
+      
+      const domain = Object.keys(filters).length > 0 
+        ? filters 
+        : [['active', '=', true]];
 
-      const response = await this.callOdooMethod('search_read', ODOO_MODELS.EMPLOYEE, {
-        domain: allFilters,
-        fields: ODOO_FIELDS.EMPLOYEE,
-        limit: 500,
-      });
+      const employees = await this.connection!.rpcCall<OdooEmployee[]>(
+        ODOO_MODELS.EMPLOYEE,
+        'search_read',
+        [],
+        {
+          domain,
+          fields: ODOO_FIELDS.EMPLOYEE,
+          limit: 500,
+        },
+      );
 
-      return response;
+      console.log(`[OdooService] Fetched ${employees.length} employees from Odoo`);
+      this.logSync('Employee', 0, 'read', 'success');
+      return employees;
     } catch (error) {
       this.logSync('Employee', 0, 'read', 'failed', String(error));
+      console.error('[OdooService] Failed to fetch employees:', error);
       throw error;
     }
   }
@@ -117,14 +178,24 @@ class OdooService {
    */
   async fetchDepartments(): Promise<OdooDepartment[]> {
     try {
-      const response = await this.callOdooMethod('search_read', ODOO_MODELS.DEPARTMENT, {
-        domain: [['active', '=', true]],
-        fields: ODOO_FIELDS.DEPARTMENT,
-      });
+      await this.ensureConnection();
 
-      return response;
+      const departments = await this.connection!.rpcCall<OdooDepartment[]>(
+        ODOO_MODELS.DEPARTMENT,
+        'search_read',
+        [],
+        {
+          domain: [['active', '=', true]],
+          fields: ODOO_FIELDS.DEPARTMENT,
+        },
+      );
+
+      console.log(`[OdooService] Fetched ${departments.length} departments from Odoo`);
+      this.logSync('Department', 0, 'read', 'success');
+      return departments;
     } catch (error) {
       this.logSync('Department', 0, 'read', 'failed', String(error));
+      console.error('[OdooService] Failed to fetch departments:', error);
       throw error;
     }
   }
@@ -134,15 +205,26 @@ class OdooService {
    */
   async fetchCompany(): Promise<OdooCompany | null> {
     try {
-      const response = await this.callOdooMethod('search_read', ODOO_MODELS.COMPANY, {
-        domain: [],
-        fields: ODOO_FIELDS.COMPANY,
-        limit: 1,
-      });
+      await this.ensureConnection();
 
-      return response.length > 0 ? response[0] : null;
+      const companies = await this.connection!.rpcCall<OdooCompany[]>(
+        ODOO_MODELS.COMPANY,
+        'search_read',
+        [],
+        {
+          domain: [],
+          fields: ODOO_FIELDS.COMPANY,
+          limit: 1,
+        },
+      );
+
+      const company = companies.length > 0 ? companies[0] : null;
+      console.log(`[OdooService] Fetched company info: ${company?.name || 'N/A'}`);
+      this.logSync('Company', 0, 'read', 'success');
+      return company;
     } catch (error) {
       this.logSync('Company', 0, 'read', 'failed', String(error));
+      console.error('[OdooService] Failed to fetch company:', error);
       throw error;
     }
   }
@@ -158,11 +240,20 @@ class OdooService {
     description?: string;
   }): Promise<number> {
     try {
-      const applicantId = await this.callOdooMethod('create', ODOO_MODELS.JOB_APPLICANT, data);
+      await this.ensureConnection();
+
+      const applicantId = await this.connection!.rpcCall<number>(
+        ODOO_MODELS.JOB_APPLICANT,
+        'create',
+        [data],
+      );
+
+      console.log(`[OdooService] Created job applicant with ID: ${applicantId}`);
       this.logSync('JobApplicant', applicantId, 'create', 'success');
       return applicantId;
     } catch (error) {
       this.logSync('JobApplicant', 0, 'create', 'failed', String(error));
+      console.error('[OdooService] Failed to create applicant:', error);
       throw error;
     }
   }
@@ -175,51 +266,20 @@ class OdooService {
     data: Partial<OdooJobApplicant>,
   ): Promise<boolean> {
     try {
-      await this.callOdooMethod('write', ODOO_MODELS.JOB_APPLICANT, {
-        args: [[applicantId], data],
-      });
+      await this.ensureConnection();
+
+      await this.connection!.rpcCall<boolean>(
+        ODOO_MODELS.JOB_APPLICANT,
+        'write',
+        [[applicantId], data],
+      );
+
+      console.log(`[OdooService] Updated job applicant ID: ${applicantId}`);
       this.logSync('JobApplicant', applicantId, 'update', 'success');
       return true;
     } catch (error) {
       this.logSync('JobApplicant', applicantId, 'update', 'failed', String(error));
-      throw error;
-    }
-  }
-
-  /**
-   * Generic RPC call to Odoo
-   */
-  private async callOdooMethod(
-    method: string,
-    model: string,
-    data: unknown,
-  ): Promise<unknown> {
-    try {
-      // This will be handled by the MCP server
-      // The MCP server at d:/01_WORK_PROJECTS/odoo-mcp-server/dist/index.js
-      // will process these requests and communicate with Odoo
-
-      const request: OdooMCPRequest = {
-        method,
-        model,
-        args: Array.isArray(data) ? data : [data],
-      };
-
-      // Simulated response - in production, this would call the MCP server
-      console.log(`Odoo RPC Call: ${method} on ${model}`, request);
-
-      // Return mock response structure
-      if (method === 'search_read') {
-        return [];
-      } else if (method === 'create') {
-        return Math.floor(Math.random() * 10000);
-      } else if (method === 'write') {
-        return true;
-      }
-
-      return null;
-    } catch (error) {
-      console.error('Odoo RPC Error:', error);
+      console.error('[OdooService] Failed to update applicant:', error);
       throw error;
     }
   }
@@ -234,7 +294,7 @@ class OdooService {
     company: OdooCompany | null;
   }> {
     if (this.isSyncing) {
-      console.warn('Sync already in progress');
+      console.warn('[OdooService] Sync already in progress');
       return {
         jobs: [],
         applicants: [],
@@ -246,7 +306,7 @@ class OdooService {
     this.isSyncing = true;
 
     try {
-      console.log('Starting sync from Odoo...');
+      console.log('[OdooService] Starting full sync from Odoo...');
 
       const [jobs, applicants, departments, company] = await Promise.all([
         this.fetchJobs(),
@@ -255,8 +315,10 @@ class OdooService {
         this.fetchCompany(),
       ]);
 
-      console.log('Sync completed successfully');
-      console.log(`Fetched: ${jobs.length} jobs, ${applicants.length} applicants, ${departments.length} departments`);
+      console.log('[OdooService] ✓ Sync completed successfully');
+      console.log(
+        `[OdooService] Synced: ${jobs.length} jobs, ${applicants.length} applicants, ${departments.length} departments`
+      );
 
       return {
         jobs,
@@ -265,7 +327,8 @@ class OdooService {
         company,
       };
     } catch (error) {
-      console.error('Sync failed:', error);
+      console.error('[OdooService] Sync failed:', error);
+      this.logSync('SYNC', 0, 'read', 'failed', String(error));
       throw error;
     } finally {
       this.isSyncing = false;
@@ -299,6 +362,10 @@ class OdooService {
     if (this.syncLogs.length > 1000) {
       this.syncLogs = this.syncLogs.slice(-1000);
     }
+
+    console.log(`[OdooService] [${status.toUpperCase()}] ${modelName}:${odooId} - ${action}`, {
+      error: error || 'N/A',
+    });
   }
 
   /**
@@ -313,6 +380,7 @@ class OdooService {
    */
   clearSyncLogs(): void {
     this.syncLogs = [];
+    console.log('[OdooService] Sync logs cleared');
   }
 
   /**
@@ -320,6 +388,24 @@ class OdooService {
    */
   isSyncInProgress(): boolean {
     return this.isSyncing;
+  }
+
+  /**
+   * Get connection status
+   */
+  isConnected(): boolean {
+    return this.connection?.isAuthenticated() ?? false;
+  }
+
+  /**
+   * Disconnect from Odoo
+   */
+  disconnect(): void {
+    if (this.connection) {
+      this.connection.disconnect();
+      this.connection = null;
+    }
+    console.log('[OdooService] Disconnected from Odoo');
   }
 }
 

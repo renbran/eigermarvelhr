@@ -1,0 +1,139 @@
+{
+  "timestamp": "2026-01-17T01:58:31.003022",
+  "diagnostics": {
+    "Python": [
+      {
+        "name": "Version",
+        "status": "\u2705",
+        "details": "3.13.3"
+      }
+    ],
+    "Python Packages": [
+      {
+        "name": "odoo",
+        "status": "\u274c",
+        "details": "Not installed"
+      },
+      {
+        "name": "psycopg2",
+        "status": "\u2705",
+        "details": "Installed"
+      },
+      {
+        "name": "requests",
+        "status": "\u2705",
+        "details": "Installed"
+      },
+      {
+        "name": "openai",
+        "status": "\u2705",
+        "details": "Installed"
+      },
+      {
+        "name": "pillow",
+        "status": "\u274c",
+        "details": "Not installed"
+      },
+      {
+        "name": "werkzeug",
+        "status": "\u2705",
+        "details": "Installed"
+      }
+    ],
+    "Odoo": [
+      {
+        "name": "Installation",
+        "status": "\u274c",
+        "details": "Not found in standard locations"
+      }
+    ],
+    "Database": [
+      {
+        "name": "PostgreSQL Driver",
+        "status": "\u2705",
+        "details": "psycopg2 installed"
+      },
+      {
+        "name": "PostgreSQL Connection",
+        "status": "\u26a0\ufe0f",
+        "details": "Connection refused"
+      }
+    ],
+    "Module": [
+      {
+        "name": "Location",
+        "status": "\u2705",
+        "details": "D:\\01_WORK_PROJECTS\\EM WEBSITE\\eiger-marvel-hr-plat\\odoo_modules\\uae_recruitment_mgmt"
+      },
+      {
+        "name": "Manifest",
+        "status": "\u2705",
+        "details": "Present"
+      }
+    ],
+    "Module Structure": [
+      {
+        "name": "models",
+        "status": "\u2705",
+        "details": "7 files"
+      },
+      {
+        "name": "controllers",
+        "status": "\u2705",
+        "details": "2 files"
+      },
+      {
+        "name": "views",
+        "status": "\u2705",
+        "details": "7 files"
+      },
+      {
+        "name": "security",
+        "status": "\u2705",
+        "details": "2 files"
+      },
+      {
+        "name": "data",
+        "status": "\u2705",
+        "details": "3 files"
+      },
+      {
+        "name": "wizards",
+        "status": "\u2705",
+        "details": "2 files"
+      }
+    ],
+    "Permissions": [
+      {
+        "name": "Read",
+        "status": "\u2705",
+        "details": "Module readable"
+      },
+      {
+        "name": "Write",
+        "status": "\u2705",
+        "details": "Module writable"
+      }
+    ],
+    "Ports": [
+      {
+        "name": "PostgreSQL",
+        "status": "\u26a0\ufe0f",
+        "details": "Port not responding"
+      },
+      {
+        "name": "Odoo",
+        "status": "\u26a0\ufe0f",
+        "details": "Port not responding"
+      }
+    ],
+    "Connectivity": [
+      {
+        "name": "Internet",
+        "status": "\u26a0\ufe0f",
+        "details": "Some APIs may be unreachable"
+      }
+    ]
+  },
+  "recommendations": []
+}

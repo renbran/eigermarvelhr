@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- OpenAI Provider (Paid, High-Performance) -->
+        <record id="llm_provider_openai" model="llm.provider">
+            <field name="name">OpenAI GPT-4o Mini</field>
+            <field name="provider_type">openai</field>
+            <field name="sequence">10</field>
+            <field name="active">True</field>
+            <field name="api_endpoint">https://api.openai.com/v1/chat/completions</field>
+            <field name="api_key">sk-placeholder-set-in-system-params</field>
+            <field name="default_model">gpt-4o-mini</field>
+            <field name="supports_resume_parsing">True</field>
+            <field name="supports_matching">True</field>
+            <field name="supports_interview_feedback">True</field>
+            <field name="supports_offer_drafting">True</field>
+            <field name="cost_per_1k_tokens">0.00015</field>
+            <field name="monthly_limit">10000000</field>
+            <field name="is_default">False</field>
+            <field name="documentation_url">https://platform.openai.com/docs/guides/gpt-4-vision</field>
+            <field name="notes">High-performance, production-ready. Paid tier with usage costs.</field>
+        </record>
+
+        <!-- Groq Provider (Free Tier) -->
+        <record id="llm_provider_groq" model="llm.provider">
+            <field name="name">Groq Mixtral (Free Tier)</field>
+            <field name="provider_type">groq</field>
+            <field name="sequence">20</field>
+            <field name="active">True</field>
+            <field name="api_endpoint">https://api.groq.com/openai/v1/chat/completions</field>
+            <field name="api_key">gsk-placeholder-get-free-at-groq</field>
+            <field name="default_model">mixtral-8x7b-32768</field>
+            <field name="supports_resume_parsing">True</field>
+            <field name="supports_matching">True</field>
+            <field name="supports_interview_feedback">False</field>
+            <field name="supports_offer_drafting">False</field>
+            <field name="cost_per_1k_tokens">0.0</field>
+            <field name="monthly_limit">14400</field>
+            <field name="is_default">True</field>
+            <field name="documentation_url">https://console.groq.com/docs/speech-text</field>
+            <field name="notes">Free tier with 14,400 requests per month. Fast inference, perfect for resume parsing.</field>
+        </record>
+
+        <!-- Anthropic Claude Provider (Optional) -->
+        <record id="llm_provider_anthropic" model="llm.provider">
+            <field name="name">Anthropic Claude 3 Haiku</field>
+            <field name="provider_type">anthropic</field>
+            <field name="sequence">30</field>
+            <field name="active">False</field>
+            <field name="api_endpoint">https://api.anthropic.com/v1/messages</field>
+            <field name="api_key">sk-ant-placeholder</field>
+            <field name="default_model">claude-3-haiku-20240307</field>
+            <field name="supports_resume_parsing">True</field>
+            <field name="supports_matching">True</field>
+            <field name="supports_interview_feedback">True</field>
+            <field name="supports_offer_drafting">True</field>
+            <field name="cost_per_1k_tokens">0.00025</field>
+            <field name="is_default">False</field>
+            <field name="documentation_url">https://docs.anthropic.com/claude/reference/getting-started-with-the-api</field>
+            <field name="notes">High-quality, reasoning-capable model. Paid tier.</field>
+        </record>
+
+        <!-- LLM Capabilities -->
+        <record id="llm_capability_resume_parsing" model="llm.capability">
+            <field name="name">Resume Parsing</field>
+            <field name="description">Extract structured data from resume documents</field>
+        </record>
+
+        <record id="llm_capability_candidate_matching" model="llm.capability">
+            <field name="name">Candidate Matching</field>
+            <field name="description">Match candidates to job requirements</field>
+        </record>
+
+        <record id="llm_capability_interview_feedback" model="llm.capability">
+            <field name="name">Interview Feedback</field>
+            <field name="description">Generate interview feedback and assessments</field>
+        </record>
+
+        <record id="llm_capability_offer_drafting" model="llm.capability">
+            <field name="name">Offer Drafting</field>
+            <field name="description">Draft job offer letters with AI assistance</field>
+        </record>
+
+        <record id="llm_capability_video_analysis" model="llm.capability">
+            <field name="name">Video Analysis</field>
+            <field name="description">Analyze video interview performance</field>
+        </record>
+
+        <!-- OpenAI Models -->
+        <record id="llm_model_gpt4o_mini" model="llm.model">
+            <field name="name">GPT-4o Mini (Latest)</field>
+            <field name="provider_id" ref="llm_provider_openai"/>
+            <field name="model_id">gpt-4o-mini</field>
+            <field name="context_window">128000</field>
+            <field name="max_output_tokens">4096</field>
+            <field name="cost_per_1k_input">0.00015</field>
+            <field name="cost_per_1k_output">0.0006</field>
+            <field name="sequence">10</field>
+            <field name="active">True</field>
+            <field name="capabilities" eval="[
+                (4, ref('llm_capability_resume_parsing')),
+                (4, ref('llm_capability_candidate_matching')),
+                (4, ref('llm_capability_interview_feedback')),
+                (4, ref('llm_capability_offer_drafting'))
+            ]"/>
+        </record>
+
+        <record id="llm_model_gpt4" model="llm.model">
+            <field name="name">GPT-4 (Turbo)</field>
+            <field name="provider_id" ref="llm_provider_openai"/>
+            <field name="model_id">gpt-4-turbo</field>
+            <field name="context_window">128000</field>
+            <field name="max_output_tokens">4096</field>
+            <field name="cost_per_1k_input">0.01</field>
+            <field name="cost_per_1k_output">0.03</field>
+            <field name="sequence">20</field>
+            <field name="active">True</field>
+            <field name="capabilities" eval="[
+                (4, ref('llm_capability_resume_parsing')),
+                (4, ref('llm_capability_candidate_matching')),
+                (4, ref('llm_capability_interview_feedback')),
+                (4, ref('llm_capability_offer_drafting'))
+            ]"/>
+        </record>
+
+        <!-- Groq Models -->
+        <record id="llm_model_mixtral_8x7b" model="llm.model">
+            <field name="name">Mixtral 8x7B (32K context)</field>
+            <field name="provider_id" ref="llm_provider_groq"/>
+            <field name="model_id">mixtral-8x7b-32768</field>
+            <field name="context_window">32768</field>
+            <field name="max_output_tokens">8192</field>
+            <field name="cost_per_1k_input">0.0</field>
+            <field name="cost_per_1k_output">0.0</field>
+            <field name="sequence">10</field>
+            <field name="active">True</field>
+            <field name="capabilities" eval="[
+                (4, ref('llm_capability_resume_parsing')),
+                (4, ref('llm_capability_candidate_matching'))
+            ]"/>
+        </record>
+
+        <record id="llm_model_llama2_70b" model="llm.model">
+            <field name="name">LLaMA2 70B</field>
+            <field name="provider_id" ref="llm_provider_groq"/>
+            <field name="model_id">llama2-70b-4096</field>
+            <field name="context_window">4096</field>
+            <field name="max_output_tokens">2048</field>
+            <field name="cost_per_1k_input">0.0</field>
+            <field name="cost_per_1k_output">0.0</field>
+            <field name="sequence">20</field>
+            <field name="active">True</field>
+            <field name="capabilities" eval="[
+                (4, ref('llm_capability_resume_parsing'))
+            ]"/>
+        </record>
+
+        <!-- Anthropic Models -->
+        <record id="llm_model_claude_3_haiku" model="llm.model">
+            <field name="name">Claude 3 Haiku (Fast)</field>
+            <field name="provider_id" ref="llm_provider_anthropic"/>
+            <field name="model_id">claude-3-haiku-20240307</field>
+            <field name="context_window">200000</field>
+            <field name="max_output_tokens">4096</field>
+            <field name="cost_per_1k_input">0.00025</field>
+            <field name="cost_per_1k_output">0.00125</field>
+            <field name="sequence">10</field>
+            <field name="active">False</field>
+            <field name="capabilities" eval="[
+                (4, ref('llm_capability_resume_parsing')),
+                (4, ref('llm_capability_candidate_matching')),
+                (4, ref('llm_capability_interview_feedback')),
+                (4, ref('llm_capability_offer_drafting'))
+            ]"/>
+        </record>
+
+        <record id="llm_model_claude_3_opus" model="llm.model">
+            <field name="name">Claude 3 Opus (Most Capable)</field>
+            <field name="provider_id" ref="llm_provider_anthropic"/>
+            <field name="model_id">claude-3-opus-20240229</field>
+            <field name="context_window">200000</field>
+            <field name="max_output_tokens">4096</field>
+            <field name="cost_per_1k_input">0.015</field>
+            <field name="cost_per_1k_output">0.075</field>
+            <field name="sequence">20</field>
+            <field name="active">False</field>
+            <field name="capabilities" eval="[
+                (4, ref('llm_capability_resume_parsing')),
+                (4, ref('llm_capability_candidate_matching')),
+                (4, ref('llm_capability_interview_feedback')),
+                (4, ref('llm_capability_offer_drafting'))
+            ]"/>
+        </record>
+
+    </data>
+</odoo>

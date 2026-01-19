@@ -17,6 +17,8 @@ interface SyncConfig {
   autoSync: boolean;
   syncInterval: number; // milliseconds
   conflictResolution: 'odoo_wins' | 'website_wins' | 'manual';
+  retryOnFailure: boolean;
+  maxRetries: number;
 }
 
 interface SyncStatus {
@@ -24,13 +26,26 @@ interface SyncStatus {
   isActive: boolean;
   lastError: string | null;
   itemsSynced: number;
+  successCount: number;
+  failureCount: number;
 }
+
+interface SyncEvent {
+  type: 'init' | 'progress' | 'complete' | 'error';
+  message: string;
+  progress?: number;
+  data?: unknown;
+}
+
+type SyncEventListener = (event: SyncEvent) => void;
 
 class SyncManager {
   private config: SyncConfig = {
     autoSync: true,
     syncInterval: 5 * 60 * 1000, // 5 minutes
     conflictResolution: 'odoo_wins',
+    retryOnFailure: true,
+    maxRetries: 3,
   };
 
   private syncStatus: SyncStatus = {
@@ -38,30 +53,83 @@ class SyncManager {
     isActive: false,
     lastError: null,
     itemsSynced: 0,
+    successCount: 0,
+    failureCount: 0,
   };
 
   private syncTimer: NodeJS.Timeout | null = null;
+  private eventListeners: Set<SyncEventListener> = new Set();
+
+  /**
+   * Add event listener for sync events
+   */
+  addEventListener(listener: SyncEventListener): void {
+    this.eventListeners.add(listener);
+  }
+
+  /**
+   * Remove event listener
+   */
+  removeEventListener(listener: SyncEventListener): void {
+    this.eventListeners.delete(listener);
+  }
+
+  /**
+   * Emit sync event
+   */
+  private emitEvent(event: SyncEvent): void {
+    console.log(`[SyncManager] Event: ${event.type} - ${event.message}`);
+    this.eventListeners.forEach((listener) => {
+      try {
+        listener(event);
+      } catch (error) {
+        console.error('[SyncManager] Error in event listener:', error);
+      }
+    });
+  }
 
   /**
    * Initialize sync manager
    */
   async initialize(): Promise<void> {
     try {
-      console.log('Initializing Sync Manager...');
+      console.log('[SyncManager] Initializing...');
+      this.emitEvent({
+        type: 'init',
+        message: 'Connecting to Odoo database: eigermarvel',
+      });
+
       const connected = await odooService.initConnection();
 
       if (!connected) {
-        throw new Error('Failed to connect to Odoo');
+        throw new Error('Failed to connect to Odoo instance at https://eigermarvelhr.com');
       }
+
+      this.emitEvent({
+        type: 'progress',
+        message: 'Connected to Odoo successfully',
+      });
 
       if (this.config.autoSync) {
         this.startAutoSync();
       }
 
-      console.log('Sync Manager initialized successfully');
+      this.syncStatus.successCount++;
+      console.log('[SyncManager] ✓ Initialized successfully');
+      this.emitEvent({
+        type: 'complete',
+        message: 'Sync Manager initialized and ready',
+      });
     } catch (error) {
-      console.error('Failed to initialize Sync Manager:', error);
-      this.syncStatus.lastError = String(error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error('[SyncManager] ✗ Initialization failed:', error);
+      this.syncStatus.lastError = errorMessage;
+      this.syncStatus.failureCount++;
+      this.emitEvent({
+        type: 'error',
+        message: `Initialization failed: ${errorMessage}`,
+      });
+      throw error;
     }
   }
 
@@ -70,21 +138,25 @@ class SyncManager {
    */
   startAutoSync(): void {
     if (this.syncTimer) {
-      console.warn('Auto sync already running');
+      console.warn('[SyncManager] Auto sync already running');
       return;
     }
 
-    console.log(`Starting auto sync (interval: ${this.config.syncInterval}ms)`);
+    console.log(`[SyncManager] Starting auto sync (interval: ${this.config.syncInterval}ms)`);
+    this.emitEvent({
+      type: 'progress',
+      message: `Auto-sync enabled (${this.config.syncInterval / 1000}s interval)`,
+    });
 
     this.syncTimer = setInterval(() => {
       this.performFullSync().catch((error) => {
-        console.error('Auto sync failed:', error);
+        console.error('[SyncManager] Auto sync failed:', error);
       });
     }, this.config.syncInterval);
 
-    // Perform initial sync
+    // Perform initial sync immediately
     this.performFullSync().catch((error) => {
-      console.error('Initial sync failed:', error);
+      console.error('[SyncManager] Initial sync failed:', error);
     });
   }
 
@@ -95,7 +167,11 @@ class SyncManager {
     if (this.syncTimer) {
       clearInterval(this.syncTimer);
       this.syncTimer = null;
-      console.log('Auto sync stopped');
+      console.log('[SyncManager] Auto sync stopped');
+      this.emitEvent({
+        type: 'progress',
+        message: 'Auto-sync disabled',
+      });
     }
   }
 
@@ -104,28 +180,48 @@ class SyncManager {
    */
   async performFullSync(): Promise<void> {
     if (this.syncStatus.isActive) {
-      console.warn('Sync already in progress');
+      console.warn('[SyncManager] Sync already in progress');
       return;
     }
 
     this.syncStatus.isActive = true;
     let itemsSynced = 0;
+    let retryCount = 0;
 
     try {
-      console.log('Starting full sync...');
+      console.log('[SyncManager] Starting full sync...');
+      this.emitEvent({
+        type: 'progress',
+        message: 'Fetching data from Odoo...',
+        progress: 10,
+      });
 
       const data = await odooService.syncFromOdoo();
 
       // Map Odoo jobs to website format
+      this.emitEvent({
+        type: 'progress',
+        message: `Mapping ${data.jobs.length} jobs to website format...`,
+        progress: 30,
+      });
       const jobs = this.mapOdooJobsToWebsite(data.jobs);
       itemsSynced += jobs.length;
 
       // Map Odoo applicants to website format
+      this.emitEvent({
+        type: 'progress',
+        message: `Mapping ${data.applicants.length} applicants to website format...`,
+        progress: 50,
+      });
       const applications = this.mapOdooApplicantsToWebsite(data.applicants);
       itemsSynced += applications.length;
 
-      // Store synced data in localStorage for now
-      // In production, this would be stored in a database
+      // Store synced data in localStorage
+      this.emitEvent({
+        type: 'progress',
+        message: 'Storing synced data...',
+        progress: 70,
+      });
       this.storeLocalData('jobs', jobs);
       this.storeLocalData('applications', applications);
 
@@ -136,13 +232,45 @@ class SyncManager {
       this.syncStatus.lastSyncTime = new Date().toISOString();
       this.syncStatus.itemsSynced = itemsSynced;
       this.syncStatus.lastError = null;
+      this.syncStatus.successCount++;
 
-      console.log(`Sync completed: ${itemsSynced} items synced`);
+      console.log(
+        `[SyncManager] ✓ Sync completed: ${itemsSynced} items (Jobs: ${jobs.length}, Apps: ${applications.length})`
+      );
+
+      this.emitEvent({
+        type: 'complete',
+        message: `Sync completed: ${itemsSynced} items synced`,
+        progress: 100,
+        data: { jobs, applications, company: data.company },
+      });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       this.syncStatus.lastError = errorMessage;
-      console.error('Sync failed:', error);
-      throw error;
+      this.syncStatus.failureCount++;
+
+      console.error('[SyncManager] ✗ Sync failed:', error);
+
+      // Retry logic
+      if (this.config.retryOnFailure && retryCount < this.config.maxRetries) {
+        retryCount++;
+        const waitTime = Math.pow(2, retryCount) * 1000;
+        console.log(`[SyncManager] Retrying in ${waitTime}ms (attempt ${retryCount}/${this.config.maxRetries})...`);
+
+        this.emitEvent({
+          type: 'error',
+          message: `Sync failed, retrying in ${waitTime}ms...`,
+        });
+
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+        await this.performFullSync();
+      } else {
+        this.emitEvent({
+          type: 'error',
+          message: `Sync failed: ${errorMessage}`,
+        });
+        throw error;
+      }
     } finally {
       this.syncStatus.isActive = false;
     }

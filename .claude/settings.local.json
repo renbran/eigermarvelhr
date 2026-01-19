@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node investigate-odoo-views.js:*)",
+      "Bash(move investigate-odoo-views.js investigate-odoo-views.cjs)",
+      "Bash(node:*)",
+      "Bash(ren investigate-odoo-views.js investigate-odoo-views.cjs)",
+      "Bash(python:*)"
+    ]
+  }
+}

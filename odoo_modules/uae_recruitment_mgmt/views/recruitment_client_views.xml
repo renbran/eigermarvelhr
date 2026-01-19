@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Recruitment Client Kanban View -->
+    <record id="view_recruitment_client_kanban" model="ir.ui.view">
+        <field name="name">recruitment.client.kanban</field>
+        <field name="model">recruitment.client</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" records_per_row="3">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="reference"/>
+                <field name="entity_type"/>
+                <field name="ded_verified"/>
+                <field name="placement_count"/>
+                <field name="total_revenue"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_content">
+                                <h4><strong><t t-if="record.name" t-esc="record.name.value"/></strong></h4>
+                                <div class="text-muted small">
+                                    <div><t t-if="record.reference.value" t-esc="record.reference.value"/><t t-else="">-</t></div>
+                                    <div><t t-if="record.placement_count.value" t-esc="record.placement_count.value"/><t t-else="">0</t> placements</div>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_footer">
+                                <a type="edit" role="button" class="btn btn-primary btn-sm">Edit</a>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Recruitment Client List View -->
+    <record id="view_recruitment_client_list" model="ir.ui.view">
+        <field name="name">recruitment.client.list</field>
+        <field name="model">recruitment.client</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="entity_type"/>
+                <field name="state" widget="badge" decoration-success="state=='active'" decoration-warning="state in ('verified','pending_verification')" decoration-danger="state in ('suspended','terminated')"/>
+                <field name="ded_verified" widget="boolean"/>
+                <field name="job_order_count"/>
+                <field name="placement_count"/>
+                <field name="total_revenue" sum="Total Revenue"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Recruitment Client Form View -->
+    <record id="view_recruitment_client_form" model="ir.ui.view">
+        <field name="name">recruitment.client.form</field>
+        <field name="model">recruitment.client</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_verify_ded" type="object" class="oe_highlight" string="Verify with DED" invisible="ded_verified"/>
+                    <button name="action_enable_portal" type="object" class="oe_highlight" string="Enable Portal" invisible="portal_enabled"/>
+                    <button name="action_suspend" type="object" string="Suspend" invisible="state != 'active'"/>
+                    <button name="action_terminate" type="object" string="Terminate" invisible="state == 'terminated'"/>
+                    <field name="state" widget="statusbar" options="{'clickable': False}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="reference" readonly="1"/>
+                            <field name="partner_id" required="1"/>
+                            <field name="trade_license_number" required="1"/>
+                            <field name="entity_type" required="1"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="ded_verified" readonly="1"/>
+                            <field name="ded_verification_date" readonly="1"/>
+                            <field name="portal_enabled"/>
+                            <field name="portal_user_id" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Contact Information">
+                            <group>
+                                <group>
+                                    <field name="contact_person"/>
+                                    <field name="email" required="1"/>
+                                    <field name="phone"/>
+                                    <field name="website"/>
+                                </group>
+                                <group>
+                                    <field name="address"/>
+                                    <field name="city"/>
+                                    <field name="emirate"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Service Agreement">
+                            <group>
+                                <group>
+                                    <field name="service_type" required="1"/>
+                                     <field name="contingency_percentage" invisible="service_type != 'contingency'"/>
+                                     <field name="retainer_amount" invisible="service_type not in ['retainer', 'hybrid']"/>
+                                </group>
+                                <group>
+                                    <field name="currency_id"/>
+                                    <field name="total_revenue" readonly="1"/>
+                                    <field name="outstanding_amount" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Statistics">
+                            <group>
+                                <group>
+                                    <field name="job_order_count" readonly="1"/>
+                                    <field name="placement_count" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="trade_license_expiry"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Internal Notes">
+                            <field name="internal_notes"/>
+                        </page>
+
+                        <page string="Terms &amp; Conditions">
+                            <field name="terms_and_conditions"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_recruitment_client_search" model="ir.ui.view">
+        <field name="name">recruitment.client.search</field>
+        <field name="model">recruitment.client</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Client Name"/>
+                <field name="reference"/>
+                <field name="email"/>
+                <separator/>
+                <filter name="active" string="Active" domain="[('state', '=', 'active')]"/>
+                <filter name="verified" string="Verified" domain="[('ded_verified', '=', True)]"/>
+                <filter name="portal" string="Portal Enabled" domain="[('portal_enabled', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_entity" string="Entity Type" context="{'group_by': 'entity_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_recruitment_client" model="ir.actions.act_window">
+        <field name="name">Clients</field>
+        <field name="res_model">recruitment.client</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Click to add a new client.</p>
+        </field>
+    </record>
+
+</odoo>
+

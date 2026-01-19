@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Client Welcome Email Template -->
+    <record id="template_client_welcome" model="mail.template">
+        <field name="name">Recruitment - Client Welcome</field>
+        <field name="model_id" ref="model_recruitment_client"/>
+        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_to">${object.email or ''}</field>
+        <field name="subject">Welcome to Our Recruitment Platform - ${object.name or ''}</field>
+        <field name="body_html"><![CDATA[
+            <html>
+                <body>
+                    <div style="font-family: Arial, sans-serif; color: #333;">
+                        <h2>Welcome, <t t-esc="object.name or ''"/>!</h2>
+                        <p>We're excited to partner with you for your recruitment needs.</p>
+                        
+                        <h3>Your Account Details</h3>
+                        <ul>
+                            <li><strong>Reference:</strong> <t t-esc="object.reference or ''"/></li>
+                            <li><strong>Account Status:</strong> <t t-esc="object.state or ''"/></li>
+                            <li><strong>Portal Access:</strong> <t t-esc="object.portal_enabled or ''"/></li>
+                        </ul>
+
+                        <h3>Next Steps</h3>
+                        <ol>
+                            <li>Complete your company profile</li>
+                            <li>Set up your service agreement</li>
+                            <li>Post your first job opening</li>
+                            <li>Start receiving qualified candidates</li>
+                        </ol>
+
+                        <p>If you have any questions, please don't hesitate to contact us.</p>
+                        
+                        <p>
+                            Best regards,<br/>
+                            <strong>Recruitment Team</strong>
+                        </p>
+                    </div>
+                </body>
+            </html>
+        ]]></field>
+    </record>
+
+    <!-- Job Application Received Template -->
+    <record id="template_application_received" model="mail.template">
+        <field name="name">Recruitment - Application Received</field>
+        <field name="model_id" ref="model_hr_applicant"/>
+        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_to">${object.email_from or ''}</field>
+        <field name="subject">Your Application for ${object.job_id.name or ''} - ${object.company_id.name or ''}</field>
+        <field name="body_html"><![CDATA[
+            <html>
+                <body>
+                    <div style="font-family: Arial, sans-serif; color: #333;">
+                        <h2>Application Received!</h2>
+                        <p>Dear <t t-esc="object.partner_name or ''"/>,</p>
+                        
+                        <p>Thank you for applying for the position of <strong><t t-esc="object.job_id.name or ''"/></strong> at <strong><t t-esc="object.job_id.client_id.name or ''"/></strong>.</p>
+
+                        <h3>Application Details</h3>
+                        <ul>
+                            <li><strong>Position:</strong> <t t-esc="object.job_id.name or ''"/></li>
+                            <li><strong>Job Level:</strong> <t t-esc="object.job_id.job_level or ''"/></li>
+                            <li><strong>Location:</strong> <t t-esc="object.job_id.location or ''"/></li>
+                            <li><strong>Salary Range:</strong> <t t-esc="object.job_id.salary_min or ''"/> - <t t-esc="object.job_id.salary_max or ''"/></li>
+                        </ul>
+
+                        <h3>What Happens Next</h3>
+                        <p>Our recruitment team will review your application and resume using our AI-powered matching system. If your profile matches the requirements, we'll contact you within 3-5 business days to schedule an interview.</p>
+
+                        <p>You can track your application status on our portal at any time.</p>
+
+                        <p>
+                            Best regards,<br/>
+                            <strong>Recruitment Team</strong>
+                        </p>
+                    </div>
+                </body>
+            </html>
+        ]]></field>
+    </record>
+
+    <!-- Interview Scheduled Template -->
+    <record id="template_interview_scheduled" model="mail.template">
+        <field name="name">Recruitment - Interview Scheduled</field>
+        <field name="model_id" ref="model_hr_applicant"/>
+        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_to">${object.email_from or ''}</field>
+        <field name="subject">Interview Scheduled - ${object.job_id.name or ''}</field>
+        <field name="body_html"><![CDATA[
+            <html>
+                <body>
+                    <div style="font-family: Arial, sans-serif; color: #333;">
+                        <h2>Congratulations!</h2>
+                        <p>Dear <t t-esc="object.partner_name or ''"/>,</p>
+                        
+                        <p>We're pleased to invite you for an interview for the position of <strong><t t-esc="object.job_id.name or ''"/></strong>.</p>
+
+                        <h3>Interview Details</h3>
+                        <ul>
+                            <li><strong>Position:</strong> <t t-esc="object.job_id.name or ''"/></li>
+                            <li><strong>Company:</strong> <t t-esc="object.job_id.client_id.name or ''"/></li>
+                            <li><strong>Stage:</strong> <t t-esc="object.stage_id.name or ''"/></li>
+                        </ul>
+
+                        <p>Our recruitment coordinator will contact you shortly with specific interview date, time, and format details.</p>
+
+                        <p>If you have any questions or need to reschedule, please reply to this email.</p>
+
+                        <p>
+                            Best regards,<br/>
+                            <strong>Recruitment Team</strong>
+                        </p>
+                    </div>
+                </body>
+            </html>
+        ]]></field>
+    </record>
+
+    <!-- Placement Offer Template -->
+    <record id="template_placement_offer" model="mail.template">
+        <field name="name">Recruitment - Placement Offer</field>
+        <field name="model_id" ref="model_recruitment_placement"/>
+        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_to">${object.applicant_id.email_from or ''}</field>
+        <field name="subject">Job Offer - ${object.job_order_id.name or ''}</field>
+        <field name="body_html"><![CDATA[
+            <html>
+                <body>
+                    <div style="font-family: Arial, sans-serif; color: #333;">
+                        <h2>Congratulations on Your Job Offer!</h2>
+                        <p>Dear <t t-esc="object.applicant_id.partner_name or ''"/>,</p>
+                        
+                        <p>We're delighted to offer you the position of <strong><t t-esc="object.job_order_id.name or ''"/></strong> at <strong><t t-esc="object.client_id.name or ''"/></strong>.</p>
+
+                        <h3>Offer Details</h3>
+                        <ul>
+                            <li><strong>Position:</strong> <t t-esc="object.job_order_id.name or ''"/></li>
+                            <li><strong>Gross Salary:</strong> <t t-esc="object.gross_salary or 0"/> <t t-esc="object.currency_id.name or ''"/></li>
+                            <li><strong>Joining Date:</strong> <t t-esc="object.joining_date or ''"/></li>
+                            <li><strong>Location:</strong> <t t-esc="object.job_order_id.location or ''"/></li>
+                        </ul>
+
+                        <h3>Next Steps</h3>
+                        <p>Please confirm your acceptance of this offer by <t t-esc="object.confirmation_end_date or ''"/>. Once confirmed, we'll proceed with:
+                        <ol>
+                            <li>Final documentation and onboarding</li>
+                            <li>Visa sponsorship processing (if applicable)</li>
+                            <li>Joining procedures with your new employer</li>
+                        </ol>
+                        </p>
+
+                        <p>
+                            Best regards,<br/>
+                            <strong>Recruitment Team</strong>
+                        </p>
+                    </div>
+                </body>
+            </html>
+        ]]></field>
+    </record>
+
+    <!-- Visa Milestone - Documents Needed Template -->
+    <record id="template_visa_docs_needed" model="mail.template">
+        <field name="name">Recruitment - Visa Documents Needed</field>
+        <field name="model_id" ref="model_uae_visa_processing"/>
+        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_to">${object.applicant_id.email_from or ''}</field>
+        <field name="subject">Action Required - Visa Documents Submission - ${object.reference or ''}</field>
+        <field name="body_html"><![CDATA[
+            <html>
+                <body>
+                    <div style="font-family: Arial, sans-serif; color: #333;">
+                        <h2>Visa Documents Required</h2>
+                        <p>Dear <t t-esc="object.applicant_id.partner_name or ''"/>,</p>
+                        
+                        <p>To process your <strong><t t-esc="object.visa_type or ''"/></strong> visa, we need the following documents:</p>
+
+                        <h3>Required Documents</h3>
+                        <ul>
+                            <li><strong>Passport:</strong> Valid copy with expiry date after <t t-esc="object.doc_passport_expiry_date or ''"/></li>
+                            <li><strong>Photograph:</strong> 4x6 inches, white background</li>
+                            <li><strong>Certificates:</strong> Educational and professional certificates</li>
+                            <li><strong>Medical Fitness:</strong> UAE recognized hospital</li>
+                            <li><strong>Police Clearance:</strong> From your home country</li>
+                            <li><strong>No Objection Certificate (NOC):</strong> From current employer</li>
+                            <li><strong>Employment Contract:</strong> Signed employment agreement</li>
+                            <li><strong>Salary Certificate:</strong> From current employer</li>
+                        </ul>
+
+                        <h3>Submission Details</h3>
+                        <ul>
+                            <li><strong>Expected Completion:</strong> <t t-esc="object.expected_completion_date or ''"/></li>
+                            <li><strong>Visa Type:</strong> <t t-esc="object.visa_type or ''"/></li>
+                            <li><strong>PRO Company:</strong> <t t-esc="object.pro_company_id.name or ''"/></li>
+                        </ul>
+
+                        <p>Please submit all documents as soon as possible. You can upload them through our portal or send them directly to our office.</p>
+
+                        <p>
+                            Best regards,<br/>
+                            <strong>Visa Processing Team</strong>
+                        </p>
+                    </div>
+                </body>
+            </html>
+        ]]></field>
+    </record>
+
+    <!-- Visa Milestone - Medical Exam Template -->
+    <record id="template_visa_medical_exam" model="mail.template">
+        <field name="name">Recruitment - Medical Exam Scheduled</field>
+        <field name="model_id" ref="model_uae_visa_processing"/>
+        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_to">${object.applicant_id.email_from or ''}</field>
+        <field name="subject">Medical Exam Scheduled - ${object.reference or ''}</field>
+        <field name="body_html"><![CDATA[
+            <html>
+                <body>
+                    <div style="font-family: Arial, sans-serif; color: #333;">
+                        <h2>Medical Exam Scheduled</h2>
+                        <p>Dear <t t-esc="object.applicant_id.partner_name or ''"/>,</p>
+                        
+                        <p>Your medical examination for your visa application has been scheduled.</p>
+
+                        <h3>Medical Exam Details</h3>
+                        <ul>
+                            <li><strong>Date:</strong> <t t-esc="object.medical_exam_date or ''"/></li>
+                            <li><strong>Medical Center:</strong> <t t-esc="object.medical_center_name or ''"/></li>
+                            <li><strong>Reference:</strong> <t t-esc="object.reference or ''"/></li>
+                        </ul>
+
+                        <h3>Important Information</h3>
+                        <ul>
+                            <li>Arrive 15 minutes early</li>
+                            <li>Bring original passport and appointment letter</li>
+                            <li>Fast for 8 hours before the exam (if blood test required)</li>
+                            <li>Wear comfortable, loose-fitting clothing</li>
+                        </ul>
+
+                        <p>
+                            Best regards,<br/>
+                            <strong>Visa Processing Team</strong>
+                        </p>
+                    </div>
+                </body>
+            </html>
+        ]]></field>
+    </record>
+
+    <!-- Visa Completion Template -->
+    <record id="email_template_visa_completed" model="mail.template">
+        <field name="name">Recruitment - Visa Completed</field>
+        <field name="model_id" ref="model_uae_visa_processing"/>
+        <field name="email_from">{{ object.company_id.email or '' }}</field>
+        <field name="email_to">{{ object.applicant_id.email_from or '' }}</field>
+        <field name="subject">Your Visa is Ready! - {{ object.name or '' }}</field>
+        <field name="body_html"><![CDATA[
+            <html>
+                <body>
+                    <div style="font-family: Arial, sans-serif; color: #333;">
+                        <h2>Congratulations! Your Visa is Ready</h2>
+                        <p>Dear <t t-esc="object.applicant_id.partner_name or ''"/>,</p>
+                        
+                        <p>Your <strong><t t-esc="object.visa_type or ''"/></strong> visa has been successfully processed and is ready for collection.</p>
+
+                        <h3>Visa Details</h3>
+                        <ul>
+                            <li><strong>Emirates ID:</strong> <t t-esc="object.emirates_id_number or 'Pending'"/></li>
+                            <li><strong>Visa Expiry Date:</strong> <t t-esc="object.emirates_id_expiry or 'N/A'"/></li>
+                            <li><strong>Collection Location:</strong> Immigration Office or PRO Company</li>
+                            <li><strong>Reference:</strong> <t t-esc="object.name or ''"/></li>
+                        </ul>
+
+                        <h3>What's Next</h3>
+                        <p>You are now ready to travel and begin your employment. Please coordinate with <t t-esc="object.client_id.name or ''"/> for joining procedures and final onboarding details.</p>
+
+                        <p>Welcome to the UAE! We wish you the best in your new role.</p>
+
+                        <p>
+                            Best regards,<br/>
+                            <strong>Visa Processing Team</strong>
+                        </p>
+                    </div>
+                </body>
+            </html>
+        ]]></field>
+    </record>
+
+    <!-- Client Verified Template -->
+    <record id="email_template_client_verified" model="mail.template">
+        <field name="name">Recruitment - Client Verified</field>
+        <field name="model_id" ref="model_recruitment_client"/>
+        <field name="email_from">{{ object.company_id.email or '' }}</field>
+        <field name="email_to">{{ object.email or '' }}</field>
+        <field name="subject">Welcome! Your Account is Verified - {{ object.name or '' }}</field>
+        <field name="body_html"><![CDATA[
+            <html>
+                <body>
+                    <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
+                            <h1 style="color: white; margin: 0;">Account Verified!</h1>
+                        </div>
+                        
+                        <div style="padding: 30px; background: #f8f9fa;">
+                            <h2 style="color: #333;">Welcome, <t t-esc="object.name or ''"/>!</h2>
+                            <p>Great news! Your company has been successfully verified with DED and your account is now active.</p>
+                            
+                            <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                                <h3 style="color: #667eea; margin-top: 0;">Your Account Details</h3>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li><strong>Reference:</strong> <t t-esc="object.reference or ''"/></li>
+                                    <li><strong>Trade License:</strong> <t t-esc="object.trade_license_number or ''"/></li>
+                                    <li><strong>Entity Type:</strong> <t t-esc="dict(object._fields['entity_type'].selection).get(object.entity_type or 'mainland')"/></li>
+                                    <li><strong>Service Type:</strong> <t t-esc="dict(object._fields['service_type'].selection).get(object.service_type or 'contingency')"/></li>
+                                </ul>
+                            </div>
+
+                            <h3 style="color: #333;">What You Can Do Now</h3>
+                            <ol style="line-height: 1.8;">
+                                <li><strong>Post Job Orders:</strong> Start receiving qualified candidates</li>
+                                <li><strong>Access Portal:</strong> Track your recruitment progress</li>
+                                <li><strong>Review Candidates:</strong> AI-matched profiles delivered to you</li>
+                                <li><strong>Manage Placements:</strong> Track visa processing and onboarding</li>
+                            </ol>
+
+                            <t t-if="object.portal_enabled">
+                            <div style="text-align: center; margin: 30px 0;">
+                                <a t-att-href="object.get_portal_url()" style="background: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                                    Access Your Portal
+                                </a>
+                            </div>
+                            </t>
+
+                            <p style="color: #666; font-size: 14px; margin-top: 30px;">
+                                Our team will contact you shortly to guide you through the platform and answer any questions you may have.
+                            </p>
+
+                            <p style="margin-top: 30px;">
+                                Best regards,<br/>
+                                <strong>Recruitment Team</strong><br/>
+                                    <a t-att-href="'mailto:%s' % (object.company_id.email or '')"><t t-esc="object.company_id.email or ''"/></a>
+                            </p>
+                        </div>
+                        
+                        <div style="background: #333; color: white; padding: 20px; text-align: center; font-size: 12px;">
+                            <p style="margin: 0;">© <t t-esc="datetime.datetime.now().year"/> Eiger Marvel HR. All rights reserved.</p>
+                        </div>
+                    </div>
+                </body>
+            </html>
+        ]]></field>
+    </record>
+
+    <!-- Placement Confirmed Template -->
+    <record id="email_template_placement_confirmed" model="mail.template">
+        <field name="name">Recruitment - Placement Confirmed</field>
+        <field name="model_id" ref="model_recruitment_placement"/>
+        <field name="email_from">{{ object.company_id.email or '' }}</field>
+        <field name="email_to">{{ object.applicant_id.email_from or '' }}</field>
+        <field name="partner_to">{{ object.client_id.partner_id.id if object.client_id.partner_id else '' }}</field>
+        <field name="subject">Placement Confirmed - {{ object.applicant_id.partner_name or '' }} at {{ object.client_id.name or '' }}</field>
+        <field name="body_html"><![CDATA[
+            <html>
+                <body>
+                    <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
+                        <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 30px; text-align: center;">
+                            <h1 style="color: white; margin: 0;">🎉 Placement Confirmed!</h1>
+                        </div>
+                        
+                        <div style="padding: 30px; background: #f8f9fa;">
+                            <p><strong>Congratulations!</strong> We're thrilled to confirm your placement.</p>
+                            
+                            <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                                <h3 style="color: #11998e; margin-top: 0;">Placement Details</h3>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li><strong>Reference:</strong> <t t-esc="object.name or ''"/></li>
+                                    <li><strong>Candidate:</strong> <t t-esc="object.applicant_id.partner_name or ''"/></li>
+                                    <li><strong>Position:</strong> <t t-esc="object.job_order_id.name or ''"/></li>
+                                    <li><strong>Company:</strong> <t t-esc="object.client_id.name or ''"/></li>
+                                    <li><strong>Salary:</strong> <t t-esc="object.gross_salary or 0"/> <t t-esc="object.currency_id.symbol or 'AED'"/></li>
+                                    <li><strong>Placement Date:</strong> <t t-esc="object.placement_date or ''"/></li>
+                                    <li><strong>Joining Date:</strong> <t t-esc="object.joining_date or 'TBD'"/></li>
+                                </ul>
+                            </div>
+
+                            <h3 style="color: #333;">Next Steps</h3>
+                            <ol style="line-height: 1.8;">
+                                <t t-if="object.visa_status == 'not_started'">
+                                    <li>Visa processing will begin shortly</li>
+                                </t>
+                                <t t-elif="object.visa_status == 'in_progress'">
+                                    <li>Your visa is currently being processed</li>
+                                </t>
+                                <li>Complete your medical examination (if required)</li>
+                                <li>Prepare required documents for joining</li>
+                                <li>Coordinate with <t t-esc="object.client_id.contact_person or 'HR team'"/> for onboarding</li>
+                            </ol>
+
+                            <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0;">
+                                <p style="margin: 0;"><strong>⚠️ Important:</strong> Please keep your contact information updated and respond promptly to any communications regarding your visa processing and joining formalities.</p>
+                            </div>
+
+                            <p style="margin-top: 30px;">
+                                We're excited for you to start this new chapter in your career!
+                            </p>
+
+                            <p>
+                                Best regards,<br/>
+                                <strong>Recruitment Team</strong>
+                            </p>
+                        </div>
+                    </div>
+                </body>
+            </html>
+        ]]></field>
+    </record>
+
+</odoo>

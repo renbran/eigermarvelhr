@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- LLM Provider List View -->
+        <record id="view_llm_provider_tree" model="ir.ui.view">
+            <field name="name">llm.provider.list</field>
+            <field name="model">llm.provider</field>
+            <field name="arch" type="xml">
+                <list string="LLM Providers" edit="false">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="provider_type"/>
+                    <field name="default_model"/>
+                    <field name="active" widget="boolean"/>
+                    <field name="is_available" widget="boolean"/>
+                    <field name="cost_per_1k_tokens"/>
+                    <field name="usage_percentage" widget="progressbar"/>
+                    <field name="last_test_status"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- LLM Provider Form View -->
+        <record id="view_llm_provider_form" model="ir.ui.view">
+            <field name="name">llm.provider.form</field>
+            <field name="model">llm.provider</field>
+            <field name="arch" type="xml">
+                <form string="LLM Provider">
+                    <header>
+                        <button name="test_connection" string="Test Connection" type="object" class="btn-primary"/>
+                        <field name="is_available" widget="boolean" invisible="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_usage_logs" type="object" class="oe_stat_button" icon="fa-bar-chart">
+                                <field name="current_month_usage" widget="statinfo" string="Tokens This Month"/>
+                            </button>
+                            <button name="action_view_errors" type="object" class="oe_stat_button" icon="fa-exclamation-triangle">
+                                <field string="Errors" name="last_test_status"/>
+                            </button>
+                        </div>
+
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                                <field name="is_default" widget="boolean" class="oe_inline" string="Default"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="Provider Configuration">
+                                <field name="provider_type" options="{'no_open': True}"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                                <field name="is_available" readonly="1"/>
+                            </group>
+                            <group string="Pricing">
+                                <field name="cost_per_1k_tokens"/>
+                                <field name="monthly_limit"/>
+                                <field name="usage_percentage" widget="progressbar"/>
+                            </group>
+                        </group>
+
+                        <group string="API Configuration">
+                            <field name="api_endpoint" colspan="2"/>
+                            <field name="api_key"/>
+                            <field name="api_key_masked" readonly="1"/>
+                        </group>
+
+                        <group string="Model Selection">
+                            <field name="default_model" colspan="2"/>
+                        </group>
+
+                        <group string="Capabilities" colspan="2">
+                            <field name="supports_resume_parsing" widget="boolean"/>
+                            <field name="supports_matching" widget="boolean"/>
+                            <field name="supports_interview_feedback" widget="boolean"/>
+                            <field name="supports_offer_drafting" widget="boolean"/>
+                        </group>
+
+                        <group string="Status" colspan="2">
+                            <field name="last_test_date"/>
+                            <field name="last_test_status"/>
+                        </group>
+
+                        <group string="Additional Information" colspan="2">
+                            <field name="documentation_url" widget="url"/>
+                            <field name="notes" nolabel="1" colspan="2" placeholder="Provider notes..."/>
+                        </group>
+
+                        <notebook>
+                            <page string="Available Models">
+                                <field name="model_ids" colspan="2">
+                                    <list>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="model_id"/>
+                                        <field name="context_window"/>
+                                        <field name="cost_per_1k_input"/>
+                                        <field name="cost_per_1k_output"/>
+                                        <field name="active" widget="boolean"/>
+                                    </list>
+                                    <form string="Model">
+                                        <group>
+                                            <field name="name"/>
+                                            <field name="model_id"/>
+                                            <field name="context_window"/>
+                                            <field name="max_output_tokens"/>
+                                            <field name="active" widget="boolean"/>
+                                        </group>
+                                        <group string="Pricing">
+                                            <field name="cost_per_1k_input"/>
+                                            <field name="cost_per_1k_output"/>
+                                        </group>
+                                        <field name="capabilities" widget="many2many_tags"/>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- LLM Provider Search View -->
+        <record id="view_llm_provider_search" model="ir.ui.view">
+            <field name="name">llm.provider.search</field>
+            <field name="model">llm.provider</field>
+            <field name="arch" type="xml">
+                <search string="Search LLM Providers">
+                    <field name="name" string="Provider"/>
+                    <field name="provider_type"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Provider Type" name="provider_type_group" context="{'group_by': 'provider_type'}"/>
+                        <filter string="Status" name="status_group" context="{'group_by': 'last_test_status'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- LLM Provider Action -->
+        <record id="action_llm_provider" model="ir.actions.act_window">
+            <field name="name">LLM Providers</field>
+            <field name="res_model">llm.provider</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No LLM provider configured yet.
+                </p>
+                <p>
+                    Configure AI providers (OpenAI, Groq, Anthropic, etc.) for resume parsing,
+                    candidate matching, and other AI-powered features.
+                </p>
+            </field>
+        </record>
+
+        <!-- LLM Usage Log List View -->
+        <record id="view_llm_usage_log_tree" model="ir.ui.view">
+            <field name="name">llm.usage.log.list</field>
+            <field name="model">llm.usage.log</field>
+            <field name="arch" type="xml">
+                <list string="LLM Usage Logs" edit="false">
+                    <field name="usage_date"/>
+                    <field name="provider_id"/>
+                    <field name="request_type"/>
+                    <field name="tokens_used" sum="Total Tokens"/>
+                    <field name="cost" sum="Total Cost"/>
+                    <field name="model_used"/>
+                    <field name="context"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- LLM Usage Log Search -->
+        <record id="view_llm_usage_log_search" model="ir.ui.view">
+            <field name="name">llm.usage.log.search</field>
+            <field name="model">llm.usage.log</field>
+            <field name="arch" type="xml">
+                <search string="Search Usage Logs">
+                    <field name="provider_id"/>
+                    <field name="usage_date"/>
+                    <field name="request_type"/>
+                    <separator/>
+                    <!-- <filter string="This Month" name="this_month" domain="[
+                        ('usage_date', '&gt;=', context_today().replace(day=1)),
+                        ('usage_date', '&lt;=', context_today())
+                    ]"/> -->
+                    <group expand="0" string="Group By">
+                        <filter string="Provider" name="provider_group" context="{'group_by': 'provider_id'}"/>
+                        <filter string="Date" name="date_group" context="{'group_by': 'usage_date'}"/>
+                        <filter string="Request Type" name="type_group" context="{'group_by': 'request_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- LLM Usage Log Action -->
+        <record id="action_llm_usage_log" model="ir.actions.act_window">
+            <field name="name">LLM Usage Logs</field>
+            <field name="res_model">llm.usage.log</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- LLM Error Log List View -->
+        <record id="view_llm_error_log_tree" model="ir.ui.view">
+            <field name="name">llm.error.log.list</field>
+            <field name="model">llm.error.log</field>
+            <field name="arch" type="xml">
+                <list string="LLM Error Logs" edit="false">
+                    <field name="create_date"/>
+                    <field name="provider_id"/>
+                    <field name="error_type"/>
+                    <field name="resolved" widget="boolean"/>
+                    <field name="error_message"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- LLM Error Log Form View -->
+        <record id="view_llm_error_log_form" model="ir.ui.view">
+            <field name="name">llm.error.log.form</field>
+            <field name="model">llm.error.log</field>
+            <field name="arch" type="xml">
+                <form string="Error Log">
+                    <group>
+                        <field name="provider_id"/>
+                        <field name="error_type"/>
+                        <field name="resolved" widget="boolean"/>
+                        <field name="create_date"/>
+                    </group>
+                    <group string="Error Details">
+                        <field name="error_message" colspan="2" nolabel="1"/>
+                    </group>
+                    <group string="Request Data">
+                        <field name="request_data" colspan="2" nolabel="1"/>
+                    </group>
+                    <group string="Response Data">
+                        <field name="response_data" colspan="2" nolabel="1"/>
+                    </group>
+                    <group string="Resolution">
+                        <field name="resolution_notes" colspan="2" nolabel="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- LLM Error Log Action -->
+        <record id="action_llm_error_log" model="ir.actions.act_window">
+            <field name="name">LLM Error Logs</field>
+            <field name="res_model">llm.error.log</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>
+

@@ -1,7 +1,9 @@
 /**
  * Eiger Marvel HR Platform - Cloudflare Workers Entry Point
- * Handles static site serving from the dist folder
+ * Handles static site serving from the dist folder and proxies Odoo backend requests
  */
+
+const ODOO_BACKEND = 'http://65.20.72.53:8069';
 
 export default {
   async fetch(request, env, ctx) {
@@ -11,11 +13,49 @@ export default {
     console.log(`${request.method} ${url.pathname}`);
     
     try {
-      // Try to serve the requested resource
+      // Route Odoo API and web routes to the backend
+      if (url.pathname.startsWith('/web/') || 
+          url.pathname.startsWith('/api/') ||
+          url.pathname === '/web' ||
+          url.pathname.startsWith('/json/') ||
+          url.pathname.startsWith('/rpc/')) {
+        
+        // Proxy request to Odoo backend
+        const backendUrl = new URL(url.pathname + url.search, ODOO_BACKEND);
+        const proxyRequest = new Request(backendUrl, {
+          method: request.method,
+          headers: request.headers,
+          body: request.method !== 'GET' && request.method !== 'HEAD' ? request.body : undefined,
+        });
+        
+        try {
+          const backendResponse = await fetch(proxyRequest);
+          
+          // Add CORS headers for API responses
+          const responseHeaders = new Headers(backendResponse.headers);
+          responseHeaders.set('Access-Control-Allow-Origin', '*');
+          responseHeaders.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+          responseHeaders.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+          
+          return new Response(backendResponse.body, {
+            status: backendResponse.status,
+            statusText: backendResponse.statusText,
+            headers: responseHeaders,
+          });
+        } catch (backendError) {
+          console.error('Backend proxy error:', backendError);
+          return new Response('Backend service unavailable', {
+            status: 503,
+            headers: { 'Content-Type': 'text/plain' },
+          });
+        }
+      }
+      
+      // Try to serve static files
       const response = await env.ASSETS.fetch(request);
       
       // If it's not found and it's not an API route, try serving index.html (SPA routing)
-      if (response.status === 404 && !url.pathname.startsWith('/api/')) {
+      if (response.status === 404) {
         // Check if it's trying to access an HTML page (has no file extension or is a directory)
         const hasExtension = /\.\w+$/.test(url.pathname);
         

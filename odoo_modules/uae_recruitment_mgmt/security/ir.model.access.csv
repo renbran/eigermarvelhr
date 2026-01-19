@@ -1,0 +1,30 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_recruitment_client_user,Recruitment Client User,model_recruitment_client,base.group_user,1,0,0,0
+access_recruitment_client_manager,Recruitment Client Manager,model_recruitment_client,group_recruitment_manager,1,1,1,0
+access_recruitment_job_order_user,Recruitment Job Order User,model_recruitment_job_order,base.group_user,1,0,0,0
+access_recruitment_job_order_manager,Recruitment Job Order Manager,model_recruitment_job_order,group_recruitment_manager,1,1,1,0
+access_recruitment_placement_user,Recruitment Placement User,model_recruitment_placement,base.group_user,1,0,0,0
+access_recruitment_placement_manager,Recruitment Placement Manager,model_recruitment_placement,group_recruitment_manager,1,1,1,0
+access_hr_applicant_user,HR Applicant User,hr_recruitment.model_hr_applicant,base.group_user,1,0,0,0
+access_hr_applicant_manager,HR Applicant Manager,hr_recruitment.model_hr_applicant,group_recruitment_manager,1,1,1,0
+access_uae_visa_processing_user,UAE Visa Processing User,model_uae_visa_processing,base.group_user,1,0,0,0
+access_uae_visa_processing_manager,UAE Visa Processing Manager,model_uae_visa_processing,group_recruitment_manager,1,1,1,0
+access_uae_visa_stage_user,UAE Visa Stage User,model_uae_visa_stage,base.group_user,1,0,0,0
+access_uae_visa_stage_manager,UAE Visa Stage Manager,model_uae_visa_stage,group_recruitment_manager,1,1,1,1
+access_recruitment_dashboard,Recruitment Dashboard,model_recruitment_dashboard,base.group_user,1,0,0,0
+access_llm_provider_user,LLM Provider User,model_llm_provider,base.group_user,1,0,0,0
+access_llm_provider_manager,LLM Provider Manager,model_llm_provider,group_recruitment_manager,1,1,1,1
+access_llm_model_user,LLM Model User,model_llm_model,base.group_user,1,0,0,0
+access_llm_model_manager,LLM Model Manager,model_llm_model,group_recruitment_manager,1,1,1,1
+access_llm_capability_user,LLM Capability User,model_llm_capability,base.group_user,1,0,0,0
+access_llm_capability_manager,LLM Capability Manager,model_llm_capability,group_recruitment_manager,1,1,1,0
+access_llm_usage_log_manager,LLM Usage Log Manager,model_llm_usage_log,group_recruitment_manager,1,0,0,1
+access_llm_error_log_manager,LLM Error Log Manager,model_llm_error_log,group_recruitment_manager,1,1,0,1
+access_client_onboarding_wizard_user,Client Onboarding Wizard User,model_recruitment_client_onboarding_wizard,base.group_user,1,1,1,1
+access_client_onboarding_wizard_manager,Client Onboarding Wizard Manager,model_recruitment_client_onboarding_wizard,group_recruitment_manager,1,1,1,1
+access_bulk_candidate_import_user,Bulk Candidate Import User,model_bulk_candidate_import,base.group_user,1,1,1,1
+access_bulk_candidate_import_manager,Bulk Candidate Import Manager,model_bulk_candidate_import,group_recruitment_manager,1,1,1,1
+access_interview_scheduler_user,Interview Scheduler User,model_interview_scheduler,base.group_user,1,1,1,1
+access_interview_scheduler_manager,Interview Scheduler Manager,model_interview_scheduler,group_recruitment_manager,1,1,1,1
+access_offer_generator_user,Offer Generator User,model_offer_generator,base.group_user,1,1,1,1
+access_offer_generator_manager,Offer Generator Manager,model_offer_generator,group_recruitment_manager,1,1,1,1

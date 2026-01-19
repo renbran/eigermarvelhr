@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Candidate Kanban View - Grouped by Match Score -->
+    <record id="view_hr_applicant_kanban" model="ir.ui.view">
+        <field name="name">hr.applicant.kanban</field>
+        <field name="model">hr.applicant</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="ai_match_score_category" records_per_row="4">
+                <field name="id"/>
+                <field name="partner_name"/>
+                <field name="ai_match_score"/>
+                <field name="candidate_code"/>
+                <field name="email_from"/>
+                <field name="stage_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_content">
+                                <h4><strong><t t-if="record.partner_name" t-esc="record.partner_name.value"/></strong></h4>
+                                <div class="text-muted small">
+                                    <div><t t-if="record.candidate_code.value" t-esc="record.candidate_code.value"/><t t-else="">-</t></div>
+                                    <div t-if="record.ai_match_score">
+                                        <span t-if="record.ai_match_score.value >= 75" class="badge badge-success"><t t-esc="record.ai_match_score.value"/>%</span>
+                                        <span t-elif="record.ai_match_score.value >= 50" class="badge badge-warning"><t t-esc="record.ai_match_score.value"/>%</span>
+                                        <span t-else="" class="badge badge-danger"><t t-esc="record.ai_match_score.value"/>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_footer">
+                                <a type="edit" role="button" class="btn btn-primary btn-sm">View</a>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Candidate List View -->
+    <record id="view_hr_applicant_list" model="ir.ui.view">
+        <field name="name">hr.applicant.list</field>
+        <field name="model">hr.applicant</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1">
+                <field name="candidate_code"/>
+                <field name="partner_name"/>
+                <field name="email_from"/>
+                <field name="partner_phone"/>
+                <field name="job_order_ids" widget="many2many_tags"/>
+                <field name="ai_match_score" widget="progress"/>
+                <field name="stage_id" widget="badge"/>
+                <field name="availability"/>
+                <field name="expected_salary"/>
+                <field name="submission_date"/>
+                <field name="offer_status"/>
+                <field name="placement_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Candidate Form View -->
+    <record id="view_hr_applicant_form" model="ir.ui.view">
+        <field name="name">hr.applicant.form</field>
+        <field name="model">hr.applicant</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_parse_resume" type="object" string="Parse Resume with AI"/>
+                    <button name="action_view_placements" type="object" string="View Placements"/>
+                    <button name="action_sync_to_website" type="object" string="Sync to Website"/>
+                    <field name="stage_id" widget="statusbar" options="{'clickable': True}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="partner_name"/></h1>
+                    </div>
+                    
+                    <div class="alert alert-info" role="alert" invisible="not ai_match_score">
+                        <h4>AI Analysis</h4>
+                        <p>
+                            <strong>Overall Match Score:</strong>
+                            <span class="badge badge-lg o_badge_primary">
+                                <field name="ai_match_score" readonly="1"/>
+                                <span>%</span>
+                            </span>
+                        </p>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="candidate_code" readonly="1"/>
+                            <field name="partner_name" required="1"/>
+                            <field name="email_from" required="1"/>
+                        </group>
+                        <group>
+                            <field name="partner_phone"/>
+                            <field name="availability"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Personal Information">
+                            <group>
+                                <group>
+                                    <field name="nationality_id"/>
+                                    <field name="emirates_id"/>
+                                    <field name="passport_number"/>
+                                    <field name="visa_status"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Salary &amp; Expectations">
+                            <group>
+                                <group>
+                                    <field name="expected_salary"/>
+                                    <field name="currency_id"/>
+                                    <field name="current_salary"/>
+                                </group>
+                                <group>
+                                    <field name="notice_period"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="AI Parsed Information">
+                            <group>
+                                <group>
+                                    <field name="ai_parsed_skills" widget="many2many_tags"/>
+                                </group>
+                            </group>
+                            <field name="resume_summary" widget="html" readonly="1"/>
+                        </page>
+
+                        <page string="Education &amp; Experience">
+                            <group>
+                                <group>
+                                    <field name="education_level"/>
+                                    <field name="years_of_experience"/>
+                                </group>
+                                <group>
+                                    <field name="linkedin_profile"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Submission &amp; Placement">
+                            <group>
+                                <group>
+                                    <field name="job_order_ids" widget="many2many_tags"/>
+                                    <field name="submission_date"/>
+                                    <field name="offer_status"/>
+                                    <field name="placement_id" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="client_feedback" placeholder="Client feedback or next steps"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Internal Notes">
+                            <field name="internal_notes" widget="html" placeholder="Interview notes, comments, feedback..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_recruitment_candidate" model="ir.actions.act_window">
+        <field name="name">Candidates</field>
+        <field name="res_model">hr.applicant</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('source_id.name', 'ilike', 'recruitment')]</field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_hr_applicant_search" model="ir.ui.view">
+        <field name="name">hr.applicant.search</field>
+        <field name="model">hr.applicant</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_name" string="Candidate Name"/>
+                <field name="job_order_ids" string="Job Orders"/>
+                <field name="email_from"/>
+                <separator/>
+                <!-- <filter name="excellent_match" string="Excellent Match (75%+)" domain="[('ai_match_score', '&gt;=', 75)]"/> -->
+                <!-- <filter name="good_match" string="Good Match (50-74%)" domain="[('ai_match_score', '&gt;=', 50), ('ai_match_score', '&lt;', 75)]"/> -->
+                <filter name="needs_review" string="Needs Review (&lt;50%)" domain="[('ai_match_score', '&lt;', 50)]"/>
+                <filter name="interview_stage" string="In Interview" domain="[('stage_id.name', '=', 'Interview')]"/>
+                <filter name="uae_nationals" string="UAE Nationals" domain="[('nationality_id.code', '=', 'AE')]"/>
+                <filter name="submitted_to_client" string="Submitted to Client" domain="[('submitted_to_client', '=', True)]"/>
+                <filter name="offer_accepted" string="Offer Accepted" domain="[('offer_status', '=', 'accepted')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_stage" string="Stage" context="{'group_by': 'stage_id'}"/>
+                    <filter name="group_by_job_order" string="Job Order" context="{'group_by': 'job_order_ids'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
+

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Client Reference Sequence -->
+    <record id="seq_recruitment_client" model="ir.sequence">
+        <field name="name">Recruitment Client</field>
+        <field name="code">recruitment.client</field>
+        <field name="prefix">RC/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+    </record>
+
+    <!-- Job Order Reference Sequence -->
+    <record id="seq_recruitment_job_order" model="ir.sequence">
+        <field name="name">Recruitment Job Order</field>
+        <field name="code">recruitment.job.order</field>
+        <field name="prefix">JO/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+    </record>
+
+    <!-- Placement Reference Sequence -->
+    <record id="seq_recruitment_placement" model="ir.sequence">
+        <field name="name">Recruitment Placement</field>
+        <field name="code">recruitment.placement</field>
+        <field name="prefix">PL/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+    </record>
+
+    <!-- Candidate Code Sequence -->
+    <record id="seq_hr_applicant" model="ir.sequence">
+        <field name="name">Candidate Code</field>
+        <field name="code">hr.applicant</field>
+        <field name="prefix">CAN/%(year)s/</field>
+        <field name="padding">6</field>
+        <field name="number_next">1</field>
+    </record>
+
+    <!-- Visa Processing Reference Sequence -->
+    <record id="seq_uae_visa_processing" model="ir.sequence">
+        <field name="name">Visa Processing Reference</field>
+        <field name="code">uae.visa.processing</field>
+        <field name="prefix">VISA/%(year)s/</field>
+        <field name="padding">6</field>
+        <field name="number_next">1</field>
+    </record>
+
+    <!-- Visa Processing Stages -->
+    <record id="visa_stage_documents" model="uae.visa.stage">
+        <field name="name">Document Collection</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="visa_stage_submission" model="uae.visa.stage">
+        <field name="name">Submitted to Immigration</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="visa_stage_approval" model="uae.visa.stage">
+        <field name="name">Approval Pending</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="visa_stage_medical" model="uae.visa.stage">
+        <field name="name">Medical Test</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="visa_stage_emirates_id" model="uae.visa.stage">
+        <field name="name">Emirates ID</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="visa_stage_completed" model="uae.visa.stage">
+        <field name="name">Completed</field>
+        <field name="sequence">60</field>
+        <field name="fold">True</field>
+    </record>
+
+</odoo>
