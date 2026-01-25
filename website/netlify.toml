@@ -10,18 +10,18 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    # Allow iframe embedding from your Odoo domain
-    X-Frame-Options = "ALLOW-FROM https://your-odoo-domain.com"
-    Content-Security-Policy = "frame-ancestors 'self' https://your-odoo-domain.com https://*.your-odoo-domain.com"
-    
+    # Allow embedding inside Odoo / your domain
+    Content-Security-Policy = "frame-ancestors 'self' https://eigermarvelhr.com https://*.eigermarvelhr.com https://*.odoo.com https://*.odoo.sh https://*.netlify.app" 
+    X-Frame-Options = "ALLOWALL"
+
     # Standard security headers
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    
+
     # Performance headers
     Cache-Control = "public, max-age=31536000, immutable"
-    
+
     # CORS (allow embedding)
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Methods = "GET, OPTIONS"
