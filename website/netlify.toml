@@ -2,6 +2,7 @@
 # This file configures deployment settings for Netlify
 
 [build]
+  # No base directory - files are in root
   publish = "."
   command = "echo 'No build required - static site'"
 
