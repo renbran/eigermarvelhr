@@ -1,0 +1,55 @@
+# Netlify Configuration for Eiger Marvel HR Platform
+# This file configures deployment settings for Netlify
+
+[build]
+  publish = "."
+  command = "echo 'No build required - static site'"
+
+# Security Headers for iframe embedding
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Allow iframe embedding from your Odoo domain
+    X-Frame-Options = "ALLOW-FROM https://your-odoo-domain.com"
+    Content-Security-Policy = "frame-ancestors 'self' https://your-odoo-domain.com https://*.your-odoo-domain.com"
+    
+    # Standard security headers
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Performance headers
+    Cache-Control = "public, max-age=31536000, immutable"
+    
+    # CORS (allow embedding)
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, OPTIONS"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
+# Performance settings
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true

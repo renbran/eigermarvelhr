@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Events Workforce Solutions | Eiger Marvel</title>
+    <meta name="description" content="Events, conferences, festivals—on-demand staffing that scales. We deliver event-ready professionals with fast turnarounds and flexible payroll." />
+    <style>
+      :root {
+        --gold: #d4af37;
+        --accent: #8e44ad;
+        --bg-900: #0a0a0a;
+        --bg-800: #121212;
+        --bg-700: #1a1a1a;
+        --text-100: #f5f5f5;
+        --text-300: #c9c9c9;
+      }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text-100);
+        background: linear-gradient(180deg, var(--bg-900), var(--bg-800));
+      }
+      a { color: var(--gold); text-decoration: none; }
+      h1, h2, h3 { line-height: 1.2; margin: 0 0 12px; }
+      p { line-height: 1.7; margin: 0 0 16px; color: var(--text-300); }
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+      .btn { display: inline-block; padding: 12px 18px; border-radius: 8px; font-weight: 600; transition: transform .08s ease; }
+      .btn-primary { background: var(--gold); color: #0a0a0a; }
+      .btn:hover { transform: translateY(-1px); }
+      header { padding: 12px 0; border-bottom: 1px solid rgba(212,175,55,0.2); }
+      .header-inner { display: flex; align-items: center; justify-content: space-between; }
+      .brand { display: flex; align-items: center; gap: 10px; }
+      .brand-mark { width: 24px; height: 24px; border-radius: 6px; background: linear-gradient(135deg, var(--gold), #b38a2e); }
+      .mini { font-size: 13px; color: var(--text-300); }
+      .kicker { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+      .hero { padding: 72px 0 48px; background: linear-gradient(135deg, rgba(142,68,173,0.12), transparent 60%); }
+      .hero h1 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; max-width: 900px; }
+      .hero h1 .accent { color: var(--accent); }
+      .hero .sub { font-size: clamp(16px, 2vw, 20px); max-width: 800px; margin-bottom: 12px; }
+      section { padding: 56px 0; border-top: 1px solid rgba(255,255,255,0.08); }
+      .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+      .col-4 { grid-column: span 4; }
+      .col-6 { grid-column: span 6; }
+      .col-12 { grid-column: span 12; }
+      .card { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 18px; }
+      .card h3 { font-size: 18px; }
+      .metric { font-size: 24px; font-weight: 800; color: var(--accent); margin-bottom: 4px; }
+      .section-bg { background: rgba(142,68,173,0.06); }
+      .cta-bg { background: rgba(212,175,55,0.08); }
+      .positions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 12px 0; max-width: 600px; }
+      .pos-tag { background: rgba(142,68,173,0.15); border: 1px solid rgba(142,68,173,0.3); border-radius: 6px; padding: 8px 12px; font-size: 13px; }
+      .step-number { display: inline-block; width: 40px; height: 40px; background: rgba(142,68,173,0.15); border: 1px solid var(--accent); border-radius: 50%; line-height: 40px; text-align: center; font-weight: bold; color: var(--accent); margin-right: 12px; }
+      .title-large { font-size: 32px; margin-bottom: 24px; }
+      .max-width-800 { max-width: 800px; margin: 0 auto; }
+      .max-width-700 { max-width: 700px; }
+      .mt-24 { margin-top: 24px; }
+      .mt-18 { margin-top: 18px; }
+      .mb-28 { margin-bottom: 28px; }
+      .text-center { text-align: center; }
+      .no-list { list-style: none; padding: 0; margin: 0; }
+      .no-list li { padding: 6px 0; }
+      .no-list li::before { content: "✓ "; color: var(--accent); font-weight: bold; }
+      footer { padding: 24px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); }
+      @media (max-width: 1024px) {
+        .col-4 { grid-column: span 6; }
+        .col-6 { grid-column: span 12; }
+      }
+      @media (max-width: 768px) {
+        .col-4, .col-6 { grid-column: span 12; }
+        .hero { padding: 48px 0 36px; }
+        .positions { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-inner">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div>
+            <strong>Eiger Marvel</strong>
+            <div class="mini">Workforce 360°</div>
+          </div>
+        </div>
+        <div><a href="workforce360.html">← Back to Home</a></div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <span class="kicker">Events Industry</span>
+        <h1>Conferences. Festivals. <span class="accent">Flawless Staffing.</span></h1>
+        <p class="sub">Event demand is unpredictable—but your staffing shouldn't be. We deliver on-demand event professionals with flexible payroll, so you scale instantly without hiring headaches or WPS compliance stress.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="title-large">The Event Staffing Challenge</h2>
+        <div class="grid">
+          <div class="card col-3">
+            <p class="metric">100+</p>
+            <p>Major events in UAE annually (conferences, festivals, expos)</p>
+          </div>
+          <div class="card col-3">
+            <p class="metric">10K+</p>
+            <p>Event staff needed seasonally across UAE</p>
+          </div>
+          <div class="card col-3">
+            <p class="metric">60 days</p>
+            <p>Average time to hire event staff (way too slow)</p>
+          </div>
+          <div class="card col-3">
+            <p class="metric">5 vendors</p>
+            <p>Average companies juggle for events (temp staff, payroll, WPS)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-bg">
+      <div class="container">
+        <h2 class="title-large">Event Positions We Deliver</h2>
+        <div class="positions">
+          <div class="pos-tag">🎤 Event Coordinators</div>
+          <div class="pos-tag">📺 AV & Tech Staff</div>
+          <div class="pos-tag">🚚 Setup & Logistics</div>
+          <div class="pos-tag">👥 Hospitality Staff</div>
+          <div class="pos-tag">📋 Registration & Admin</div>
+          <div class="pos-tag">🎉 Event Management</div>
+        </div>
+        <p class="mini mt-18"><strong>Pre-screened, event-ready, flexible scheduling. Scale up or down instantly.</strong></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="title-large">Why Event Companies & Venues Choose Eiger Marvel</h2>
+        <div class="grid">
+          <div class="card col-6">
+            <h3>⚡ Instant Scaling</h3>
+            <p>Need 50 people in 2 weeks? 200 for a festival? We mobilize. Flexible contracts, no long-term commitment.</p>
+          </div>
+          <div class="card col-6">
+            <h3>🎯 Event-Ready</h3>
+            <p>Pre-trained in event logistics, crowd management, customer service. They show up, ready to execute.</p>
+          </div>
+          <div class="card col-6">
+            <h3>💳 Flexible Payroll</h3>
+            <p>Hourly, daily, or project-based. Automated invoicing. No vendor chaos. Clean financial records.</p>
+          </div>
+          <div class="card col-6">
+            <h3>📊 Compliance Built-In</h3>
+            <p>WPS guaranteed. All workers registered, insured, compliant. You focus on the event, not paperwork.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="title-large">How Event Staffing Works</h2>
+        <div class="max-width-800">
+          <p class="mb-28">
+            <span class="step-number">1</span>
+            <strong>Event Details</strong>
+            <br />
+            <span class="mini">Date, venue, roles needed, duration (hourly/daily/project). We confirm availability and rates.</span>
+          </p>
+          <p class="mb-28">
+            <span class="step-number">2</span>
+            <strong>Candidate Confirmation (1–3 days)</strong>
+            <br />
+            <span class="mini">We match pre-screened staff, confirm attendance, provide briefing materials (your event, layout, timeline).</span>
+          </p>
+          <p class="mb-28">
+            <span class="step-number">3</span>
+            <strong>Pre-Event Prep (1–2 days)</strong>
+            <br />
+            <span class="mini">Brief on roles, safety, venue tour. Uniforms (if required) confirmed. Contingency staff on standby.</span>
+          </p>
+          <p class="mb-28">
+            <span class="step-number">4</span>
+            <strong>Event Execution + Support</strong>
+            <br />
+            <span class="mini">Staff on-site. Payroll processed post-event. WPS filed automatically. Clean financials within 3 days.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-bg">
+      <div class="container">
+        <h2 class="title-large">Case Study: 500-Person Festival</h2>
+        <div class="card max-width-700">
+          <h3>Challenge</h3>
+          <p>Large UAE festival needed 500+ event staff in 90 days. Tight timeline, seasonal hiring, 4 vendors for recruitment/payroll/compliance.</p>
+          <h3 class="mt-24">Solution</h3>
+          <p>Eiger Marvel handled end-to-end staffing: recruitment, payroll, WPS compliance, contingency planning.</p>
+          <h3 class="mt-24">Results (3 months)</h3>
+          <ul class="no-list">
+            <li>Recruited 520 event-ready staff in 60 days</li>
+            <li>100% WPS compliance; zero fines</li>
+            <li>Consolidated payroll from 4 vendors to 1 system</li>
+            <li>Post-event invoicing completed in 2 days (vs. 14-day industry average)</li>
+            <li>Cost savings: AED 45K (vendor consolidation + efficiency)</li>
+          </ul>
+          <p class="mt-24"><strong>Client quote:</strong> "Scales with our seasonality, WPS guarantee gives peace of mind. No stress, just execution."</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container text-center">
+        <h2 class="title-large">Event Organizers Trust Eiger Marvel</h2>
+        <div class="grid">
+          <div class="card col-4">
+            <p class="metric">5K+</p>
+            <p>Event staff deployed (conferences, festivals, expos)</p>
+          </div>
+          <div class="card col-4">
+            <p class="metric">100%</p>
+            <p>On-time attendance rate</p>
+          </div>
+          <div class="card col-4">
+            <p class="metric">7–14 days</p>
+            <p>Average staff confirmation time</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-bg">
+      <div class="container text-center">
+        <h2 class="title-large">Stop Stressing About Event Staffing</h2>
+        <p style="max-width:700px;margin:0 auto 24px">Your next event needs staff you can trust. Eiger Marvel delivers pre-screened event professionals, handles payroll flexibly, and guarantees WPS compliance—so you execute flawlessly.</p>
+        <a href="health-check.html" class="btn btn-primary">Book Your FREE Workforce Health Check →</a>
+        <p class="mini mt-18">30-minute consultation: Discuss your event timeline, staffing scale, payroll complexity, and cost optimization</p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p class="mini">© 2026 Eiger Marvel Consultants. | <a href="workforce360.html">Back to Home</a> | <a href="#">Privacy</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,298 @@
+<!-- ================================================================
+     ODOO INTEGRATION CODE
+     Copy and paste this entire block into your Odoo Website page
+     ================================================================ -->
+
+<!-- Step 1: Create new page in Odoo (Website → Pages → New Page) -->
+<!-- Step 2: Switch to HTML editor and paste this code -->
+<!-- Step 3: Replace 'YOUR-HOSTED-WEBSITE-URL' with actual URL -->
+
+<style>
+/* ============================================
+   IFRAME EMBED WRAPPER - RESPONSIVE & MODERN
+   ============================================ */
+
+.hr-platform-embed {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    background: transparent;
+}
+
+/* Main iframe container with aspect ratio */
+.hr-platform-iframe-wrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100vh; /* Full viewport height */
+    overflow: hidden;
+    background: #ffffff;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* The actual iframe */
+.hr-platform-iframe-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+/* Loading indicator while iframe loads */
+.hr-platform-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.hr-platform-loading .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #1a73e8;
+    border-radius: 50%;
+    animation: hr-spin 0.8s linear infinite;
+    margin: 0 auto 12px;
+}
+
+.hr-platform-loading p {
+    color: #5f6368;
+    font-size: 14px;
+    margin: 0;
+}
+
+@keyframes hr-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Hide loading once iframe loads */
+.hr-platform-iframe-wrapper.loaded .hr-platform-loading {
+    display: none;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .hr-platform-iframe-wrapper {
+        padding-bottom: 120vh; /* Taller for mobile content */
+        border-radius: 0;
+    }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hr-platform-iframe-wrapper {
+        padding-bottom: 110vh;
+    }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1025px) {
+    .hr-platform-iframe-wrapper {
+        padding-bottom: 90vh; /* Shorter on desktop */
+        max-width: 1920px;
+        margin: 0 auto;
+    }
+}
+
+/* Full-bleed option (remove Odoo container padding) */
+.o_container_small .hr-platform-embed,
+.container .hr-platform-embed {
+    max-width: none;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    width: 100vw;
+}
+
+/* Print styles */
+@media print {
+    .hr-platform-iframe-wrapper {
+        height: auto !important;
+        min-height: 500px;
+    }
+}
+</style>
+
+<!-- ============================================
+     MAIN EMBED CONTAINER
+     ============================================ -->
+<div class="hr-platform-embed">
+    <div class="hr-platform-iframe-wrapper" id="hrPlatformWrapper">
+        <!-- Loading Indicator -->
+        <div class="hr-platform-loading">
+            <div class="spinner"></div>
+            <p>Loading Workforce 360° Platform...</p>
+        </div>
+        
+        <!-- Main Iframe -->
+        <iframe 
+            id="hrPlatformFrame"
+            src="YOUR-HOSTED-WEBSITE-URL"
+            title="Workforce 360° - HR Platform"
+            allow="accelerometer; autoplay; clipboard-read; clipboard-write; encrypted-media; fullscreen; geolocation; gyroscope; picture-in-picture"
+            loading="lazy"
+            sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals"
+            referrerpolicy="strict-origin-when-cross-origin"
+            importance="high">
+            
+            <!-- Fallback for browsers that don't support iframes -->
+            <p style="padding: 40px; text-align: center; font-family: sans-serif;">
+                Your browser doesn't support iframes. 
+                <a href="YOUR-HOSTED-WEBSITE-URL" target="_blank" rel="noopener noreferrer" 
+                   style="color: #1a73e8; text-decoration: underline;">
+                    Click here to visit the Workforce 360° platform directly.
+                </a>
+            </p>
+        </iframe>
+    </div>
+</div>
+
+<!-- ============================================
+     JAVASCRIPT FOR LOADING STATE & RESPONSIVENESS
+     ============================================ -->
+<script>
+(function() {
+    'use strict';
+    
+    // Get elements
+    const wrapper = document.getElementById('hrPlatformWrapper');
+    const iframe = document.getElementById('hrPlatformFrame');
+    
+    if (!wrapper || !iframe) return;
+    
+    // Remove loading indicator when iframe loads
+    iframe.addEventListener('load', function() {
+        wrapper.classList.add('loaded');
+        console.log('✅ Workforce 360° Platform loaded successfully');
+    });
+    
+    // Error handling
+    iframe.addEventListener('error', function() {
+        const loading = wrapper.querySelector('.hr-platform-loading');
+        if (loading) {
+            loading.innerHTML = `
+                <div style="color: #d93025; font-family: sans-serif;">
+                    <p style="font-size: 16px; margin-bottom: 8px;">⚠️ Failed to load platform</p>
+                    <p style="font-size: 14px; color: #5f6368;">
+                        <a href="${iframe.src}" target="_blank" rel="noopener noreferrer" 
+                           style="color: #1a73e8; text-decoration: underline;">
+                            Open in new window
+                        </a>
+                    </p>
+                </div>
+            `;
+        }
+        console.error('❌ Failed to load Workforce 360° Platform');
+    });
+    
+    // Optional: Post message communication with embedded site
+    // This allows two-way communication between Odoo and embedded site
+    window.addEventListener('message', function(event) {
+        // Verify origin for security (replace with your actual domain)
+        // if (event.origin !== 'YOUR-HOSTED-WEBSITE-URL') return;
+        
+        // Handle messages from embedded site
+        if (event.data && event.data.type) {
+            switch(event.data.type) {
+                case 'resize':
+                    // Handle dynamic height adjustment if needed
+                    if (event.data.height) {
+                        wrapper.style.paddingBottom = event.data.height + 'px';
+                    }
+                    break;
+                case 'navigation':
+                    // Track navigation within embedded site
+                    console.log('Navigation:', event.data.url);
+                    break;
+                case 'formSubmit':
+                    // Track form submissions
+                    console.log('Form submitted:', event.data.formData);
+                    break;
+            }
+        }
+    }, false);
+    
+    // Send initial load message to embedded site
+    iframe.addEventListener('load', function() {
+        try {
+            iframe.contentWindow.postMessage({
+                type: 'odooContext',
+                isOdooEmbed: true,
+                timestamp: new Date().toISOString()
+            }, '*');
+        } catch(e) {
+            // Cross-origin restrictions may prevent this
+            console.log('PostMessage not available (cross-origin)');
+        }
+    });
+    
+    // Optional: Auto-height adjustment
+    // Uncomment if you want iframe to adjust height automatically
+    /*
+    function adjustIframeHeight() {
+        try {
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            const height = iframeDoc.documentElement.scrollHeight;
+            wrapper.style.paddingBottom = height + 'px';
+        } catch(e) {
+            // Cross-origin restrictions
+        }
+    }
+    
+    iframe.addEventListener('load', adjustIframeHeight);
+    setInterval(adjustIframeHeight, 1000); // Check every second
+    */
+    
+})();
+</script>
+
+<!-- ============================================
+     CONFIGURATION NOTES
+     ============================================
+     
+     REQUIRED CHANGES:
+     1. Replace ALL instances of "YOUR-HOSTED-WEBSITE-URL" with your actual URL
+        Examples:
+        - GitHub Pages: https://renbran.github.io/eiger-marvel-hr-plat
+        - Netlify: https://eiger-marvel.netlify.app
+        - Vercel: https://eiger-marvel.vercel.app
+        - Custom domain: https://workforce360.eigermarvel.com
+     
+     OPTIONAL CUSTOMIZATIONS:
+     1. Adjust padding-bottom percentages in CSS for different aspect ratios
+     2. Enable auto-height adjustment (uncomment section in JavaScript)
+     3. Customize loading spinner colors/styles
+     4. Add analytics tracking in message event handler
+     5. Modify sandbox attributes based on security needs
+     
+     ODOO MENU SETUP:
+     After pasting this code:
+     1. Save the page
+     2. Go to Website → Configuration → Menus
+     3. Create new menu item:
+        - Name: "Workforce 360°" or "HR Platform"
+        - URL: /page/workforce-360 (or whatever you named the page)
+        - Parent: Top Menu
+        - Sequence: Adjust as needed
+     4. Publish the page
+     
+     TESTING CHECKLIST:
+     ✓ Desktop browsers (Chrome, Firefox, Safari, Edge)
+     ✓ Mobile browsers (iOS Safari, Android Chrome)
+     ✓ Tablet devices
+     ✓ Different screen sizes
+     ✓ Form submissions work
+     ✓ WhatsApp button works
+     ✓ All links work correctly
+     
+     ============================================ -->
