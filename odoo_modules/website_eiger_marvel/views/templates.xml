@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="workforce360" name="Workforce 360 Embed" page="True">
+    <t t-call="website.layout">
+      <div class="oe_structure">
+        <style>
+          .platform-wrapper { width: 100%; height: 1200px; }
+          .platform-wrapper iframe { width: 100%; height: 100%; border: 0; }
+        </style>
+        <div class="container">
+          <div class="platform-wrapper">
+            <iframe src="https://eigermarvel.netlify.app" allow="fullscreen" />
+          </div>
+        </div>
+      </div>
+    </t>
+  </template>
+</odoo>

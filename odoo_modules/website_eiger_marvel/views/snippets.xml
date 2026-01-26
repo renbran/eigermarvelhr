@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Custom Header with Eiger Marvel Branding -->
+    <template id="header_custom" inherit_id="website.layout" name="Eiger Marvel Header">
+        <xpath expr="//header" position="replace">
+            <header class="em-header" role="banner">
+                <div class="container">
+                    <div class="d-flex align-items-center justify-content-between py-3">
+                        <!-- Logo and Brand -->
+                        <div class="d-flex align-items-center gap-3">
+                            <a href="/" class="em-logo text-decoration-none">
+                                <img t-attf-src="/website_eiger_marvel/static/src/img/logo-icon.png" 
+                                     alt="Eiger Marvel Logo" 
+                                     class="flex-shrink-0"/>
+                                <div class="d-flex flex-column">
+                                    <span class="text-white">Eiger Marvel</span>
+                                    <span class="em-tagline">Exceed Your Expectations</span>
+                                </div>
+                            </a>
+                            
+                            <!-- Desktop Navigation -->
+                            <nav class="d-none d-md-flex align-items-center gap-4 ms-4" role="navigation">
+                                <a href="/" class="em-nav-link text-decoration-none">Home</a>
+                                <a href="/jobs" class="em-nav-link text-decoration-none">Jobs</a>
+                                <a href="/employers" class="em-nav-link text-decoration-none">For Employers</a>
+                                <a href="/contact" class="em-nav-link text-decoration-none">Contact</a>
+                            </nav>
+                        </div>
+                        
+                        <!-- Auth Buttons (if needed) -->
+                        <div class="d-none d-md-flex gap-2">
+                            <a href="/web/login" class="btn btn-sm btn-outline-light">Login</a>
+                        </div>
+                        
+                        <!-- Mobile Menu Toggle -->
+                        <button class="btn btn-link d-md-none text-white" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+                            <i class="fa fa-bars fa-lg"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Mobile Menu -->
+                    <div class="collapse d-md-none" id="mobileMenu">
+                        <nav class="py-3">
+                            <a href="/" class="d-block py-2 text-white text-decoration-none">Home</a>
+                            <a href="/jobs" class="d-block py-2 text-white text-decoration-none">Jobs</a>
+                            <a href="/employers" class="d-block py-2 text-white text-decoration-none">For Employers</a>
+                            <a href="/contact" class="d-block py-2 text-white text-decoration-none">Contact</a>
+                            <hr class="border-light"/>
+                            <a href="/web/login" class="d-block py-2 text-white text-decoration-none">Login</a>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+        </xpath>
+    </template>
+
+    <!-- Custom Footer with Eiger Marvel Branding -->
+    <template id="footer_custom" inherit_id="website.layout" name="Eiger Marvel Footer">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <footer class="em-footer">
+                <div class="em-footer-glow-1"></div>
+                <div class="em-footer-glow-2"></div>
+                
+                <div class="em-footer-content">
+                    <div class="container">
+                        <div class="row g-4">
+                            <!-- Company Info -->
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <span class="d-block fs-5 fw-bold text-white">Eiger Marvel</span>
+                                    <span class="em-tagline d-block">Exceed Your Expectations</span>
+                                </div>
+                                <p class="small text-white-50">
+                                    Specialized HR &amp; Management Consultants serving the MENA region since 2022.
+                                </p>
+                            </div>
+                            
+                            <!-- Contact Info -->
+                            <div class="col-md-4">
+                                <h3 class="em-footer-title">Contact</h3>
+                                <div class="d-flex flex-column gap-2">
+                                    <a href="tel:+971586241100" class="em-footer-link text-decoration-none">
+                                        <i class="fa fa-phone me-2"></i>+971 58 624 1100
+                                    </a>
+                                    <a href="mailto:info@em-gc.com" class="em-footer-link text-decoration-none">
+                                        <i class="fa fa-envelope me-2"></i>info@em-gc.com
+                                    </a>
+                                    <div class="em-footer-link">
+                                        <i class="fa fa-map-marker-alt me-2"></i>Dubai, UAE
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Links -->
+                            <div class="col-md-4">
+                                <h3 class="em-footer-title">Company</h3>
+                                <div class="d-flex flex-column">
+                                    <a href="/" class="em-footer-link text-decoration-none">About Us</a>
+                                    <a href="/employers" class="em-footer-link text-decoration-none">Services</a>
+                                    <a href="/contact" class="em-footer-link text-decoration-none">Privacy Policy</a>
+                                    <a href="/contact" class="em-footer-link text-decoration-none">Terms &amp; Conditions</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="em-footer-copyright">
+                            <p class="mb-0">
+                                © <t t-esc="datetime.datetime.now().year"/> Eiger Marvel HR Consultancies. All rights reserved.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </xpath>
+    </template>
+
+</odoo>

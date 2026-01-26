@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Homepage Template -->
+    <template id="index" name="Eiger Marvel Home">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                
+                <!-- Hero Section -->
+                <section class="em-hero">
+                    <div class="em-hero-img-wrapper">
+                        <!-- Overlays for vignette effect -->
+                        <div class="em-hero-overlay-top"></div>
+                        <div class="em-hero-overlay-radial"></div>
+                        <div class="em-hero-overlay-sides-left"></div>
+                        <div class="em-hero-overlay-sides-right"></div>
+                        <div class="em-hero-overlay-bottom"></div>
+                        
+                        <!-- Hero Image -->
+                        <img t-attf-src="/website_eiger_marvel/static/src/img/team-photo.jpg" 
+                             alt="Eiger Marvel Team" 
+                             class="em-hero-img"/>
+                        
+                        <!-- Hero Content -->
+                        <div class="em-hero-content">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h1 class="animate-fadeIn">
+                                            The UAE's Smartest Way to Hire and Get Hired
+                                        </h1>
+                                        <p class="em-hero-subtitle">
+                                            AI-powered recruitment connecting exceptional talent with leading UAE companies in 24 hours, not 3 months. From Dubai to Abu Dhabi, we deliver results that matter.
+                                        </p>
+                                        <div class="d-flex flex-wrap gap-3 mt-4">
+                                            <a href="/jobs" class="em-btn-primary text-decoration-none">
+                                                <i class="fa fa-briefcase me-2"></i>
+                                                Explore Opportunities
+                                            </a>
+                                            <a href="/employers" class="em-btn-secondary text-decoration-none">
+                                                <i class="fa fa-building me-2"></i>
+                                                Hire Top Talent
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Services Section -->
+                <section class="em-services-section">
+                    <div class="container">
+                        <h2 class="em-section-title">Core HR Services</h2>
+                        <p class="em-section-subtitle">
+                            Comprehensive consultancy solutions tailored to MENA market requirements
+                        </p>
+                        
+                        <div class="row g-4">
+                            <!-- Service 1 -->
+                            <div class="col-md-6 col-lg-4">
+                                <div class="em-service-card">
+                                    <div class="em-service-icon">
+                                        <i class="fa fa-users fa-2x" style="color: #F59E0B;"></i>
+                                    </div>
+                                    <h3 class="em-service-title">Human Resources Consultancy</h3>
+                                    <p class="em-service-description">
+                                        Comprehensive HR solutions including recruitment, talent management, and organizational development
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Service 2 -->
+                            <div class="col-md-6 col-lg-4">
+                                <div class="em-service-card">
+                                    <div class="em-service-icon">
+                                        <i class="fa fa-chart-line fa-2x" style="color: #F59E0B;"></i>
+                                    </div>
+                                    <h3 class="em-service-title">Management Consultancy</h3>
+                                    <p class="em-service-description">
+                                        Strategic business planning, process optimization, and performance improvement
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Service 3 -->
+                            <div class="col-md-6 col-lg-4">
+                                <div class="em-service-card">
+                                    <div class="em-service-icon">
+                                        <i class="fa fa-bullhorn fa-2x" style="color: #F59E0B;"></i>
+                                    </div>
+                                    <h3 class="em-service-title">Marketing &amp; Sales Consultancy</h3>
+                                    <p class="em-service-description">
+                                        Market analysis, brand strategy, and sales optimization for business growth
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Service 4 -->
+                            <div class="col-md-6 col-lg-4">
+                                <div class="em-service-card">
+                                    <div class="em-service-icon">
+                                        <i class="fa fa-building fa-2x" style="color: #F59E0B;"></i>
+                                    </div>
+                                    <h3 class="em-service-title">Business Setup &amp; Company Formation</h3>
+                                    <p class="em-service-description">
+                                        Complete UAE company formation and business setup services
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Service 5 -->
+                            <div class="col-md-6 col-lg-4">
+                                <div class="em-service-card">
+                                    <div class="em-service-icon">
+                                        <i class="fa fa-certificate fa-2x" style="color: #F59E0B;"></i>
+                                    </div>
+                                    <h3 class="em-service-title">Quality &amp; Standardization (ISO)</h3>
+                                    <p class="em-service-description">
+                                        ISO certification consulting and quality management system implementation
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Latest Jobs Section -->
+                <section class="py-5" style="background-color: #000;">
+                    <div class="container">
+                        <h2 class="em-section-title">Latest Opportunities</h2>
+                        <p class="em-section-subtitle">
+                            Discover your next career move with UAE's leading companies
+                        </p>
+                        
+                        <div class="row g-4">
+                            <t t-foreach="jobs" t-as="job">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="em-job-card">
+                                        <h3 class="em-job-title">
+                                            <a t-attf-href="/jobs/detail/#{job.id}" 
+                                               class="text-white text-decoration-none">
+                                                <t t-esc="job.name"/>
+                                            </a>
+                                        </h3>
+                                        <div class="em-job-company">
+                                            <i class="fa fa-building me-2"></i>
+                                            <t t-esc="job.company_id.name"/>
+                                        </div>
+                                        <div class="em-job-location">
+                                            <i class="fa fa-map-marker-alt me-2"></i>
+                                            <t t-esc="job.address_id.city or 'Dubai, UAE'"/>
+                                        </div>
+                                        <div class="em-job-description" t-if="job.description">
+                                            <t t-raw="job.description[:150]"/>...
+                                        </div>
+                                        <a t-attf-href="/jobs/detail/#{job.id}" 
+                                           class="em-btn-primary text-decoration-none mt-3 d-inline-block">
+                                            View Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        
+                        <div class="text-center mt-5">
+                            <a href="/jobs" class="em-btn-secondary text-decoration-none">
+                                View All Jobs
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </t>
+    </template>
+
+    <!-- Jobs Page Template -->
+    <template id="jobs_page" name="Jobs - Eiger Marvel">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5" style="background-color: #000; min-height: 80vh;">
+                    <div class="container">
+                        <h1 class="em-section-title">Current Opportunities</h1>
+                        <p class="em-section-subtitle">
+                            Find your perfect role with leading companies across the UAE
+                        </p>
+                        
+                        <div class="row g-4 mt-4">
+                            <t t-foreach="jobs" t-as="job">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="em-job-card">
+                                        <h3 class="em-job-title">
+                                            <a t-attf-href="/jobs/detail/#{job.id}" 
+                                               class="text-white text-decoration-none">
+                                                <t t-esc="job.name"/>
+                                            </a>
+                                        </h3>
+                                        <div class="em-job-company">
+                                            <i class="fa fa-building me-2"></i>
+                                            <t t-esc="job.company_id.name"/>
+                                        </div>
+                                        <div class="em-job-location">
+                                            <i class="fa fa-map-marker-alt me-2"></i>
+                                            <t t-esc="job.address_id.city or 'Dubai, UAE'"/>
+                                        </div>
+                                        <div class="em-job-description" t-if="job.description">
+                                            <t t-raw="job.description[:150]"/>...
+                                        </div>
+                                        <a t-attf-href="/jobs/detail/#{job.id}" 
+                                           class="em-btn-primary text-decoration-none mt-3 d-inline-block">
+                                            Apply Now
+                                        </a>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        
+                        <t t-if="not jobs">
+                            <div class="text-center py-5">
+                                <p class="text-muted">No job openings available at the moment. Check back soon!</p>
+                            </div>
+                        </t>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Employers Page Template -->
+    <template id="employers_page" name="For Employers - Eiger Marvel">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5" style="background-color: #000; min-height: 80vh;">
+                    <div class="container">
+                        <h1 class="em-section-title">Hire Top Talent</h1>
+                        <p class="em-section-subtitle">
+                            Partner with UAE's fastest-growing recruitment platform
+                        </p>
+                        
+                        <div class="row g-5 mt-4">
+                            <div class="col-lg-6">
+                                <div class="em-service-card p-4">
+                                    <h3 class="text-white mb-4">Why Choose Eiger Marvel?</h3>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-3">
+                                            <i class="fa fa-check-circle text-warning me-2"></i>
+                                            <span class="text-white">AI-powered candidate matching</span>
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="fa fa-check-circle text-warning me-2"></i>
+                                            <span class="text-white">24-hour shortlisting guarantee</span>
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="fa fa-check-circle text-warning me-2"></i>
+                                            <span class="text-white">Specialized MENA market expertise</span>
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="fa fa-check-circle text-warning me-2"></i>
+                                            <span class="text-white">End-to-end recruitment management</span>
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="fa fa-check-circle text-warning me-2"></i>
+                                            <span class="text-white">Visa &amp; onboarding support</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="em-service-card p-4">
+                                    <h3 class="text-white mb-4">Get Started</h3>
+                                    <p class="em-service-description mb-4">
+                                        Contact our team to discuss your hiring needs and discover how we can help you build a world-class team.
+                                    </p>
+                                    <div class="mb-3">
+                                        <i class="fa fa-phone text-warning me-2"></i>
+                                        <a href="tel:+971586241100" class="text-white text-decoration-none">+971 58 624 1100</a>
+                                    </div>
+                                    <div class="mb-3">
+                                        <i class="fa fa-envelope text-warning me-2"></i>
+                                        <a href="mailto:info@em-gc.com" class="text-white text-decoration-none">info@em-gc.com</a>
+                                    </div>
+                                    <div class="mt-4">
+                                        <a href="/contact" class="em-btn-primary text-decoration-none">
+                                            Schedule Consultation
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Contact Page Template -->
+    <template id="contact_page" name="Contact - Eiger Marvel">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5" style="background-color: #000; min-height: 80vh;">
+                    <div class="container">
+                        <h1 class="em-section-title">Get in Touch</h1>
+                        <p class="em-section-subtitle">
+                            We're here to help you achieve your recruitment goals
+                        </p>
+                        
+                        <t t-if="request.params.get('submitted')">
+                            <div class="alert alert-success mt-4">
+                                <i class="fa fa-check-circle me-2"></i>
+                                Thank you for contacting us! We'll get back to you within 24 hours.
+                            </div>
+                        </t>
+                        
+                        <div class="row g-5 mt-4">
+                            <div class="col-lg-6">
+                                <div class="em-service-card p-4">
+                                    <h3 class="text-white mb-4">Contact Information</h3>
+                                    <div class="mb-4">
+                                        <h5 class="text-warning">Phone</h5>
+                                        <a href="tel:+971586241100" class="text-white text-decoration-none">
+                                            <i class="fa fa-phone me-2"></i>+971 58 624 1100
+                                        </a>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h5 class="text-warning">Email</h5>
+                                        <a href="mailto:info@em-gc.com" class="text-white text-decoration-none">
+                                            <i class="fa fa-envelope me-2"></i>info@em-gc.com
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-warning">Location</h5>
+                                        <p class="text-white">
+                                            <i class="fa fa-map-marker-alt me-2"></i>Dubai, UAE
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="em-service-card p-4">
+                                    <h3 class="text-white mb-4">Send us a Message</h3>
+                                    <form action="/contact/submit" method="post" t-attf-csrf_token="#{request.csrf_token()}">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label text-white">Name</label>
+                                            <input type="text" class="form-control" id="name" name="name" required="required"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label text-white">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" required="required"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="phone" class="form-label text-white">Phone</label>
+                                            <input type="tel" class="form-control" id="phone" name="phone"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="message" class="form-label text-white">Message</label>
+                                            <textarea class="form-control" id="message" name="message" rows="5" required="required"></textarea>
+                                        </div>
+                                        <button type="submit" class="em-btn-primary">
+                                            <i class="fa fa-paper-plane me-2"></i>Send Message
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+</odoo>
