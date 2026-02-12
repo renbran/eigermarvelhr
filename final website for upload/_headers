@@ -1,0 +1,23 @@
+# Security Headers for GitHub Pages
+# Place in root of repository as '_headers' (no extension)
+
+/*
+  X-Frame-Options: ALLOW-FROM https://your-odoo-domain.com
+  Content-Security-Policy: frame-ancestors 'self' https://your-odoo-domain.com https://*.your-odoo-domain.com
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Eiger Marvel — Workforce 360°</title>
+    <meta name="description" content="We Hire Them. We Pay Them. You Build. Workforce 360° for UAE construction, hospitality, and events: recruitment + payroll + WPS compliance." />
+    <style>
+      :root {
+        --gold: #d4af37;
+        --bg-900: #0a0a0a;
+        --bg-800: #121212;
+        --bg-700: #1a1a1a;
+        --text-100: #f5f5f5;
+        --text-300: #c9c9c9;
+        --accent-construction: #f39c12;
+        --accent-hospitality: #3498db;
+        --accent-events: #8e44ad;
+        --success: #10b981;
+      }
+      /* Base */
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text-100);
+        background: linear-gradient(180deg, var(--bg-900), var(--bg-800));
+      }
+      a { color: var(--gold); text-decoration: none; }
+      h1, h2, h3 { line-height: 1.2; margin: 0 0 12px; }
+      p { line-height: 1.7; margin: 0 0 16px; color: var(--text-300); }
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+      .btn { display: inline-block; padding: 12px 18px; border-radius: 8px; font-weight: 600; transition: transform .08s ease, box-shadow .2s ease; }
+      .btn:hover { transform: translateY(-1px); }
+      .btn-primary { background: var(--gold); color: #0a0a0a; }
+      .btn-secondary { border: 1px solid var(--gold); color: var(--text-100); }
+      /* Header */
+      header { position: sticky; top: 0; z-index: 100; -webkit-backdrop-filter: saturate(180%) blur(10px); backdrop-filter: saturate(180%) blur(10px); background: rgba(10,10,10,0.7); border-bottom: 1px solid rgba(212,175,55,0.2); }
+      .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; }
+      .brand { display: flex; align-items: center; gap: 10px; }
+      .brand-mark { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, var(--gold), #b38a2e); }
+      nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 18px; align-items: center; }
+      nav a { color: var(--text-100); opacity: 0.9; }
+      .cta-header { margin-left: 8px; }
+      .menu-toggle { display: none; border: 1px solid rgba(212,175,55,0.3); color: var(--text-100); background: transparent; padding: 8px 12px; border-radius: 8px; }
+      /* Hero */
+      .hero { padding: 72px 0 48px; background: radial-gradient(1200px 600px at 80% -100%, rgba(212,175,55,0.12), transparent 60%), linear-gradient(180deg, var(--bg-800), var(--bg-700)); }
+      .hero h1 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; }
+      .hero h1 .pay { color: var(--gold); }
+      .hero .sub { font-size: clamp(16px, 2.2vw, 20px); max-width: 920px; }
+      .hero .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
+      .hero .trust { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; color: var(--text-300); }
+      .badge { border: 1px dashed rgba(212,175,55,0.35); padding: 8px 12px; border-radius: 999px; font-size: 13px; }
+      /* Sections */
+      section { padding: 56px 0; border-top: 1px solid rgba(255,255,255,0.08); }
+      .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 0 0 24px; }
+      .section-title { font-size: clamp(22px, 3vw, 32px); font-weight: 800; }
+      /* Cards Grid */
+      .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+      .col-3 { grid-column: span 3; }
+      .col-4 { grid-column: span 4; }
+      .col-6 { grid-column: span 6; }
+      .col-12 { grid-column: span 12; }
+      .card { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 18px; }
+      .card h3 { font-size: 18px; }
+      .kicker { color: var(--gold); font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+      /* Pricing */
+      .price { font-size: 24px; font-weight: 800; color: var(--gold); }
+      .pricing .card { position: relative; }
+      .pricing .popular::after { content: "Most Popular"; position: absolute; top: 12px; right: 12px; padding: 6px 10px; border-radius: 999px; font-size: 12px; background: rgba(212,175,55,0.18); border: 1px solid rgba(212,175,55,0.35); }
+      /* Utility & industry accents */
+      .industry-construction { border-color: rgba(243,156,18,0.35) !important; }
+      .industry-hospitality { border-color: rgba(52,152,219,0.35) !important; }
+      .industry-events { border-color: rgba(142,68,173,0.35) !important; }
+      .mt-18 { margin-top: 18px !important; }
+      .ml-10 { margin-left: 10px !important; }
+      .calendar-placeholder { border:1px dashed rgba(255,255,255,0.18); padding:16px; border-radius:12px; text-align:center; }
+      /* Footer */
+      footer { padding: 36px 0 80px; background: var(--bg-700); border-top: 1px solid rgba(255,255,255,0.08); }
+      .footer-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+      .footer-col h4 { margin-bottom: 8px; }
+      .mini { font-size: 13px; color: var(--text-300); }
+      /* WhatsApp Floating Button */
+      .wa { position: fixed; bottom: 18px; right: 18px; z-index: 200; display: flex; align-items: center; gap: 10px; background: #25d366; color: #0a0a0a; padding: 10px 14px; border-radius: 999px; font-weight: 700; box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
+      .wa svg { width: 18px; height: 18px; }
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .col-3 { grid-column: span 6; }
+        .col-4 { grid-column: span 6; }
+        .col-6 { grid-column: span 12; }
+      }
+      @media (max-width: 720px) {
+        nav { display: none; }
+        .menu-toggle { display: inline-block; }
+        .footer-grid { grid-template-columns: 1fr; }
+        .hero { padding: 56px 0 36px; }
+        .grid { grid-template-columns: repeat(1, 1fr); }
+        .col-3, .col-4, .col-6, .col-12 { grid-column: span 1; }
+        .wa { bottom: 12px; right: 12px; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container header-inner">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div>
+            <strong>Eiger Marvel</strong>
+            <div class="mini">Workforce 360°</div>
+          </div>
+        </div>
+        <nav aria-label="Main">
+          <ul>
+            <li><a href="#hero" data-scroll>Home</a></li>
+            <li><a href="#how" data-scroll>How It Works</a></li>
+            <li><a href="#industries" data-scroll>Industries</a></li>
+            <li><a href="#pricing" data-scroll>Pricing</a></li>
+            <li><a href="#about" data-scroll>About</a></li>
+            <li class="cta-header"><a class="btn btn-primary" href="#health-check" data-scroll>Free Workforce Health Check</a></li>
+          </ul>
+        </nav>
+        <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">Menu</button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="hero" class="hero">
+      <div class="container">
+        <span class="kicker">All-in-one workforce partner</span>
+        <h1>We Hire Them. <span class="pay">We Pay Them.</span> You Build.</h1>
+        <p class="sub">The UAE's only integrated workforce solution for <strong>construction</strong>, <strong>hospitality</strong>, and <strong>events</strong>. From the first interview to the final paycheck—fully managed, fully compliant.</p>
+        <p>UAE construction is growing to USD 55.81B by 2031. Hospitality adds 26,000+ jobs in 2026. Competitors struggle to hire and pay on time. You don't have to.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#health-check" data-scroll>Get Your FREE Workforce Health Check</a>
+          <a class="btn btn-secondary" href="#how" data-scroll>See How It Works →</a>
+        </div>
+        <div class="trust">
+          <span class="badge">WPS-Compliant</span>
+          <span class="badge">MOHRE-Registered</span>
+          <span class="badge">Multi-Bank Integrated</span>
+          <span class="badge">Odoo ERP Powered</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">Your Current Workforce Process Is Costing You</h2>
+          <span class="mini">Time, money, and projects</span>
+        </div>
+        <div class="grid">
+          <div class="card col-3"><h3>Hiring Takes Too Long</h3><p>Intense demand means delays. We cut placement cycles to 7–14 days with guaranteed results.</p></div>
+          <div class="card col-3"><h3>Payroll Is a Headache</h3><p>Stop wasting 20+ hours monthly. We automate calculations, approvals, and payment confirmations.</p></div>
+          <div class="card col-3"><h3>Too Many Vendors</h3><p>Recruitment, payroll, compliance, systems—fragmented. We unify everything under one partner.</p></div>
+          <div class="card col-3"><h3>Compliance Anxiety</h3><p>WPS deadlines and MOHRE fines. We monitor, file, and guarantee zero penalties.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works / Workforce 360 -->
+    <section id="how">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">Workforce 360°: Built for UAE Growth</h2>
+          <span class="mini">One partner. One system.</span>
+        </div>
+        <div class="grid">
+          <div class="card col-6">
+            <span class="kicker">We Find Them</span>
+            <h3>Recruitment Engine</h3>
+            <p>Construction: skilled trades, engineers, supervisors. Hospitality: chefs, front desk, management. Events: coordinators, setup crews, logistics.</p>
+            <p><strong>7–14 day</strong> average placement • <strong>30–60 day</strong> guarantee.</p>
+          </div>
+          <div class="card col-6">
+            <span class="kicker">We Pay Them</span>
+            <h3>Payroll Management</h3>
+            <p>Complete processing: salary, overtime, allowances. Automated calculations, approvals, payment confirmation. <strong>20+ hours</strong> monthly time saved.</p>
+          </div>
+          <div class="card col-6">
+            <span class="kicker">We Ensure Compliance</span>
+            <h3>WPS Guarantee</h3>
+            <p>Automated SIF generation, deadline monitoring, bank integrations. <strong>Zero penalty</strong> guarantee—we cover any fines.</p>
+          </div>
+          <div class="card col-6">
+            <span class="kicker">One Integrated System</span>
+            <h3>Odoo ERP</h3>
+            <p>Unified recruitment + HR + payroll with real-time reporting and a dedicated account manager. Single monthly invoice.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Industries -->
+    <section id="industries">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">Specialized for UAE's Fastest-Growing Industries</h2>
+          <span class="mini">Pain-point led, outcome driven</span>
+        </div>
+        <div class="grid">
+          <div class="card col-4 industry-construction">
+            <h3>🏗️ Construction</h3>
+            <p>USD 55.81B market by 2031. Rapid deployment of construction-ready workers in <strong>7–14 days</strong>.</p>
+            <p class="mini">Trades, engineers, supervisors, safety officers</p>
+            <p><a href="#health-check" data-scroll>Learn More →</a></p>
+          </div>
+          <div class="card col-4 industry-hospitality">
+            <h3>🏨 Hospitality</h3>
+            <p>26,000+ new jobs in 2026. Pre-screened talent with customer service excellence.</p>
+            <p class="mini">Chefs, front desk, housekeeping, hotel management</p>
+            <p><a href="#health-check" data-scroll>Learn More →</a></p>
+          </div>
+          <div class="card col-4 industry-events">
+            <h3>🎉 Events</h3>
+            <p>Seasonal demand and fast turnarounds. On-demand staffing that scales as you grow.</p>
+            <p class="mini">Coordinators, AV tech, setup crews, hospitality staff</p>
+            <p><a href="#health-check" data-scroll>Learn More →</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="pricing">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">Flexible Workforce 360° Bundles</h2>
+          <span class="mini">Built for growing companies</span>
+        </div>
+        <div class="grid">
+          <div class="card col-4">
+            <span class="kicker">Compliance 360°</span>
+            <h3>Best for 10–30 employees</h3>
+            <p class="price">AED 5,500 / month</p>
+            <ul class="mini">
+              <li>✓ 2 recruitment placements / month</li>
+              <li>✓ Basic payroll processing</li>
+              <li>✓ WPS compliance guarantee</li>
+              <li>✓ System access & 2hr support</li>
+            </ul>
+            <p><a class="btn btn-secondary" href="#health-check" data-scroll>Get Started →</a></p>
+          </div>
+          <div class="card col-4 popular">
+            <span class="kicker">Growth 360°</span>
+            <h3>Best for 30–80 employees</h3>
+            <p class="price">AED 9,500 / month</p>
+            <ul class="mini">
+              <li>✓ 4 recruitment placements / month</li>
+              <li>✓ Full payroll + multi-currency</li>
+              <li>✓ WPS + MOHRE portal management</li>
+              <li>✓ Dedicated account manager</li>
+              <li>✓ 5hr support + analytics</li>
+            </ul>
+            <p><a class="btn btn-primary" href="#health-check" data-scroll>Get Started →</a></p>
+          </div>
+          <div class="card col-4">
+            <span class="kicker">Enterprise 360°</span>
+            <h3>Best for 80+ employees</h3>
+            <p class="price">AED 18,000 / month</p>
+            <ul class="mini">
+              <li>✓ Unlimited recruitment placements</li>
+              <li>✓ Enterprise payroll processing</li>
+              <li>✓ On-site HR support (2 days/week)</li>
+              <li>✓ Strategic workforce planning</li>
+              <li>✓ 10hr support + custom reporting</li>
+            </ul>
+            <p><a class="btn btn-secondary" href="#health-check" data-scroll>Get Started →</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section id="proof">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">Trusted by UAE Leaders</h2>
+          <span class="mini">Outcomes that compound</span>
+        </div>
+        <div class="grid">
+          <div class="card col-3"><h3>500+ Placements</h3><p>Qualified hires placed across construction, hospitality, and events.</p></div>
+          <div class="card col-3"><h3>100% WPS</h3><p>Compliance maintained; we cover penalties if any occur.</p></div>
+          <div class="card col-3"><h3>7–14 Days</h3><p>Average placement time with guarantee windows.</p></div>
+          <div class="card col-3"><h3>20+ Hours Saved</h3><p>Monthly time reclaimed via automation and managed services.</p></div>
+        </div>
+        <div class="grid mt-18">
+          <div class="card col-4"><p>“Cut hiring time in half—zero WPS issues since partnering.”</p><p class="mini">— Construction client, 80 employees</p></div>
+          <div class="card col-4"><p>“Screening is thorough, payroll integration seamless across sites.”</p><p class="mini">— Hospitality group</p></div>
+          <div class="card col-4"><p>“Scales with our seasonality; WPS guarantee gives peace of mind.”</p><p class="mini">— Events company</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Health Check / Final CTA -->
+    <section id="health-check">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">Stop Juggling Vendors. Start Building Faster.</h2>
+          <span class="mini">Book your FREE Workforce Health Check</span>
+        </div>
+        <div class="grid">
+          <div class="card col-6">
+            <h3>What You Get (30 minutes)</h3>
+            <ul class="mini">
+              <li>• Time-waste analysis</li>
+              <li>• Cost-savings calculation</li>
+              <li>• Compliance risk assessment</li>
+              <li>• Actionable roadmap with bundle fit</li>
+            </ul>
+            <p>
+              <a class="btn btn-primary" href="#calendar">Book Now</a>
+              <span class="mini ml-10">or call: +971-XX-XXX-XXXX</span>
+            </p>
+          </div>
+          <div class="card col-6" id="calendar">
+            <h3>Booking Calendar</h3>
+            <p class="mini">Embed your Calendly (or similar) here. Placeholder below:</p>
+            <div class="calendar-placeholder">
+              <p>Calendly Embed Placeholder</p>
+              <p class="mini">Replace with your actual embed script when integrating.</p>
+              <!-- Example: 
+              <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+              <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
+              <script>Calendly.initInlineWidget({ url: 'https://calendly.com/YOUR-LINK', parentElement: document.getElementById('calendar'), prefill: {}, utm: {} });</script>
+              -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About / Footer -->
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">About Eiger Marvel Consultants</h2>
+          <span class="mini">Trusted workforce partner</span>
+        </div>
+        <div class="grid">
+          <div class="card col-6">
+            <p>We help UAE companies in construction, hospitality, and events hire and pay workers efficiently with guaranteed compliance. Workforce 360° integrates recruitment, payroll, WPS, and systems into one partner.</p>
+          </div>
+          <div class="card col-6">
+            <p>Our team combines decades of HR operations with technology implementation to deliver speed, accuracy, and visibility—so you can build faster with confidence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h4>Eiger Marvel</h4>
+            <p class="mini">We Hire Them. We Pay Them. You Build.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Explore</h4>
+            <p class="mini"><a href="#how" data-scroll>How It Works</a></p>
+            <p class="mini"><a href="#industries" data-scroll>Industries</a></p>
+            <p class="mini"><a href="#pricing" data-scroll>Pricing</a></p>
+            <p class="mini"><a href="#health-check" data-scroll>Health Check</a></p>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <p class="mini">+971-XX-XXX-XXXX</p>
+            <p class="mini">info@eigermarvel.com</p>
+          </div>
+          <div class="footer-col">
+            <h4>Trust</h4>
+            <p class="mini">WPS-Compliant • MOHRE-Registered • Odoo ERP Powered</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a class="wa" href="https://wa.me/971XXXXXXXXX" target="_blank" rel="noopener" aria-label="WhatsApp us">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.77 11.77 0 0012.02 0C5.41 0 .03 5.38.03 11.99c0 2.11.56 4.16 1.62 5.97L0 24l6.2-1.62a11.99 11.99 0 005.82 1.5h.01c6.61 0 12-5.38 12-12 0-3.2-1.25-6.21-3.51-8.4zM12.03 22c-1.8 0-3.56-.49-5.1-1.42l-.37-.22-3.68.97.99-3.58-.24-.37A9.93 9.93 0 012.03 12C2.03 6.49 6.51 2 12.02 2c2.67 0 5.19 1.04 7.08 2.93A9.96 9.96 0 0122.02 12c0 5.51-4.49 10-9.99 10zm5.47-7.55c-.3-.15-1.76-.87-2.04-.97-.27-.1-.47-.15-.66.15-.2.3-.76.96-.93 1.16-.17.2-.34.22-.64.07-.3-.15-1.28-.47-2.43-1.5-.9-.8-1.52-1.78-1.7-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.66-1.6-.9-2.19-.23-.55-.47-.48-.66-.48-.17 0-.37 0-.57 0-.2 0-.53.08-.81.38-.28.3-1.06 1.03-1.06 2.5 0 1.47 1.08 2.9 1.24 3.1.15.2 2.14 3.26 5.2 4.43.73.31 1.3.5 1.75.64.73.23 1.4.2 1.93.12.58-.09 1.77-.72 2.03-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/></svg>
+      WhatsApp
+    </a>
+
+    <script>
+      function toggleMenu() {
+        const nav = document.querySelector('header nav');
+        nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+      }
+      // Smooth scroll for internal anchors
+      document.querySelectorAll('[data-scroll]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const href = a.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const el = document.querySelector(href);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+      // Optional: Light scroll-based header shadow
+      const header = document.querySelector('header');
+      window.addEventListener('scroll', () => {
+        header.style.boxShadow = window.scrollY > 6 ? '0 6px 20px rgba(0,0,0,0.35)' : 'none';
+      });
+    </script>
+  </body>
+</html>
