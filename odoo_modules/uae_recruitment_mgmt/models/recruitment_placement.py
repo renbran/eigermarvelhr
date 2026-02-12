@@ -15,6 +15,9 @@ class RecruitmentPlacement(models.Model):
     applicant_id = fields.Many2one('hr.applicant', 'Candidate', required=True, ondelete='restrict', tracking=True)
     client_id = fields.Many2one('recruitment.client', 'Client', required=True, ondelete='restrict', tracking=True)
     job_order_id = fields.Many2one('recruitment.job.order', 'Job Order', required=True, tracking=True)
+    agency_id = fields.Many2one('recruitment.agency', 'Recruitment Agency', 
+                                related='applicant_id.agency_id', store=True, readonly=True,
+                                help='The recruitment agency that sourced this candidate')
     
     # Employee Information (once hired)
     employee_id = fields.Many2one('hr.employee', 'Employee', readonly=True)
@@ -112,6 +115,31 @@ class RecruitmentPlacement(models.Model):
         for record in self:
             record.final_amount = (record.base_amount or 0.0) + (record.commission_amount or 0.0)
 
+    def action_submit_offer(self):
+        """Submit offer to candidate (User action)"""
+        self.ensure_one()
+        self.write({'state': 'offer_sent'})
+        self.message_post(body=_('Offer submitted to candidate'))
+
+    def action_confirm_offer(self):
+        """Confirm offer accepted (Manager action)"""
+        self.ensure_one()
+        self.write({'state': 'accepted'})
+        self.message_post(body=_('Offer confirmed and accepted'))
+
+    def action_onboard(self):
+        """Start onboarding process (Manager action)"""
+        self.ensure_one()
+        self.write({'state': 'onboarding'})
+        self.message_post(body=_('Onboarding process started'))
+
+    def action_deploy(self):
+        """Deploy candidate to client (Manager action)"""
+        self.ensure_one()
+        self.write({'state': 'deployed'})
+        self._create_invoice()
+        self.message_post(body=_('Candidate deployed successfully'))
+
     def action_confirm(self):
         """Confirm placement - create invoice"""
         self.ensure_one()
@@ -131,6 +159,33 @@ class RecruitmentPlacement(models.Model):
         self.write({'state': 'cancelled'})
         self.message_post(body=_('Placement cancelled'))
 
+    def action_set_to_draft(self):
+        """Set placement back to draft"""
+        self.write({'state': 'draft'})
+        self.message_post(body=_('Placement set back to draft'))
+
+    def action_view_visa_processing(self):
+        """View visa processing for this placement"""
+        if self.visa_processing_id:
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Visa Processing',
+                'res_model': 'uae.visa.processing',
+                'res_id': self.visa_processing_id.id,
+                'view_mode': 'form',
+                'target': 'current',
+            }
+        else:
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Visa Processing',
+                'res_model': 'uae.visa.processing',
+                'view_mode': 'list,form',
+                'domain': [('placement_id', '=', self.id)],
+                'context': {'default_placement_id': self.id},
+                'target': 'current',
+            }
+
     def action_terminate(self):
         """Terminate placement"""
         self.ensure_one()
@@ -149,7 +204,7 @@ class RecruitmentPlacement(models.Model):
         # Get default income account from product or company
         income_account = self.env['account.account'].search([
             ('account_type', '=', 'income'),
-            ('company_id', '=', self.env.company.id)
+            ('company_ids', 'in', self.env.company.id)
         ], limit=1)
         
         if not income_account:

@@ -1,6 +1,10 @@
 import { Phone, Envelope, MapPin } from '@phosphor-icons/react'
 
-export function Footer() {
+interface FooterProps {
+  onNavigate?: (page: string) => void
+}
+
+export function Footer({ onNavigate }: FooterProps) {
   return (
     <footer className="bg-primary border-t-2 border-accent/30 text-primary-foreground mt-auto relative overflow-hidden">
       <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl" />
@@ -41,7 +45,12 @@ export function Footer() {
             <div className="space-y-2">
               <button className="block text-xs sm:text-sm hover:text-accent transition-all duration-300 hover:translate-x-1 break-words text-left">About Us</button>
               <button className="block text-xs sm:text-sm hover:text-accent transition-all duration-300 hover:translate-x-1 break-words text-left">Services</button>
-              <button className="block text-xs sm:text-sm hover:text-accent transition-all duration-300 hover:translate-x-1 break-words text-left">Privacy Policy</button>
+              <button
+                className="block text-xs sm:text-sm hover:text-accent transition-all duration-300 hover:translate-x-1 break-words text-left"
+                onClick={() => onNavigate?.('privacy')}
+              >
+                Privacy Policy
+              </button>
               <button className="block text-xs sm:text-sm hover:text-accent transition-all duration-300 hover:translate-x-1 break-words text-left">Terms & Conditions</button>
             </div>
           </div>

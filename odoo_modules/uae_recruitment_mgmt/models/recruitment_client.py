@@ -108,6 +108,17 @@ class RecruitmentClient(models.Model):
         
         return super().create(vals_list)
 
+    def write(self, vals):
+        """Override write to allow direct state changes via statusbar"""
+        # Allow direct state changes from statusbar
+        if 'state' in vals and len(vals) == 1:
+            # This is a direct state change from clicking statusbar
+            for record in self:
+                new_state = vals['state']
+                # Log the state change
+                record.message_post(body=_('State changed to %s') % dict(record._fields['state'].selection).get(new_state))
+        return super().write(vals)
+
     @api.constrains('trade_license_number', 'partner_id')
     def _check_duplicate_client(self):
         """Prevent duplicate clients for same trade license"""
@@ -195,7 +206,21 @@ class RecruitmentClient(models.Model):
                 self.message_post(body=_('Client verified successfully (Development Mode)'))
         
         except Exception as e:
-            raise UserError(_('Error during verification: %s') % str(e))
+            raise UserError(_('Error during verification: %s') % str(e)) from e
+
+    def action_submit_for_verification(self):
+        """Submit client for verification (User action)"""
+        self.ensure_one()
+        self.write({'state': 'pending_verification'})
+        self.message_post(body=_('Client submitted for verification'))
+
+    def action_approve(self):
+        """Approve and activate client (Manager action)"""
+        self.ensure_one()
+        if not self.ded_verified:
+            raise UserError(_('Client must be verified with DED before approval'))
+        self.write({'state': 'active'})
+        self.message_post(body=_('Client approved and activated'))
 
     def action_enable_portal(self):
         """Enable portal access for client"""
@@ -245,6 +270,21 @@ class RecruitmentClient(models.Model):
         """Terminate client relationship"""
         self.write({'state': 'terminated', 'active': False})
         self.message_post(body=_('Client relationship terminated'))
+
+    def action_set_to_draft(self):
+        """Set client back to draft"""
+        self.write({'state': 'draft'})
+        self.message_post(body=_('Client set back to draft'))
+
+    def action_open_portal(self):
+        """Open client portal"""
+        if self.portal_user_id:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'home',
+            }
+        else:
+            raise UserError(_('Portal has not been enabled for this client yet'))
 
     def action_view_job_orders(self):
         """View related job orders for this client"""

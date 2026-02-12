@@ -3,7 +3,7 @@
     <data>
 
         <!-- LLM Provider List View -->
-        <record id="view_llm_provider_tree" model="ir.ui.view">
+        <record id="view_llm_provider_list" model="ir.ui.view">
             <field name="name">llm.provider.list</field>
             <field name="model">llm.provider</field>
             <field name="arch" type="xml">
@@ -33,6 +33,9 @@
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
                             <button name="action_view_usage_logs" type="object" class="oe_stat_button" icon="fa-bar-chart">
                                 <field name="current_month_usage" widget="statinfo" string="Tokens This Month"/>
                             </button>
@@ -41,6 +44,7 @@
                             </button>
                         </div>
 
+                        <widget name="web_ribbon" text="Archived" bg_color="text-bg-danger" invisible="active"/>
                         <div class="oe_title">
                             <h1>
                                 <field name="name" class="oe_inline"/>
@@ -52,7 +56,6 @@
                             <group string="Provider Configuration">
                                 <field name="provider_type" options="{'no_open': True}"/>
                                 <field name="sequence"/>
-                                <field name="active"/>
                                 <field name="is_available" readonly="1"/>
                             </group>
                             <group string="Pricing">
@@ -158,7 +161,7 @@
         </record>
 
         <!-- LLM Usage Log List View -->
-        <record id="view_llm_usage_log_tree" model="ir.ui.view">
+        <record id="view_llm_usage_log_list" model="ir.ui.view">
             <field name="name">llm.usage.log.list</field>
             <field name="model">llm.usage.log</field>
             <field name="arch" type="xml">
@@ -205,7 +208,7 @@
         </record>
 
         <!-- LLM Error Log List View -->
-        <record id="view_llm_error_log_tree" model="ir.ui.view">
+        <record id="view_llm_error_log_list" model="ir.ui.view">
             <field name="name">llm.error.log.list</field>
             <field name="model">llm.error.log</field>
             <field name="arch" type="xml">
@@ -256,4 +259,3 @@
 
     </data>
 </odoo>
-

@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Briefcase, Buildings } from '@phosphor-icons/react'
-import teamPhoto from '@/assets/images/Professional_corporate_team_photoshoot_of_diverse_-1768161201140_(1).png'
 
 interface HeroSectionProps {
   onNavigate: (page: string) => void
@@ -37,11 +36,17 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
         {/* Footer shade to anchor text without muting image colors */}
         <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-black/70 via-black/50 to-transparent z-10" />
         
-        <img 
-          src={teamPhoto} 
-          alt="Eiger Marvel Team" 
+        <video 
+          autoPlay 
+          muted={false}
+          loop
+          playsInline
           className="w-full h-full object-cover object-center smoke-shadow"
-        />
+          controlsList="nodownload"
+        >
+          <source src="https://res.cloudinary.com/dsl5fhclj/video/upload/v1768161201/hero-video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         
         <div className="absolute inset-0 flex items-end pb-12 sm:pb-16 lg:pb-20 z-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">

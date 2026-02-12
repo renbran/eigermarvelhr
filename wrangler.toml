@@ -1,10 +1,8 @@
 name = "eiger-marvel-hr-plat"
-main = "workers-site/index.js"
 compatibility_date = "2024-01-01"
 
-# Workers Sites configuration - serves static files from dist folder
-[site]
-bucket = "./dist"
+# Cloudflare Pages configuration
+pages_build_output_dir = "dist"
 
 # Optional custom domain route (requires domain verification in Cloudflare)
 # Uncomment when domain is properly configured

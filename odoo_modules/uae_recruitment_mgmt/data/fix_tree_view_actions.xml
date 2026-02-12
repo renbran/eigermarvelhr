@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Fix for tree view error in action 1079
+This XML explicitly redefines all recruitment actions to ensure they don't have 'tree' in view_mode
+-->
+<odoo>
+    <!-- 
+    NOTE: This file ensures that all recruitment actions are properly configured
+    without 'tree' in their view_mode. Tree views are not supported for the
+    recruitment module actions.
+    -->
+    
+    <!-- Fix Candidate Action - ensure no tree view -->
+    <record id="action_recruitment_candidate" model="ir.actions.act_window">
+        <field name="name">Candidates</field>
+        <field name="res_model">hr.applicant</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('source_id.name', 'ilike', 'recruitment')]</field>
+    </record>
+    
+    <!-- Ensure Job Order Action has correct view modes -->
+    <record id="action_recruitment_job_order" model="ir.actions.act_window">
+        <field name="name">Job Orders</field>
+        <field name="res_model">recruitment.job.order</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+    
+    <!-- Ensure Client Action has correct view modes -->
+    <record id="action_recruitment_client" model="ir.actions.act_window">
+        <field name="name">Clients</field>
+        <field name="res_model">recruitment.client</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+    
+    <!-- Ensure Agency Action has correct view modes -->
+    <record id="action_recruitment_agency" model="ir.actions.act_window">
+        <field name="name">Recruitment Agencies</field>
+        <field name="res_model">recruitment.agency</field>
+        <field name="view_mode">list,kanban,form</field>
+    </record>
+    
+    <!-- Ensure Placement Action has correct view modes -->
+    <record id="action_recruitment_placement" model="ir.actions.act_window">
+        <field name="name">Placements</field>
+        <field name="res_model">recruitment.placement</field>
+        <field name="view_mode">kanban,list,form,graph,pivot</field>
+    </record>
+    
+    <!-- Ensure Visa Processing Action has correct view modes -->
+    <record id="action_uae_visa_processing" model="ir.actions.act_window">
+        <field name="name">Visa Processing</field>
+        <field name="res_model">uae.visa.processing</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+</odoo>

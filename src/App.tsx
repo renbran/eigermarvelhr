@@ -10,11 +10,11 @@ import { CandidateDashboard } from '@/components/pages/CandidateDashboard'
 import { PremiumUpgradePage } from '@/components/pages/PremiumUpgradePage'
 import { HeroSection } from '@/components/home/HeroSection'
 import { LiveJobsSection } from '@/components/home/LiveJobsSection'
-import { TrustedCompaniesSection } from '@/components/home/TrustedCompaniesSection'
 import { TalentTechSection } from '@/components/home/TalentTechSection'
 import { ServicesSection } from '@/components/home/ServicesSection'
 import { PremiumSection } from '@/components/home/PremiumSection'
 import { JobsPage } from '@/components/pages/JobsPage'
+import { PrivacyPolicyPage } from '@/components/pages/PrivacyPolicyPage'
 import { OdooSyncStatus } from '@/components/OdooSyncStatus'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import type { UserType, JobPosting, CandidateProfile, User } from '@/lib/types'
@@ -202,7 +202,7 @@ function App() {
             <p className="text-muted-foreground">Loading...</p>
           </div>
         </main>
-        <Footer />
+        <Footer onNavigate={setCurrentPage} />
       </div>
     )
   }
@@ -235,7 +235,6 @@ function App() {
               onNavigate={setCurrentPage}
               onViewJob={handleViewJob}
             />
-            <TrustedCompaniesSection />
             <TalentTechSection />
             <ServicesSection />
             <PremiumSection onUpgrade={handleUpgradePremium} />
@@ -456,9 +455,13 @@ function App() {
             </div>
           </div>
         )}
+
+        {currentPage === 'privacy' && (
+          <PrivacyPolicyPage />
+        )}
       </main>
 
-      <Footer />
+      <Footer onNavigate={setCurrentPage} />
 
       <AuthDialog
         isOpen={showAuth}

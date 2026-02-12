@@ -5,7 +5,7 @@
     <record id="template_client_welcome" model="mail.template">
         <field name="name">Recruitment - Client Welcome</field>
         <field name="model_id" ref="model_recruitment_client"/>
-        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_from">${user.email or 'recruitment@eigermarvelhr.com'}</field>
         <field name="email_to">${object.email or ''}</field>
         <field name="subject">Welcome to Our Recruitment Platform - ${object.name or ''}</field>
         <field name="body_html"><![CDATA[
@@ -46,9 +46,9 @@
     <record id="template_application_received" model="mail.template">
         <field name="name">Recruitment - Application Received</field>
         <field name="model_id" ref="model_hr_applicant"/>
-        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_from">${user.email or 'recruitment@eigermarvelhr.com'}</field>
         <field name="email_to">${object.email_from or ''}</field>
-        <field name="subject">Your Application for ${object.job_id.name or ''} - ${object.company_id.name or ''}</field>
+        <field name="subject">Your Application for ${object.job_id.name or ''} - Eiger Marvel HR</field>
         <field name="body_html"><![CDATA[
             <html>
                 <body>
@@ -85,7 +85,7 @@
     <record id="template_interview_scheduled" model="mail.template">
         <field name="name">Recruitment - Interview Scheduled</field>
         <field name="model_id" ref="model_hr_applicant"/>
-        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_from">${user.email or 'recruitment@eigermarvelhr.com'}</field>
         <field name="email_to">${object.email_from or ''}</field>
         <field name="subject">Interview Scheduled - ${object.job_id.name or ''}</field>
         <field name="body_html"><![CDATA[
@@ -122,7 +122,7 @@
     <record id="template_placement_offer" model="mail.template">
         <field name="name">Recruitment - Placement Offer</field>
         <field name="model_id" ref="model_recruitment_placement"/>
-        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_from">${user.email or 'recruitment@eigermarvelhr.com'}</field>
         <field name="email_to">${object.applicant_id.email_from or ''}</field>
         <field name="subject">Job Offer - ${object.job_order_id.name or ''}</field>
         <field name="body_html"><![CDATA[
@@ -165,7 +165,7 @@
     <record id="template_visa_docs_needed" model="mail.template">
         <field name="name">Recruitment - Visa Documents Needed</field>
         <field name="model_id" ref="model_uae_visa_processing"/>
-        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_from">${user.email or 'visa@eigermarvelhr.com'}</field>
         <field name="email_to">${object.applicant_id.email_from or ''}</field>
         <field name="subject">Action Required - Visa Documents Submission - ${object.reference or ''}</field>
         <field name="body_html"><![CDATA[
@@ -212,7 +212,7 @@
     <record id="template_visa_medical_exam" model="mail.template">
         <field name="name">Recruitment - Medical Exam Scheduled</field>
         <field name="model_id" ref="model_uae_visa_processing"/>
-        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_from">${user.email or 'visa@eigermarvelhr.com'}</field>
         <field name="email_to">${object.applicant_id.email_from or ''}</field>
         <field name="subject">Medical Exam Scheduled - ${object.reference or ''}</field>
         <field name="body_html"><![CDATA[
@@ -253,7 +253,7 @@
     <record id="email_template_visa_completed" model="mail.template">
         <field name="name">Recruitment - Visa Completed</field>
         <field name="model_id" ref="model_uae_visa_processing"/>
-        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_from">${user.email or 'visa@eigermarvelhr.com'}</field>
         <field name="email_to">${object.applicant_id.email_from or ''}</field>
         <field name="subject">Your Visa is Ready! - ${object.name or ''}</field>
         <field name="body_html"><![CDATA[
@@ -292,7 +292,7 @@
     <record id="email_template_client_verified" model="mail.template">
         <field name="name">Recruitment - Client Verified</field>
         <field name="model_id" ref="model_recruitment_client"/>
-        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_from">${user.email or 'noreply@eigermarvelhr.com'}</field>
         <field name="email_to">${object.email or ''}</field>
         <field name="subject">Welcome! Your Account is Verified - ${object.name or ''}</field>
         <field name="body_html"><![CDATA[
@@ -339,8 +339,8 @@
 
                             <p style="margin-top: 30px;">
                                 Best regards,<br/>
-                                <strong>Recruitment Team</strong><br/>
-                                    <a t-att-href="'mailto:%s' % (object.company_id.email or '')"><t t-esc="object.company_id.email or ''"/></a>
+                                <strong>Eiger Marvel Recruitment Team</strong><br/>
+                                <a href="mailto:recruitment@eigermarvelhr.com">recruitment@eigermarvelhr.com</a>
                             </p>
                         </div>
                         
@@ -357,7 +357,7 @@
     <record id="email_template_placement_confirmed" model="mail.template">
         <field name="name">Recruitment - Placement Confirmed</field>
         <field name="model_id" ref="model_recruitment_placement"/>
-        <field name="email_from">${object.company_id.email or user.email or ''}</field>
+        <field name="email_from">${user.email or 'recruitment@eigermarvelhr.com'}</field>
         <field name="email_to">${object.applicant_id.email_from or ''}</field>
         <field name="partner_to">${object.client_id.partner_id.id if object.client_id.partner_id else ''}</field>
         <field name="subject">Placement Confirmed - ${object.applicant_id.partner_name or ''} at ${object.client_id.name or ''}</field>

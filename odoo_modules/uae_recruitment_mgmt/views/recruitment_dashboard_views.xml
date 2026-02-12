@@ -13,6 +13,25 @@
                         <p class="text-muted">Real-time recruitment metrics and analytics</p>
                     </div>
 
+                    <!-- Quick Access Smart Buttons -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_recruitment_job_order)d" type="action" class="oe_stat_button" icon="fa-briefcase">
+                            <field name="active_jobs" widget="statinfo" string="Active Jobs"/>
+                        </button>
+                        <button name="%(action_recruitment_candidate)d" type="action" class="oe_stat_button" icon="fa-users">
+                            <field name="candidate_total" widget="statinfo" string="Total Candidates"/>
+                        </button>
+                        <button name="%(action_recruitment_client)d" type="action" class="oe_stat_button" icon="fa-building">
+                            <field name="active_clients" widget="statinfo" string="Active Clients"/>
+                        </button>
+                        <button name="%(action_recruitment_placement)d" type="action" class="oe_stat_button" icon="fa-check-circle">
+                            <field name="placements_month" widget="statinfo" string="Placements (M)"/>
+                        </button>
+                        <button name="%(action_uae_visa_processing)d" type="action" class="oe_stat_button" icon="fa-file-pdf-o">
+                            <field name="visa_in_progress" widget="statinfo" string="Visa Processing"/>
+                        </button>
+                    </div>
+
                     <!-- Key Metrics Section -->
                     <group string="Key Performance Indicators" col="4">
                         <field name="active_jobs" widget="statinfo" string="Active Jobs"/>

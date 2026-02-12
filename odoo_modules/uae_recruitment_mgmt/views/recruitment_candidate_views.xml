@@ -47,6 +47,7 @@
                 <field name="partner_name"/>
                 <field name="email_from"/>
                 <field name="partner_phone"/>
+                <field name="agency_id" optional="show"/>
                 <field name="job_order_ids" widget="many2many_tags"/>
                 <field name="ai_match_score" widget="progress"/>
                 <field name="stage_id" widget="badge"/>
@@ -69,11 +70,21 @@
                     <button name="action_parse_resume" type="object" string="Parse Resume with AI"/>
                     <button name="action_view_placements" type="object" string="View Placements"/>
                     <button name="action_sync_to_website" type="object" string="Sync to Website"/>
+                    <button name="action_send_offer" type="object" class="oe_highlight" string="Send Offer" invisible="offer_status == 'accepted'"/>
+                    <button name="action_reject" type="object" string="Reject" invisible="stage_id.name == 'Rejected'"/>
+                    <button name="action_set_to_draft" type="object" string="Set to Draft" invisible="stage_id.name == 'Application'"/>
                     <field name="stage_id" widget="statusbar" options="{'clickable': True}"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
                         <h1><field name="partner_name"/></h1>
+                    </div>
+
+                    <!-- Smart Buttons Section -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_placements" type="object" class="oe_stat_button" icon="fa-briefcase" string="Placements"/>
+                        <button name="%(action_recruitment_job_order)d" type="action" class="oe_stat_button" icon="fa-list" context="{'search_default_active_jobs': True}" string="Available Jobs"/>
+                        <button name="%(action_uae_visa_processing)d" type="action" class="oe_stat_button" icon="fa-file-pdf-o" context="{'search_default_by_candidate': True}" string="Visa Status"/>
                     </div>
                     
                     <div class="alert alert-info" role="alert" invisible="not ai_match_score">
@@ -92,6 +103,7 @@
                             <field name="candidate_code" readonly="1"/>
                             <field name="partner_name" required="1"/>
                             <field name="email_from" required="1"/>
+                            <field name="agency_id" string="Sourced by Agency" options="{'no_create': True}"/>
                         </group>
                         <group>
                             <field name="partner_phone"/>
@@ -174,7 +186,7 @@
         <field name="name">Candidates</field>
         <field name="res_model">hr.applicant</field>
         <field name="view_mode">kanban,list,form</field>
-        <field name="domain">[('source_id.name', 'ilike', 'recruitment')]</field>
+        <field name="context">{'search_default_group_by_stage': 1}</field>
     </record>
 
     <!-- Search View -->
@@ -186,22 +198,24 @@
                 <field name="partner_name" string="Candidate Name"/>
                 <field name="job_order_ids" string="Job Orders"/>
                 <field name="email_from"/>
+                <field name="stage_id"/>
                 <separator/>
-                <!-- <filter name="excellent_match" string="Excellent Match (75%+)" domain="[('ai_match_score', '&gt;=', 75)]"/> -->
-                <!-- <filter name="good_match" string="Good Match (50-74%)" domain="[('ai_match_score', '&gt;=', 50), ('ai_match_score', '&lt;', 75)]"/> -->
-                <filter name="needs_review" string="Needs Review (&lt;50%)" domain="[('ai_match_score', '&lt;', 50)]"/>
+                <filter name="needs_review" string="Needs Review" domain="[('ai_match_score', '&lt;', 50)]"/>
                 <filter name="interview_stage" string="In Interview" domain="[('stage_id.name', '=', 'Interview')]"/>
                 <filter name="uae_nationals" string="UAE Nationals" domain="[('nationality_id.code', '=', 'AE')]"/>
                 <filter name="submitted_to_client" string="Submitted to Client" domain="[('submitted_to_client', '=', True)]"/>
                 <filter name="offer_accepted" string="Offer Accepted" domain="[('offer_status', '=', 'accepted')]"/>
                 <separator/>
+                <filter name="available_now" string="Available Now" domain="[('can_join_immediately', '=', True)]"/>
+                <filter name="with_noc" string="Requires NOC" domain="[('requires_noc', '=', True)]"/>
+                <separator/>
                 <group expand="0" string="Group By">
                     <filter name="group_by_stage" string="Stage" context="{'group_by': 'stage_id'}"/>
                     <filter name="group_by_job_order" string="Job Order" context="{'group_by': 'job_order_ids'}"/>
+                    <filter name="group_by_agency" string="Agency" context="{'group_by': 'agency_id'}"/>
                 </group>
             </search>
         </field>
     </record>
 
 </odoo>
-

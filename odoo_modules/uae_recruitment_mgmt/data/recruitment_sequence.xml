@@ -37,6 +37,15 @@
         <field name="number_next">1</field>
     </record>
 
+    <!-- Agency Code Sequence -->
+    <record id="seq_recruitment_agency" model="ir.sequence">
+        <field name="name">Recruitment Agency Code</field>
+        <field name="code">recruitment.agency</field>
+        <field name="prefix">AGCY/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+    </record>
+
     <!-- Visa Processing Reference Sequence -->
     <record id="seq_uae_visa_processing" model="ir.sequence">
         <field name="name">Visa Processing Reference</field>

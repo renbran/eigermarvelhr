@@ -209,6 +209,15 @@ class RecruitmentJobOrder(models.Model):
         self.write({'state': 'cancelled'})
         self.message_post(body=_('Job order cancelled'))
 
+    def action_cancel_job(self):
+        """Cancel job order (alias for cancel)"""
+        return self.action_cancel()
+
+    def action_set_to_draft(self):
+        """Set job order back to draft"""
+        self.write({'state': 'draft'})
+        self.message_post(body=_('Job order set back to draft'))
+
     def action_sync_to_website(self):
         """Sync job order to website"""
         for record in self:

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 from datetime import timedelta
 
 
@@ -150,6 +151,48 @@ class UAEVisaProcessing(models.Model):
             else:
                 record.processing_days = 0
 
+    def action_submit_documents(self):
+        """Submit required documents (User action)"""
+        self.ensure_one()
+        self.write({'state': 'documents_submitted'})
+        self.message_post(body=_('Documents submitted for verification'))
+
+    def action_verify_documents(self):
+        """Verify submitted documents (Manager action)"""
+        self.ensure_one()
+        self.write({'state': 'documents_verified'})
+        self.message_post(body=_('Documents verified successfully'))
+
+    def action_submit_application(self):
+        """Submit application to immigration (Manager action)"""
+        self.ensure_one()
+        if not self.documents_complete:
+            raise UserError(_('All required documents must be collected before submission'))
+        self.write({'state': 'submitted'})
+        self.message_post(body=_('Visa application submitted to immigration'))
+
+    def action_approve_visa(self):
+        """Approve visa application (Manager action)"""
+        self.ensure_one()
+        self.write({'state': 'approved'})
+        self.message_post(body=_('Visa application approved'))
+
+    def action_issue_visa(self):
+        """Issue final visa (Manager action)"""
+        self.ensure_one()
+        self.write({
+            'state': 'issued',
+            'actual_completion': fields.Date.today()
+        })
+        if self.placement_id:
+            self.placement_id.write({'visa_status': 'completed'})
+        if self.applicant_id:
+            self.applicant_id.write({
+                'visa_status': 'employment',
+                'emirates_id': self.emirates_id_number
+            })
+        self.message_post(body=_('Visa issued successfully'))
+
     def action_collect_documents(self):
         """Move to document collection stage"""
         self.write({'state': 'documents'})
@@ -214,6 +257,23 @@ class UAEVisaProcessing(models.Model):
         """Cancel visa processing"""
         self.write({'state': 'cancelled'})
         self.message_post(body=_('Visa processing cancelled'))
+
+    def action_set_to_draft(self):
+        """Set visa processing back to draft"""
+        self.write({'state': 'draft'})
+        self.message_post(body=_('Visa processing set back to draft'))
+
+    def action_view_documents(self):
+        """View all required documents for this visa"""
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Visa Documents',
+            'res_model': 'uae.visa.processing',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'current',
+            'views': [(self.env.ref('uae_recruitment_mgmt.view_uae_visa_processing_form').id, 'form')],
+        }
 
     def action_mark_documents_complete(self):
         """Mark all documents as collected"""

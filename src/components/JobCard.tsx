@@ -56,7 +56,7 @@ export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, co
           <div className="flex-1 min-w-0">
             <CardTitle className="text-base sm:text-lg font-bold break-words pr-20 group-hover:text-accent transition-colors text-white">{job.title}</CardTitle>
             <CardDescription className="flex items-center gap-1 break-words text-gray-400">
-              <span className="break-words">{job.employerName || 'Eiger Marvel Client'}</span>
+              <span className="break-words">Eiger Marvel HR Consultants</span>
               {isPremium && (
                 <CrownSimple size={14} weight="fill" className="text-accent flex-shrink-0 premium-badge" />
               )}

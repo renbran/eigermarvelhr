@@ -60,23 +60,82 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_verify_ded" type="object" class="oe_highlight" string="Verify with DED" invisible="ded_verified"/>
-                    <button name="action_enable_portal" type="object" class="oe_highlight" string="Enable Portal" invisible="portal_enabled"/>
-                    <button name="action_suspend" type="object" string="Suspend" invisible="state != 'active'"/>
-                    <button name="action_terminate" type="object" string="Terminate" invisible="state == 'terminated'"/>
-                    <field name="state" widget="statusbar" options="{'clickable': False}"/>
+                    <!-- Officer/User Actions -->
+                    <button name="action_submit_for_verification" type="object" class="oe_highlight" 
+                            string="Submit for Verification" 
+                            invisible="state != 'draft'" 
+                            groups="uae_recruitment_mgmt.group_recruitment_user"/>
+                    
+                    <!-- Manager Actions -->
+                    <button name="action_verify_ded" type="object" class="oe_highlight" 
+                            string="Verify with DED" 
+                            invisible="ded_verified or state != 'pending_verification'" 
+                            groups="uae_recruitment_mgmt.group_recruitment_manager"/>
+                    
+                    <button name="action_approve" type="object" class="oe_highlight" 
+                            string="Approve &amp; Activate" 
+                            invisible="state != 'verified'" 
+                            groups="uae_recruitment_mgmt.group_recruitment_manager"/>
+                    
+                    <button name="action_enable_portal" type="object" 
+                            string="Enable Portal" 
+                            invisible="portal_enabled or state not in ('active', 'verified')" 
+                            groups="uae_recruitment_mgmt.group_recruitment_manager"/>
+                    
+                    <!-- Administrative Actions -->
+                    <button name="action_suspend" type="object" 
+                            string="Suspend" 
+                            invisible="state != 'active'" 
+                            groups="uae_recruitment_mgmt.group_recruitment_manager"/>
+                    
+                    <button name="action_reactivate" type="object" class="oe_highlight" 
+                            string="Reactivate" 
+                            invisible="state != 'suspended'" 
+                            groups="uae_recruitment_mgmt.group_recruitment_manager"/>
+                    
+                    <button name="action_terminate" type="object" 
+                            string="Terminate" 
+                            invisible="state == 'terminated'" 
+                            groups="uae_recruitment_mgmt.group_recruitment_manager"/>
+                    
+                    <button name="action_set_to_draft" type="object" 
+                            string="Reset to Draft" 
+                            invisible="state in ('draft', 'terminated')" 
+                            groups="uae_recruitment_mgmt.group_recruitment_manager"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending_verification,verified,active" options="{'clickable': False}"/>
                 </header>
                 <sheet>
+                    <widget name="web_ribbon" text="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <h1><field name="name"/></h1>
                     </div>
+
+                    <!-- Smart Buttons Section -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                        <button name="%(action_recruitment_job_order)d" type="action" class="oe_stat_button" icon="fa-briefcase">
+                            <field name="job_order_count" widget="statinfo" string="Job Orders"/>
+                        </button>
+                        <button name="%(action_recruitment_placement)d" type="action" class="oe_stat_button" icon="fa-check-circle" context="{'search_default_by_client': True}">
+                            <field name="placement_count" widget="statinfo" string="Placements"/>
+                        </button>
+                        <button name="action_open_portal" type="object" class="oe_stat_button" icon="fa-globe" invisible="not portal_enabled" string="Portal"/>
+                    </div>
+
                     <group>
                         <group>
                             <field name="reference" readonly="1"/>
                             <field name="partner_id" required="1"/>
                             <field name="trade_license_number" required="1"/>
                             <field name="entity_type" required="1"/>
-                            <field name="active"/>
                         </group>
                         <group>
                             <field name="ded_verified" readonly="1"/>
@@ -176,4 +235,3 @@
     </record>
 
 </odoo>
-

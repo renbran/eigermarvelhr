@@ -1,18 +1,5 @@
 # -*- coding: utf-8 -*-
 {
-    "name": "Website - Eiger Marvel Integration",
-    "summary": "Adds backend route and menu to embed Workforce 360 platform",
-    "version": "1.0.0",
-    "category": "Website",
-    "author": "Eiger Marvel",
-    "license": "OEEL-1",
-    "depends": ["website"],
-    "data": [
-        "views/templates.xml"
-    ],
-    "post_init_hook": "post_init_hook",
-}# -*- coding: utf-8 -*-
-{
     'name': 'Eiger Marvel Website',
     'version': '18.0.1.0.0',
     'category': 'Website',

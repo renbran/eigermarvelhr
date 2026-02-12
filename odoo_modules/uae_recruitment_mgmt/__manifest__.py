@@ -61,11 +61,13 @@
         'data/automation_rules.xml',
         'data/scheduled_actions.xml',
         'data/llm_providers_data.xml',
+        'data/fix_tree_view_actions.xml',
         
         # Views - Phase 2: UI Layer (Core models with full interface)
         'views/recruitment_client_views.xml',
         'views/recruitment_job_order_views.xml',
         'views/recruitment_candidate_views.xml',
+        'views/recruitment_agency_views.xml',
         'views/recruitment_placement_views.xml',
         'views/uae_visa_processing_views.xml',
         'views/recruitment_dashboard_views.xml',

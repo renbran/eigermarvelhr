@@ -7,6 +7,8 @@ access_recruitment_placement_user,Recruitment Placement User,model_recruitment_p
 access_recruitment_placement_manager,Recruitment Placement Manager,model_recruitment_placement,group_recruitment_manager,1,1,1,0
 access_hr_applicant_user,HR Applicant User,hr_recruitment.model_hr_applicant,base.group_user,1,0,0,0
 access_hr_applicant_manager,HR Applicant Manager,hr_recruitment.model_hr_applicant,group_recruitment_manager,1,1,1,0
+access_recruitment_agency_user,Recruitment Agency User,model_recruitment_agency,base.group_user,1,0,0,0
+access_recruitment_agency_manager,Recruitment Agency Manager,model_recruitment_agency,group_recruitment_manager,1,1,1,0
 access_uae_visa_processing_user,UAE Visa Processing User,model_uae_visa_processing,base.group_user,1,0,0,0
 access_uae_visa_processing_manager,UAE Visa Processing Manager,model_uae_visa_processing,group_recruitment_manager,1,1,1,0
 access_uae_visa_stage_user,UAE Visa Stage User,model_uae_visa_stage,base.group_user,1,0,0,0

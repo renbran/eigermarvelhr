@@ -1,20 +1,4 @@
 # -*- coding: utf-8 -*-
-from odoo import http
-from odoo.http import request
-
-
-class WebsiteEigerMarvel(http.Controller):
-    @http.route('/workforce360', type='http', auth='public', website=True)
-    def workforce360(self, **kwargs):
-        html = request.env['ir.ui.view']._render_template('website_eiger_marvel.workforce360')
-        resp = request.make_response(html)
-        # Ensure CSP allows embedding common providers and our Netlify domain for any nested frames
-        resp.headers['Content-Security-Policy'] = (
-            "frame-src 'self' https://eigermarvel.netlify.app data: blob:; "
-            "frame-ancestors 'self'"
-        )
-        return resp
-# -*- coding: utf-8 -*-
 
 from odoo import http
 from odoo.http import request

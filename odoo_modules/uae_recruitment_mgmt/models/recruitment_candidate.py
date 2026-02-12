@@ -34,6 +34,11 @@ class HrApplicantInherit(models.Model):
     
     # Job Order Relationship
     job_order_ids = fields.Many2many('recruitment.job.order', string='Applied Job Orders')
+    
+    # Agency Relationship
+    agency_id = fields.Many2one('recruitment.agency', string='Recruitment Agency', 
+                                tracking=True, index=True,
+                                help='The recruitment agency that sourced this candidate')
 
     # Submission / Placement
     submission_date = fields.Date('Submission Date')
@@ -375,3 +380,20 @@ Resume:
             self.message_post(body=_('Applicant synced to website'))
         except Exception as e:
             self.message_post(body=_('Sync failed: %s') % str(e))
+
+    def action_send_offer(self):
+        """Send offer to candidate"""
+        self.write({'offer_status': 'sent'})
+        self.message_post(body=_('Offer sent to candidate'))
+
+    def action_reject(self):
+        """Reject candidate"""
+        self.write({'stage_id': self.env.ref('hr_recruitment.stage_job3').id if self.env.ref('hr_recruitment.stage_job3', raise_if_not_found=False) else False})
+        self.message_post(body=_('Candidate rejected'))
+
+    def action_set_to_draft(self):
+        """Set candidate to application (draft) stage"""
+        application_stage = self.env['hr.recruitment.stage'].search([('name', '=', 'Application')], limit=1)
+        if application_stage:
+            self.write({'stage_id': application_stage.id})
+        self.message_post(body=_('Candidate set to application stage'))
