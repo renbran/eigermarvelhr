@@ -1,0 +1,34 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "ui-ux-designer": {
+      "model": "freellmapi/deepseek-v4-flash-free",
+      "temperature": 0.5,
+      "prompt": ".opencode/agents/ui-ux-motion-designer.md",
+      "description": "Elite UI/UX Designer & Motion Engineering Specialist — GSAP, ScrollTrigger, Lenis, premium web experiences. Designs award-worthy interfaces with cinematic motion.",
+      "mode": "subagent",
+      "color": "#8b5cf6",
+      "maxSteps": 25,
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "glob": true,
+        "grep": true,
+        "webfetch": true
+      },
+      "permission": {
+        "edit": {
+          "**": "allow"
+        },
+        "bash": {
+          "npm *": "allow",
+          "npx *": "ask",
+          "pip *": "ask",
+          "*": "ask"
+        }
+      }
+    }
+  }
+}

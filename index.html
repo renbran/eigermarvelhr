@@ -11,19 +11,19 @@
 <meta property="og:description" content="Integrated recruitment, payroll, compliance & ERP. Cinema-grade enterprise experience." />
 <meta property="og:url" content="https://eigermarvelhr.com" />
 <meta property="og:image" content="https://eigermarvelhr.com/og-default.jpg" />
-<meta name="theme-color" content="#0A1F44" />
+<meta name="theme-color" content="#070707" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <style>
-:root{--gold:#c9a54a;--gold-light:#e6c96a;--gold-dark:#a8893d;--bg:#0A1F44;--bg-surface:#0c234d;--bg-card:#112b5a;--bg-glow:rgba(201,165,74,0.08);--accent-construction:#f39c12;--accent-hospitality:#3498db;--accent-events:#8e44ad;--text-primary:#f0ede6;--text-secondary:#b7c0ce;--text-muted:#7482a8;--success:#10b981;--border:rgba(201,165,74,0.15);--glass:rgba(255,255,255,0.06);--glass-border:rgba(201,165,74,0.18);--radius:16px;--radius-sm:10px;--shadow:0 8px 40px rgba(0,0,0,0.3);--shadow-hover:0 16px 56px rgba(0,0,0,0.5);--transition:0.5s cubic-bezier(0.22,1,0.36,1);--font-title:'Cormorant Garamond',serif;--font-base:'Outfit',sans-serif;--nav-h:72px}
+:root{--gold:#c9a54a;--gold-light:#e6c96a;--gold-dark:#a8893d;--bg:#070707;--bg-surface:#0e0e0e;--bg-card:#141414;--bg-glow:rgba(201,165,74,0.08);--accent-construction:#f39c12;--accent-hospitality:#3498db;--accent-events:#8e44ad;--text-primary:#f0ede6;--text-secondary:#9a9690;--text-muted:#5a5652;--success:#10b981;--border:rgba(201,165,74,0.12);--glass:rgba(255,255,255,0.06);--glass-border:rgba(201,165,74,0.18);--radius:16px;--radius-sm:10px;--shadow:0 8px 40px rgba(0,0,0,0.5);--shadow-hover:0 16px 56px rgba(0,0,0,0.7);--transition:0.5s cubic-bezier(0.22,1,0.36,1);--font-title:'Cormorant Garamond',serif;--font-base:'Outfit',sans-serif;--nav-h:72px}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{font-family:var(--font-base);background:var(--bg);color:var(--text-primary);overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:auto!important}
+html{overflow-x:hidden}
+body{font-family:var(--font-base);background:var(--bg);color:var(--text-primary);overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none!important}
 a{color:var(--gold);text-decoration:none;transition:color 0.2s}
 a:hover{color:var(--gold-light)}
 img{max-width:100%;height:auto;display:block}
@@ -87,6 +87,7 @@ section{padding:100px 0;position:relative;overflow:hidden}
 .hero-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(201,165,74,0.03)80px,rgba(201,165,74,0.03)81px),repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(201,165,74,0.03)80px,rgba(201,165,74,0.03)81px);pointer-events:none}
 .hero-content{position:relative;z-index:2;max-width:960px}
 .hero h1{background:linear-gradient(135deg,var(--text-primary)40%,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
+.gold-divider{height:1.5px;width:100%;background:linear-gradient(90deg,transparent 0%,var(--gold-dark) 20%,var(--gold) 50%,var(--gold-light) 80%,transparent 100%);margin:0 auto;max-width:1280px}
 .hero h1 .highlight{-webkit-text-fill-color:var(--gold);background:none}
 .hero .sub{font-size:clamp(16px,1.6vw,20px);color:var(--text-secondary);max-width:780px;margin-bottom:28px;line-height:1.8}
 .hero-actions{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px}
@@ -242,6 +243,8 @@ section{padding:60px 0}
     </div>
   </div>
 </section>
+<div style="padding:0 24px;position:relative;z-index:2"><div class="gold-divider" style="transform:scaleX(0);transform-origin:left" id="goldDivider"></div></div>
+<script>ScrollTrigger.create({trigger:'#goldDivider',start:'top 85%',once:true,onEnter:()=>gsap.to('#goldDivider',{scaleX:1,duration:1.5,ease:'power3.out'})})</script>
 <!-- TRUST STRIP -->
 <section class="trust-strip">
   <div class="container trust-inner">
@@ -475,29 +478,157 @@ section{padding:60px 0}
     <div class="footer-bottom"><p>© 2026 Eiger Marvel Consultants. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p></div>
   </div>
 </footer>
+<div id="scroll-progress" style="position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light));z-index:9999;width:0%;pointer-events:none;transition:width 0.1s linear"></div>
+<div id="cursor" style="position:fixed;width:12px;height:12px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);box-shadow:0 0 20px rgba(201,165,74,0.5);transition:width 0.2s,height 0.2s,background 0.2s"></div>
+<div id="cursor-ring" style="position:fixed;width:40px;height:40px;border:1.5px solid rgba(201,165,74,0.4);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s,border-color 0.3s"></div>
 <a href="https://wa.me/97145751100" target="_blank" rel="noopener" class="wa-float" title="Chat on WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.77 11.77 0 0012.02 0C5.41 0 .03 5.38.03 11.99c0 2.11.56 4.16 1.62 5.97L0 24l6.2-1.62a11.99 11.99 0 005.82 1.5h.01c6.61 0 12-5.38 12-12 0-3.2-1.25-6.21-3.51-8.4zM12.03 22c-1.8 0-3.56-.49-5.1-1.42l-.37-.22-3.68.97.99-3.58-.24-.37A9.93 9.93 0 012.03 12C2.03 6.49 6.51 2 12.02 2c2.67 0 5.19 1.04 7.08 2.93A9.96 9.96 0 0122.02 12c0 5.51-4.49 10-9.99 10zm5.47-7.55c-.3-.15-1.76-.87-2.04-.97-.27-.1-.47-.15-.66.15-.2.3-.76.96-.93 1.16-.17.2-.34.22-.64.07-.3-.15-1.28-.47-2.43-1.5-.9-.8-1.52-1.78-1.7-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.66-1.6-.9-2.19-.23-.55-.47-.48-.66-.48-.17 0-.37 0-.57 0-.2 0-.53.08-.81.38-.28.3-1.06 1.03-1.06 2.5 0 1.47 1.08 2.9 1.24 3.1.15.2 2.14 3.26 5.2 4.43.73.31 1.3.5 1.75.64.73.23 1.4.2 1.93.12.58-.09 1.77-.72 2.03-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/></svg>
 </a>
 <script>
-const lenis=new Lenis({duration:1.2,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),orientation:'vertical',smoothWheel:true});
-lenis.on('scroll',ScrollTrigger.update);
-gsap.ticker.add(t=>lenis.raf(t*1000));
-gsap.ticker.lagSmoothing(0);
 gsap.registerPlugin(ScrollTrigger);
-document.querySelectorAll('[data-anim="fadeUp"]').forEach(el=>{gsap.from(el,{opacity:0,y:60,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%'}})});
-function animateCounters(){document.querySelectorAll('[data-count]').forEach(el=>{const t=parseInt(el.dataset.count);let c=0;const s=Math.max(1,Math.floor(t/60));const i=setInterval(()=>{c+=s;if(c>=t){c=t;clearInterval(i)}el.textContent=c},2000/(t/s))})}
-let countersDone=false;ScrollTrigger.create({trigger:'.trust-strip',start:'top 80%',onEnter:()=>{if(!countersDone){animateCounters();countersDone=true}}});
-window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)});
-document.getElementById('menuToggle').addEventListener('click',function(){this.classList.toggle('open');document.getElementById('mobileNav').classList.toggle('open')});
-function closeMobileNav(){document.getElementById('menuToggle').classList.remove('open');document.getElementById('mobileNav').classList.remove('open')}
-document.querySelectorAll('.mobile-nav a').forEach(a=>a.addEventListener('click',closeMobileNav));
-function smoothScroll(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
-const cursor=document.getElementById('cursor');if(cursor){document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});document.addEventListener('mouseover',e=>{const t=e.target;cursor.classList.toggle('hovering',t.tagName==='A'||t.tagName==='BUTTON'||t.closest('a')||t.closest('button'))})}
-window.addEventListener('scroll',()=>{const sp=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100;document.getElementById('scroll-progress').style.width=sp+'%'});
-const hg=document.getElementById('heroGlow');if(hg){document.addEventListener('mousemove',e=>{const x=(e.clientX/window.innerWidth-.5)*40;const y=(e.clientY/window.innerHeight-.5)*40;hg.style.transform=`translate(${x}px,${y}px)`})}
-function toggleFaq(b){b.classList.toggle('open');const a=b.nextElementSibling;a.style.display=a.style.display==='block'?'none':'block'}
-function handleContact(e){e.preventDefault();const btn=e.target.querySelector('button');const orig=btn.textContent;btn.textContent='✓ Message Sent!';btn.style.background='linear-gradient(135deg,#10b981,#059669)';btn.disabled=true;setTimeout(()=>{e.target.reset();btn.textContent=orig;btn.style.background='';btn.disabled=false},2500)}
-window.addEventListener('scroll',()=>{const s=document.querySelectorAll('section[id]');const l=document.querySelectorAll('.nav-links a:not(.nav-login):not(.nav-cta)');let cur='';s.forEach(e=>{if(window.scrollY>=e.offsetTop-300)cur=e.getAttribute('id')});l.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active')})});
+
+// ── Lenis smooth scroll ──
+const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), orientation: 'vertical', smoothWheel: true });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+
+// ── ScrollTrigger stagger sections ──
+document.querySelectorAll('[data-anim="fadeUp"]').forEach(el => {
+  gsap.from(el, {
+    opacity: 0, y: 60, duration: 1.2, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 85%' }
+  });
+});
+
+// ── Word-by-word heading reveals ──
+document.querySelectorAll('h2').forEach(heading => {
+  if (heading.closest('.hero-content') || heading.closest('.cta-box')) return;
+  const words = heading.textContent.trim().split(' ');
+  heading.innerHTML = '';
+  words.forEach((w, i) => {
+    const span = document.createElement('span');
+    span.textContent = w + ' ';
+    span.style.display = 'inline-block';
+    span.style.opacity = '0';
+    span.style.transform = 'translateY(30px)';
+    heading.appendChild(span);
+  });
+  ScrollTrigger.create({
+    trigger: heading,
+    start: 'top 80%',
+    once: true,
+    onEnter: () => {
+      gsap.to(heading.children, {
+        opacity: 1, y: 0, duration: 0.6, stagger: 0.04, ease: 'power3.out'
+      });
+    }
+  });
+});
+
+// ── GSAP metric counters ──
+function animateCounters() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    gsap.fromTo(el, { textContent: 0 }, {
+      textContent: target, duration: 2, ease: 'power2.out',
+      snap: { textContent: 1 },
+      onUpdate: () => el.textContent = Math.round(parseFloat(el.textContent))
+    });
+  });
+}
+let countersDone = false;
+ScrollTrigger.create({
+  trigger: '.trust-strip',
+  start: 'top 80%',
+  onEnter: () => { if (!countersDone) { animateCounters(); countersDone = true; } }
+});
+
+// ── Navbar scroll effect ──
+ScrollTrigger.create({
+  trigger: 'body',
+  start: 'top -50px',
+  onUpdate: self => {
+    document.getElementById('navbar').classList.toggle('scrolled', self.progress > 0);
+  }
+});
+
+// ── Section nav highlighting via ScrollTrigger ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a:not(.nav-login):not(.nav-cta)');
+sections.forEach(s => {
+  ScrollTrigger.create({
+    trigger: s,
+    start: 'top 40%',
+    end: 'bottom 40%',
+    onEnter: () => {
+      navLinks.forEach(a => { a.classList.remove('active'); if (a.getAttribute('href') === '#' + s.id) a.classList.add('active'); });
+    },
+    onEnterBack: () => {
+      navLinks.forEach(a => { a.classList.remove('active'); if (a.getAttribute('href') === '#' + s.id) a.classList.add('active'); });
+    }
+  });
+});
+
+// ── Mobile menu ──
+document.getElementById('menuToggle').addEventListener('click', function () {
+  this.classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+function closeMobileNav() {
+  document.getElementById('menuToggle').classList.remove('open');
+  document.getElementById('mobileNav').classList.remove('open');
+}
+document.querySelectorAll('.mobile-nav a').forEach(a => a.addEventListener('click', closeMobileNav));
+function smoothScroll(id) { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+// ── Custom cursor ──
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursor-ring');
+if (cursor && cursorRing) {
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  gsap.ticker.add(() => {
+    gsap.set(cursor, { x: mx, y: my });
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    gsap.set(cursorRing, { x: rx, y: ry });
+  });
+  document.addEventListener('mouseover', e => {
+    const t = e.target;
+    const isClickable = t.tagName === 'A' || t.tagName === 'BUTTON' || t.closest('a') || t.closest('button');
+    gsap.to(cursor, { width: isClickable ? 24 : 12, height: isClickable ? 24 : 12, background: isClickable ? 'rgba(201,165,74,0.3)' : 'var(--gold)', duration: 0.2 });
+    gsap.to(cursorRing, { width: isClickable ? 48 : 40, height: isClickable ? 48 : 40, borderColor: isClickable ? 'rgba(201,165,74,0.6)' : 'rgba(201,165,74,0.4)', duration: 0.3 });
+  });
+}
+
+// ── Hero glow parallax ──
+const hg = document.getElementById('heroGlow');
+if (hg) {
+  document.addEventListener('mousemove', e => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 40;
+    const y = (e.clientY / window.innerHeight - 0.5) * 40;
+    hg.style.transform = `translate(${x}px,${y}px)`;
+  });
+}
+
+// ── FAQ toggle ──
+function toggleFaq(b) {
+  b.classList.toggle('open');
+  const a = b.nextElementSibling;
+  a.style.display = a.style.display === 'block' ? 'none' : 'block';
+}
+
+// ── Contact form ──
+function handleContact(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  const orig = btn.textContent;
+  btn.textContent = '✓ Message Sent!';
+  btn.style.background = 'linear-gradient(135deg,#10b981,#059669)';
+  btn.disabled = true;
+  setTimeout(() => { e.target.reset(); btn.textContent = orig; btn.style.background = ''; btn.disabled = false; }, 2500);
+}
 </script>
 </body>
 </html>

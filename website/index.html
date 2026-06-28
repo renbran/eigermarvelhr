@@ -30,7 +30,7 @@
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
 
-        html { scroll-behavior: smooth; }
+        html { }
 
         body {
             font-family: 'Outfit', sans-serif;
@@ -1171,20 +1171,165 @@
         </svg>
     </a>
 
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ═══ Lenis smooth scroll ══════════════════════════════════
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        // ═══ Loading screen ═══════════════════════════════════════
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('loading-screen').classList.add('lifted');
             }, 2800);
         });
 
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            document.getElementById('scroll-progress').style.width = scrollPercent + '%';
+        // ═══ Scroll progress ══════════════════════════════════════
+        gsap.to('#scroll-progress', {
+            width: '100%',
+            ease: 'none',
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.3,
+            }
         });
 
+        // ═══ Hero animations ══════════════════════════════════════
+        const heroCtx = gsap.context(() => {
+            // Word-by-word stagger for hero h1
+            const heroH1 = document.querySelector('.hero h1');
+            if (heroH1) {
+                const words = heroH1.textContent.trim().split(' ');
+                heroH1.innerHTML = '';
+                words.forEach((w, i) => {
+                    const span = document.createElement('span');
+                    span.textContent = w + ' ';
+                    span.style.display = 'inline-block';
+                    span.style.opacity = '0';
+                    span.style.transform = 'translateY(30px) rotateX(60deg)';
+                    heroH1.appendChild(span);
+                });
+                gsap.to(heroH1.children, {
+                    opacity: 1,
+                    y: 0,
+                    rotateX: 0,
+                    duration: 0.6,
+                    stagger: 0.04,
+                    ease: 'power3.out',
+                    delay: 0.2,
+                    scrollTrigger: { trigger: '.hero', start: 'top 80%', toggleActions: 'play none none none' }
+                });
+            }
+        });
+
+        // ═══ Section heading word-by-word reveals ════════════════
+        document.querySelectorAll('.section-head h2').forEach((el) => {
+            const words = el.textContent.trim().split(' ');
+            el.innerHTML = '';
+            words.forEach((w, i) => {
+                const span = document.createElement('span');
+                span.textContent = w + ' ';
+                span.style.display = 'inline-block';
+                span.style.opacity = '0';
+                span.style.transform = 'translateY(20px)';
+                el.appendChild(span);
+            });
+            gsap.to(el.children, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: 0.03,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: el.closest('.section-head'),
+                    start: 'top 85%',
+                    once: true,
+                }
+            });
+        });
+
+        // ═══ [data-reveal] cards staggered reveal ══════════════
+        document.querySelectorAll('[data-reveal]').forEach((el, idx) => {
+            const delay = parseInt(el.getAttribute('data-delay') || '0', 10) / 1000;
+            gsap.fromTo(el, { opacity: 0, y: 40 }, {
+                opacity: 1, y: 0,
+                duration: 0.6,
+                delay: delay + 0.1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 90%',
+                    once: true,
+                }
+            });
+        });
+
+        // ═══ Metric counter animation ════════════════════════════
+        document.querySelectorAll('.metric').forEach((el) => {
+            const text = el.textContent.trim();
+            const suffix = text.replace(/[\d.,]/g, '');
+            const target = parseFloat(text.replace(/[^\d.]/g, ''));
+            if (isNaN(target)) return;
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 85%',
+                once: true,
+                onEnter: () => {
+                    gsap.fromTo(el, { textContent: 0 }, {
+                        textContent: target,
+                        duration: 1.5,
+                        ease: 'power2.out',
+                        snap: { textContent: 1 },
+                        onUpdate: () => {
+                            el.textContent = Math.round(parseFloat(el.textContent || '0')) + suffix;
+                        }
+                    });
+                }
+            });
+        });
+
+        // ═══ Header scroll effect ════════════════════════════════
+        ScrollTrigger.create({
+            trigger: 'body',
+            start: '50px top',
+            onEnter: () => document.getElementById('header')?.classList.add('scrolled'),
+            onLeaveBack: () => document.getElementById('header')?.classList.remove('scrolled'),
+        });
+
+        // ═══ Active nav section tracking ═════════════════════════
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a.nav-link');
+        sections.forEach((section) => {
+            ScrollTrigger.create({
+                trigger: section,
+                start: 'top 200px',
+                end: 'bottom 200px',
+                onEnter: () => {
+                    navLinks.forEach((link) => {
+                        const href = link.getAttribute('href');
+                        if (href === `#${section.id}`) link.classList.add('active');
+                        else link.classList.remove('active');
+                    });
+                },
+                onEnterBack: () => {
+                    navLinks.forEach((link) => {
+                        const href = link.getAttribute('href');
+                        if (href === `#${section.id}`) link.classList.add('active');
+                        else link.classList.remove('active');
+                    });
+                },
+            });
+        });
+
+        // ═══ Custom cursor ═══════════════════════════════════════
         const cursor = document.getElementById('cursor');
         let cursorVisible = true;
 
@@ -1211,6 +1356,7 @@
             }
         });
 
+        // ═══ Hero glow parallax ══════════════════════════════════
         const heroGlow = document.getElementById('hero-glow');
         document.addEventListener('mousemove', (e) => {
             if (heroGlow) {
@@ -1220,14 +1366,16 @@
             }
         });
 
+        // ═══ Smooth scroll navigation ════════════════════════════
         function smoothScroll(id) {
             const element = document.getElementById(id);
             if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                lenis.scrollTo(element);
                 closeMobileNav();
             }
         }
 
+        // ═══ Mobile nav toggle ════════════════════════════════════
         const menuToggle = document.getElementById('menu-toggle');
         const mobileNav = document.getElementById('mobile-nav');
 
@@ -1241,48 +1389,7 @@
             mobileNav?.classList.remove('open');
         }
 
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        document.querySelectorAll('[data-reveal]').forEach(el => {
-            revealObserver.observe(el);
-        });
-
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('nav a.nav-link');
-            let current = '';
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (window.pageYOffset >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
+        // ═══ Booking form ════════════════════════════════════════
         function handleBookingSubmit(e) {
             e.preventDefault();
             const formData = new FormData(e.target);

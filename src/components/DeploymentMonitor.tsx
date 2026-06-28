@@ -13,7 +13,7 @@ interface ErrorLog {
   component: string;
   message: string;
   stack?: string;
-  context?: Record<string, any>;
+  context?: Record<string, unknown>;
   resolved: boolean;
 }
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Toaster } from 'sonner'
 import { toast } from 'sonner'
@@ -10,6 +10,7 @@ import { CandidateDashboard } from '@/components/pages/CandidateDashboard'
 import { PremiumUpgradePage } from '@/components/pages/PremiumUpgradePage'
 import { HeroSection } from '@/components/home/HeroSection'
 import { LiveJobsSection } from '@/components/home/LiveJobsSection'
+import { TrustedCompaniesSection } from '@/components/home/TrustedCompaniesSection'
 import { TalentTechSection } from '@/components/home/TalentTechSection'
 import { ServicesSection } from '@/components/home/ServicesSection'
 import { PremiumSection } from '@/components/home/PremiumSection'
@@ -17,6 +18,11 @@ import { JobsPage } from '@/components/pages/JobsPage'
 import { PrivacyPolicyPage } from '@/components/pages/PrivacyPolicyPage'
 import { OdooSyncStatus } from '@/components/OdooSyncStatus'
 import ErrorBoundary from '@/components/ErrorBoundary'
+import { LoadingScreen } from '@/components/ui/LoadingScreen'
+import { ScrollProgress } from '@/components/ui/ScrollProgress'
+import { CustomCursor } from '@/components/ui/CustomCursor'
+import { FloatingCTA } from '@/components/ui/FloatingCTA'
+import { LenisProvider } from '@/components/LenisProvider'
 import type { UserType, JobPosting, CandidateProfile, User } from '@/lib/types'
 import { sampleJobs } from '@/lib/sample-jobs'
 
@@ -30,6 +36,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [candidateProfile, setCandidateProfile] = useState<CandidateProfile | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [showLoadingScreen, setShowLoadingScreen] = useState(true)
   
   const [jobs] = useKV<JobPosting[]>('jobs', [])
 
@@ -185,6 +192,10 @@ function App() {
 
   const effectiveJobs = (jobs && jobs.length > 0) ? jobs : sampleJobs
 
+  const handleLoadingComplete = useCallback(() => {
+    setShowLoadingScreen(false)
+  }, [])
+
   if (isLoading) {
     return (
       <div className="flex flex-col min-h-screen">
@@ -209,6 +220,10 @@ function App() {
 
   return (
     <ErrorBoundary>
+      <LenisProvider>
+      <LoadingScreen minDuration={2000} onComplete={handleLoadingComplete} />
+      <ScrollProgress />
+      <CustomCursor />
       <div className="flex flex-col min-h-screen">
       <Header 
         onNavigate={setCurrentPage}
@@ -230,6 +245,7 @@ function App() {
         {currentPage === 'home' && (
           <>
             <HeroSection onNavigate={setCurrentPage} />
+            <TrustedCompaniesSection />
             <LiveJobsSection 
               jobs={effectiveJobs} 
               onNavigate={setCurrentPage}
@@ -481,6 +497,8 @@ function App() {
 
       <Toaster position="top-right" />
     </div>
+    <FloatingCTA />
+    </LenisProvider>
     </ErrorBoundary>
   )
 }

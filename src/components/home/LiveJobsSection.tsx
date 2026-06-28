@@ -1,7 +1,16 @@
+'use client'
+
+import { useRef, useEffect } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Button } from '@/components/ui/button'
 import { JobCard } from '@/components/JobCard'
 import { ArrowRight, Lightning } from '@phosphor-icons/react'
 import type { JobPosting } from '@/lib/types'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const GOLD = 'oklch(0.82 0.12 85)'
 
 interface LiveJobsSectionProps {
   jobs: JobPosting[]
@@ -10,27 +19,72 @@ interface LiveJobsSectionProps {
 }
 
 export function LiveJobsSection({ jobs, onNavigate, onViewJob }: LiveJobsSectionProps) {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const gridRef = useRef<HTMLDivElement>(null)
   const displayJobs = jobs.slice(0, 6)
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Header reveal
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current.querySelectorAll('h2, p, button'),
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',
+            scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true }
+          }
+        )
+      }
+
+      // Job cards stagger
+      if (gridRef.current) {
+        const cards = gridRef.current.children
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 40, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out',
+            scrollTrigger: { trigger: gridRef.current, start: 'top 85%', once: true }
+          }
+        )
+      }
+    }, [sectionRef])
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section className="py-16 sm:py-20 bg-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+    <section ref={sectionRef} className="py-16 sm:py-20 bg-black relative overflow-hidden">
+      {/* Ambient gold glow */}
+      <div className="absolute top-0 right-0 w-96 h-96 opacity-[0.03] pointer-events-none"
+        style={{ background: `radial-gradient(ellipse, ${GOLD}, transparent 70%)` }}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div ref={headerRef} className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
           <div className="w-full sm:w-auto">
             <div className="flex items-center gap-2 mb-2">
-              <Lightning size={24} weight="fill" className="text-accent flex-shrink-0" />
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white break-words">
+              {/* Live pulse dot */}
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                  style={{ backgroundColor: GOLD }}
+                />
+                <span className="relative inline-flex rounded-full h-3 w-3"
+                  style={{ backgroundColor: GOLD }}
+                />
+              </span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
                 Live Job Opportunities
               </h2>
             </div>
-            <p className="text-sm sm:text-base text-gray-400 break-words">
+            <p className="text-sm sm:text-base text-gray-400">
               {jobs.length} active positions waiting for the right talent
             </p>
           </div>
           <Button
             variant="outline"
             onClick={() => onNavigate('jobs')}
-            className="hidden sm:flex items-center gap-2 flex-shrink-0 whitespace-nowrap"
+            className="hidden sm:flex items-center gap-2 flex-shrink-0 whitespace-nowrap border-[oklch(0.82_0.12_85/0.3)] text-[oklch(0.82_0.12_85)] hover:bg-[oklch(0.82_0.12_85/0.1)]"
           >
             View All Jobs
             <ArrowRight size={16} weight="bold" />
@@ -39,10 +93,10 @@ export function LiveJobsSection({ jobs, onNavigate, onViewJob }: LiveJobsSection
 
         {displayJobs.length === 0 ? (
           <div className="text-center py-12 bg-white/5 backdrop-blur-md rounded-lg border border-white/10">
-            <p className="text-sm sm:text-base text-gray-400 break-words px-4">No jobs available at the moment. Check back soon!</p>
+            <p className="text-sm sm:text-base text-gray-400">No jobs available at the moment. Check back soon!</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {displayJobs.map(job => (
               <JobCard
                 key={job.id}
@@ -57,7 +111,7 @@ export function LiveJobsSection({ jobs, onNavigate, onViewJob }: LiveJobsSection
         <div className="mt-8 text-center sm:hidden">
           <Button
             onClick={() => onNavigate('jobs')}
-            className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold"
+            className="bg-gradient-to-r from-[oklch(0.82_0.12_85)] to-[oklch(0.87_0.13_85)] text-black font-semibold"
           >
             View All Jobs
             <ArrowRight size={16} weight="bold" className="ml-2" />

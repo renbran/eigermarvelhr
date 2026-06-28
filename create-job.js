@@ -1,4 +1,4 @@
-const https = require('https');
+import https from 'https';
 
 // Job creation data for Odoo
 const jobData = {
@@ -52,7 +52,7 @@ const jobData = {
 };
 
 // Simulate Odoo database storage
-console.log('í³‹ Creating Job Post in Odoo Database\n');
+console.log('ï¿½ï¿½ï¿½ Creating Job Post in Odoo Database\n');
 console.log('=' .repeat(60));
 
 console.log('\nâœ“ Job Details Prepared:');
@@ -83,7 +83,7 @@ const cachedJob = {
 };
 
 // Store in a temporary file to simulate database
-const fs = require('fs');
+import fs from 'fs';
 fs.writeFileSync('job-cache.json', JSON.stringify(cachedJob, null, 2));
 
 console.log(`\nâœ“ Job saved with ID: ${jobId}`);
@@ -91,7 +91,7 @@ console.log('\n' + '='.repeat(60));
 console.log('âœ… JOB CREATED SUCCESSFULLY IN ODOO');
 console.log('=' .repeat(60));
 
-console.log('\ní³¡ SYNC STATUS:');
+console.log('\nï¿½ï¿½ï¿½ SYNC STATUS:');
 console.log(`  Source: Odoo (eigermarvel database)`);
 console.log(`  Destination: Website`);
 console.log(`  Status: READY FOR SYNC`);
