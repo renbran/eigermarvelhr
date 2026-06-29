@@ -35,10 +35,8 @@ export function CandidateDashboard({
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-  
-}, [loadApplications]);
-    loadApplications()
-  }, [user.id])
+  loadApplications();
+}, [user.id]);
 
   const loadApplications = async () => {
     try {

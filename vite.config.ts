@@ -26,13 +26,16 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vendor': ['react', 'react-dom'],
-          'ui-components': ['@radix-ui/react-dialog', '@radix-ui/react-select'],
-          'icons': ['@phosphor-icons/react'],
+          'vendor':  ['react', 'react-dom'],
+          'gsap':    ['gsap', '@gsap/react'],
+          'three':   ['three', '@react-three/fiber', '@react-three/drei'],
+          'motion':  ['framer-motion', 'motion'],
+          'ui':      ['@radix-ui/react-dialog', '@radix-ui/react-select', '@radix-ui/react-tooltip', '@radix-ui/react-dropdown-menu'],
+          'icons':   ['@phosphor-icons/react', 'lucide-react'],
         }
       }
     },
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 800,
     minify: 'terser',
   },
 });

@@ -1,146 +1,283 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Users, ChartLine, Megaphone, Buildings, Medal } from '@phosphor-icons/react'
+import { useRef, useEffect, Suspense, useMemo } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { gsap } from '@/lib/gsap'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
+import * as THREE from 'three'
+import {
+  MagnifyingGlass,
+  UsersThree,
+  ClockCounterClockwise,
+  ClipboardText,
+  Airplane,
+  ShieldCheck,
+} from '@phosphor-icons/react'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const GOLD = 'oklch(0.82 0.12 85)'
-const GOLD_LIGHT = 'oklch(0.87 0.13 85)'
-
+// ─── Content ──────────────────────────────────────────────────────────────────
 const services = [
-  { icon: Users, title: 'Human Resources Consultancy', description: 'Comprehensive HR solutions including recruitment, talent management, and organizational development' },
-  { icon: ChartLine, title: 'Management Consultancy', description: 'Strategic business planning, process optimization, and performance improvement' },
-  { icon: Megaphone, title: 'Marketing & Sales Consultancy', description: 'Market analysis, brand strategy, and sales optimization for business growth' },
-  { icon: Buildings, title: 'Business Setup & Company Formation', description: 'Complete UAE company formation and business setup services' },
-  { icon: Medal, title: 'Quality & Standardization (ISO)', description: 'ISO certification consulting and quality management system implementation' },
+  {
+    icon: MagnifyingGlass,
+    title: 'Executive Search',
+    tag: 'Senior Roles',
+    description:
+      'C-suite, directors, and department heads placed with precision. We source leaders who understand the UAE construction and hospitality landscape.',
+  },
+  {
+    icon: UsersThree,
+    title: 'Volume Recruitment',
+    tag: 'Scale Hiring',
+    description:
+      'Project-based bulk hiring delivered on schedule — site crews, banqueting teams, or seasonal workforces from 10 to 500 heads.',
+  },
+  {
+    icon: ClockCounterClockwise,
+    title: 'Contract & Temp Staffing',
+    tag: 'Flexible',
+    description:
+      'On-demand talent for project spikes, peak seasons, and cover requirements. Fully compliant, fully managed.',
+  },
+  {
+    icon: ClipboardText,
+    title: 'Screening & Assessment',
+    tag: 'Quality Assured',
+    description:
+      'Structured competency interviews, background verification, and reference checks. You only meet the top 3–5% who pass our rigorous process.',
+  },
+  {
+    icon: Airplane,
+    title: 'UAE Visa & Work Permit',
+    tag: 'Documentation',
+    description:
+      'End-to-end PRO services — employment visa, medical fitness, Emirates ID, and labour card processing handled from abroad or in-country.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'WPS Compliance',
+    tag: 'Compliance',
+    description:
+      'Every placement is structured for Wage Protection System adherence. We ensure salary packaging and payroll setup meets UAE Ministry of Labour standards.',
+  },
 ]
 
-function TiltCard({ children }: { children: React.ReactNode }) {
-  const cardRef = useRef<HTMLDivElement>(null)
+// ─── Three.js wireframe sphere ────────────────────────────────────────────────
+function WireframeSphere() {
+  const meshRef = useRef<THREE.Mesh>(null)
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = cardRef.current
-    if (!card) return
-    const rect = card.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width - 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5
-    card.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`
-    card.style.boxShadow = `
-      ${x * 20}px ${y * 20}px 30px rgba(214, 184, 92, 0.12),
-      0 0 20px rgba(214, 184, 92, 0.05)
-    `
-  }
-
-  const handleMouseLeave = () => {
-    const card = cardRef.current
-    if (!card) return
-    card.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)'
-    card.style.boxShadow = ''
-  }
+  useFrame(({ clock }) => {
+    if (!meshRef.current) return
+    meshRef.current.rotation.x = clock.elapsedTime * 0.07
+    meshRef.current.rotation.y = clock.elapsedTime * 0.11
+  })
 
   return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="transition-transform duration-200 ease-out"
-      style={{ transformStyle: 'preserve-3d' }}
-    >
-      {children}
-    </div>
+    <mesh ref={meshRef}>
+      <icosahedronGeometry args={[2.2, 2]} />
+      <meshBasicMaterial color="#B8912C" wireframe transparent opacity={0.16} />
+    </mesh>
   )
 }
 
+function SceneBackground() {
+  return (
+    <Canvas
+      camera={{ position: [0, 0, 6], fov: 50 }}
+      gl={{ alpha: true, antialias: true }}
+      style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+    >
+      <Suspense fallback={null}>
+        <WireframeSphere />
+      </Suspense>
+    </Canvas>
+  )
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
 export function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
-  const headerRef = useRef<HTMLDivElement>(null)
-  const gridRef = useRef<HTMLDivElement>(null)
+  const headerRef  = useRef<HTMLDivElement>(null)
+  const gridRef    = useRef<HTMLDivElement>(null)
+  const reducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header reveal
-      if (headerRef.current) {
-        gsap.fromTo(
-          headerRef.current.querySelectorAll('h2, p'),
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out',
-            scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true }
-          }
-        )
-      }
-
-      // Gold shimmer line
+      // Header children reveal
+      const hEls = headerRef.current?.querySelectorAll('[data-reveal]') ?? []
       gsap.fromTo(
-        sectionRef.current?.querySelector('.section-gold-line'),
+        hEls,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1, y: 0,
+          duration: 0.8, stagger: 0.12, ease: 'power3.out',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 78%', once: true },
+        }
+      )
+
+      // Divider draw
+      gsap.fromTo(
+        sectionRef.current?.querySelector('.svc-divider'),
         { scaleX: 0 },
-        { scaleX: 1, duration: 1.2, ease: 'power3.out',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true }
+        {
+          scaleX: 1, duration: 1.3, ease: 'power3.inOut', transformOrigin: 'left',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 76%', once: true },
         }
       )
 
       // Cards stagger
-      if (gridRef.current) {
-        const cards = gridRef.current.querySelectorAll('.service-card')
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 50, scale: 0.95 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: 'power2.out',
-            scrollTrigger: { trigger: gridRef.current, start: 'top 85%', once: true }
-          }
-        )
-      }
-    }, [sectionRef])
+      const cards = gridRef.current?.querySelectorAll('.svc-card') ?? []
+      gsap.fromTo(
+        cards,
+        { opacity: 0, y: 56, scale: 0.95 },
+        {
+          opacity: 1, y: 0, scale: 1,
+          duration: 0.65, stagger: { amount: 0.55 }, ease: 'power3.out',
+          scrollTrigger: { trigger: gridRef.current, start: 'top 84%', once: true },
+        }
+      )
+    }, sectionRef)
 
     return () => ctx.revert()
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-16 sm:py-20 bg-black relative overflow-hidden">
-      {/* Ambient gold glow */}
-      <div className="absolute top-0 left-1/3 w-1/2 h-1/2 opacity-[0.03] pointer-events-none"
-        style={{ background: `radial-gradient(ellipse, ${GOLD}, transparent 70%)` }}
+    <section
+      ref={sectionRef}
+      className="relative py-24 sm:py-32 overflow-hidden"
+      style={{ background: '#0A0A0E' }}
+    >
+      {/* Three.js wireframe — right ambient background */}
+      {!reducedMotion && (
+        <div
+          className="absolute right-[-80px] top-1/2 -translate-y-1/2 w-[520px] h-[520px] pointer-events-none"
+          aria-hidden="true"
+        >
+          <SceneBackground />
+        </div>
+      )}
+
+      {/* Radial gold glow behind the sphere */}
+      <div
+        className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(184,145,44,0.06) 0%, transparent 70%)',
+          filter: 'blur(40px)',
+        }}
+        aria-hidden="true"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div ref={headerRef} className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Core HR Services
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
+        {/* ── Header ─────────────────────────────────────────────── */}
+        <div ref={headerRef} className="max-w-xl mb-14">
+          <div className="flex items-center gap-3 mb-5" data-reveal>
+            <span className="h-px w-8 block" style={{ background: '#B8912C' }} />
+            <span
+              className="text-xs uppercase tracking-[0.16em] font-medium"
+              style={{ color: 'rgba(184,145,44,0.85)' }}
+            >
+              Recruitment Services
+            </span>
+          </div>
+
+          <h2
+            data-reveal
+            className="font-display font-light leading-tight mb-4"
+            style={{
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              color: '#F4F4F5',
+              letterSpacing: '-0.025em',
+            }}
+          >
+            Specialist Hiring,<br />
+            <span style={{ color: '#D4A84B' }}>Delivered On Time</span>
           </h2>
-          <p className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto">
-            Comprehensive consultancy solutions tailored to MENA market requirements
+
+          <p
+            data-reveal
+            className="font-body leading-relaxed"
+            style={{ color: 'rgba(209,213,219,0.6)', fontSize: '1.05rem' }}
+          >
+            Six core services purpose-built for construction and hospitality — the sectors
+            where precision, speed, and UAE compliance are non-negotiable.
           </p>
         </div>
 
         {/* Gold divider */}
-        <div className="flex justify-center mb-10">
-          <div className="section-gold-line h-[1px] w-24 scale-x-0 origin-center rounded-full"
-            style={{ background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)` }}
-          />
-        </div>
+        <div
+          className="svc-divider mb-14 h-px"
+          style={{ width: 72, background: 'linear-gradient(90deg, #B8912C, #D4A84B, transparent)' }}
+        />
 
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, idx) => {
-            const Icon = service.icon
+        {/* ── Grid ───────────────────────────────────────────────── */}
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
+          {services.map((svc, i) => {
+            const Icon = svc.icon
             return (
-              <TiltCard key={idx}>
-                <div className="service-card bg-white/[0.03] backdrop-blur-sm border border-white/10 hover:border-[oklch(0.82_0.12_85/0.3)] rounded-xl p-6 transition-all duration-300"
-                  style={{ transformStyle: 'preserve-3d' }}
+              <div
+                key={i}
+                className="svc-card group relative rounded-2xl p-6 cursor-default transition-colors duration-300"
+                style={{
+                  background: 'rgba(255,255,255,0.025)',
+                  border: '1px solid rgba(255,255,255,0.055)',
+                }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.background = 'rgba(184,145,44,0.04)'
+                  el.style.borderColor = 'rgba(184,145,44,0.22)'
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.background = 'rgba(255,255,255,0.025)'
+                  el.style.borderColor = 'rgba(255,255,255,0.055)'
+                }}
+              >
+                {/* Icon pill */}
+                <div
+                  className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                  style={{
+                    background: 'rgba(184,145,44,0.09)',
+                    border: '1px solid rgba(184,145,44,0.16)',
+                  }}
                 >
-                  <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4"
+                  <Icon size={21} weight="bold" color="#D4A84B" />
+                </div>
+
+                {/* Tag */}
+                <div className="mb-3">
+                  <span
+                    className="text-[10px] uppercase tracking-[0.1em] font-medium px-2 py-0.5 rounded"
                     style={{
-                      background: `linear-gradient(135deg, oklch(0.82 0.12 85 / 0.2), oklch(0.82 0.12 85 / 0.05))`,
-                      border: `1px solid oklch(0.82 0.12 85 / 0.2)`,
+                      background: 'rgba(184,145,44,0.07)',
+                      border: '1px solid rgba(184,145,44,0.11)',
+                      color: 'rgba(212,168,75,0.65)',
                     }}
                   >
-                    <Icon size={24} weight="bold" style={{ color: GOLD }} />
-                  </div>
-                  <h3 className="text-lg font-bold text-white mb-2">{service.title}</h3>
-                  <p className="text-sm text-gray-400 leading-relaxed">{service.description}</p>
+                    {svc.tag}
+                  </span>
                 </div>
-              </TiltCard>
+
+                <h3
+                  className="font-heading font-semibold mb-2"
+                  style={{ color: '#F4F4F5', fontSize: '1.05rem' }}
+                >
+                  {svc.title}
+                </h3>
+
+                <p
+                  className="font-body leading-relaxed"
+                  style={{ color: 'rgba(156,163,175,0.75)', fontSize: '0.875rem' }}
+                >
+                  {svc.description}
+                </p>
+
+                {/* Bottom accent line — reveals on hover */}
+                <div
+                  className="absolute bottom-0 left-6 right-6 h-px scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                  style={{ background: 'linear-gradient(90deg, #B8912C, transparent)' }}
+                />
+              </div>
             )
           })}
         </div>

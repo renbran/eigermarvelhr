@@ -291,10 +291,11 @@ export function HeroLandingPage({
             >
               {/* Gold badge */}
               <motion.div variants={itemVariants} className="mb-6">
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border border-[oklch(0.82_0.12_85/0.3)] bg-[oklch(0.82_0.12_85/0.08)] text-[oklch(0.87_0.13_85)] backdrop-blur-sm">
-                  <Sparkles className="w-4 h-4" />
-                  UAE&apos;s Premium Recruitment Platform
-                </span>
+                <img 
+                  src="https://res.cloudinary.com/dsl5fhclj/image/upload/v1776262365/p6bp4mhoizim0dmnarqs.png"
+                  alt="Eiger Marvel Badge"
+                  className="h-8 w-auto rounded-lg object-cover shadow-md"
+                />
               </motion.div>
 
               {/* Animated title with gold gradient */}

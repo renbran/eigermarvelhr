@@ -11,12 +11,13 @@ import { PremiumUpgradePage } from '@/components/pages/PremiumUpgradePage'
 import { HeroSection } from '@/components/home/HeroSection'
 import { LiveJobsSection } from '@/components/home/LiveJobsSection'
 import { TrustedCompaniesSection } from '@/components/home/TrustedCompaniesSection'
-import { TalentTechSection } from '@/components/home/TalentTechSection'
+import { ProcessSection } from '@/components/home/ProcessSection'
 import { ServicesSection } from '@/components/home/ServicesSection'
+import { IndustriesSection } from '@/components/home/IndustriesSection'
+import { StatsSection } from '@/components/home/StatsSection'
 import { PremiumSection } from '@/components/home/PremiumSection'
 import { JobsPage } from '@/components/pages/JobsPage'
 import { PrivacyPolicyPage } from '@/components/pages/PrivacyPolicyPage'
-import { OdooSyncStatus } from '@/components/OdooSyncStatus'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { LoadingScreen } from '@/components/ui/LoadingScreen'
 import { ScrollProgress } from '@/components/ui/ScrollProgress'
@@ -234,25 +235,20 @@ function App() {
         onLogout={handleLogout}
       />
 
-      {/* Development: Show Odoo Sync Status */}
-      {import.meta.env.DEV && (
-        <div className="bg-gray-50 border-b border-gray-200 px-4 py-3 max-w-full overflow-auto">
-          <OdooSyncStatus />
-        </div>
-      )}
-
       <main className="flex-1">
         {currentPage === 'home' && (
           <>
             <HeroSection onNavigate={setCurrentPage} />
+            <StatsSection />
+            <ServicesSection />
+            <IndustriesSection />
             <TrustedCompaniesSection />
-            <LiveJobsSection 
-              jobs={effectiveJobs} 
+            <ProcessSection />
+            <LiveJobsSection
+              jobs={effectiveJobs}
               onNavigate={setCurrentPage}
               onViewJob={handleViewJob}
             />
-            <TalentTechSection />
-            <ServicesSection />
             <PremiumSection onUpgrade={handleUpgradePremium} />
           </>
         )}
