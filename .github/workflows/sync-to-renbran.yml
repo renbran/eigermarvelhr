@@ -14,12 +14,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup SSH key
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.RENBRAN_SSH_KEY }}
-
-      - name: Push to renbran via SSH
+      - name: Push to renbran via PAT
+        env:
+          RENBRAN_PAT: ${{ secrets.RENBRAN_PAT }}
         run: |
-          git remote add renbran git@github.com:renbran/eiger-marvel-hr-plat.git
+          git remote add renbran "https://renbran:${RENBRAN_PAT}@github.com/renbran/eiger-marvel-hr-plat.git"
           git push renbran main
