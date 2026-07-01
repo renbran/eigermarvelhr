@@ -7,6 +7,7 @@
     { "source": "/favicon/(.*)", "destination": "/favicon/$1" },
     { "source": "/images/(.*)", "destination": "/images/$1" },
     { "source": "/videos/(.*)", "destination": "/videos/$1" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/src/pages/index", "destination": "/src/pages/index" },
+    { "source": "/(.*)", "destination": "/src/pages/index" }
   ]
 }

@@ -24,7 +24,10 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      input: resolve(__dirname, 'src/pages/index.html'),
       output: {
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash][extname]',
         manualChunks: {
           'vendor':  ['react', 'react-dom'],
           'gsap':    ['gsap', '@gsap/react'],
@@ -32,8 +35,8 @@ export default defineConfig({
           'motion':  ['framer-motion', 'motion'],
           'ui':      ['@radix-ui/react-dialog', '@radix-ui/react-select', '@radix-ui/react-tooltip', '@radix-ui/react-dropdown-menu'],
           'icons':   ['@phosphor-icons/react', 'lucide-react'],
-        }
-      }
+        },
+      },
     },
     chunkSizeWarningLimit: 800,
     minify: 'terser',
