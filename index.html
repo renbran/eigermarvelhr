@@ -92,7 +92,7 @@ section{padding:100px 0;position:relative;overflow:hidden}
 .hero-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(201,165,74,0.03)80px,rgba(201,165,74,0.03)81px),repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(201,165,74,0.03)80px,rgba(201,165,74,0.03)81px);pointer-events:none}
 .hero-slideshow{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .hero-slideshow .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:none;transform:scale(1)}
-.hero-slideshow .slide.active{opacity:0.30;z-index:1}
+.hero-slideshow .slide.active{opacity:0.35;z-index:1}
 .hero-slideshow .slide.ken-burns{animation:kenBurns 12s ease-out forwards}
 @keyframes kenBurns{0%{transform:scale(1)}100%{transform:scale(1.12)}}
 .hero-seq{position:relative;z-index:2;max-width:960px}
@@ -253,10 +253,11 @@ section{padding:60px 0}
     <div class="hero-grid"></div>
     <div class="hero-glow-2"></div>
     <div class="hero-slideshow" id="heroSlideshow">
-      <div class="slide active" style="background-image:url(/images/slides/slide-01.jpg)"></div>
-      <div class="slide" style="background-image:url(/images/slides/slide-02.jpg)"></div>
-      <div class="slide" style="background-image:url(/images/slides/slide-03.jpg)"></div>
-      <div class="slide" style="background-image:url(/images/slides/slide-04.jpg)"></div>
+      <div class="slide active" data-title="Burj Khalifa" style="background-image:url(/images/slides/slide-01.jpg)"></div>
+      <div class="slide" data-title="Burj Al Arab" style="background-image:url(/images/slides/slide-02.jpg)"></div>
+      <div class="slide" data-title="Sheikh Zayed Grand Mosque" style="background-image:url(/images/slides/slide-03.jpg)"></div>
+      <div class="slide" data-title="Desert Safari" style="background-image:url(/images/slides/slide-04.jpg)"></div>
+      <div class="slide" data-title="Dubai Marina" style="background-image:url(/images/slides/slide-05.jpg)"></div>
     </div>
   </div>
   <!-- Gold ambient overlay for hook sequence -->
@@ -587,12 +588,11 @@ gsap.ticker.lagSmoothing(0);
     slides[prev].classList.remove('active','ken-burns');
     // Set next slide
     slides[next].classList.add('active','ken-burns');
-    gsap.fromTo(slides[next], {opacity:0,scale:1.15}, {opacity:0.30,scale:1,duration:1.2,ease:'power3.out'});
+    gsap.fromTo(slides[next], {opacity:0,scale:1.15}, {opacity:0.35,scale:1,duration:1.2,ease:'power3.out'});
     current = next;
   }
-  // Init: show first
   slides[0].classList.add('active','ken-burns');
-  gsap.set(slides[0], {opacity:0.30});
+  gsap.set(slides[0], {opacity:0.35});
   // Auto-cycle
   setInterval(() => showSlide(current + 1), INTERVAL);
 })();
