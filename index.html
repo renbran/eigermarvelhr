@@ -259,6 +259,14 @@ section{padding:60px 0}
       <div class="slide" data-title="Desert Safari" style="background-image:url(/images/slides/slide-04.jpg)"></div>
       <div class="slide" data-title="Dubai Marina" style="background-image:url(/images/slides/slide-05.jpg)"></div>
     </div>
+    <!-- Seq1 slideshow — Workers / Human touch -->
+    <div class="hero-slideshow" id="heroSlideshow2" style="display:none">
+      <div class="slide active" data-title="Construction Team" style="background-image:url(/images/slides2/slide2-01.jpg)"></div>
+      <div class="slide" data-title="Sunset Scaffolding" style="background-image:url(/images/slides2/slide2-02.jpg)"></div>
+      <div class="slide" data-title="Engineers Collaborating" style="background-image:url(/images/slides2/slide2-03.jpg)"></div>
+      <div class="slide" data-title="Team Reviewing Plans" style="background-image:url(/images/slides2/slide2-04.jpg)"></div>
+      <div class="slide" data-title="Site Engineer" style="background-image:url(/images/slides2/slide2-05.jpg)"></div>
+    </div>
   </div>
   <!-- Gold ambient overlay for hook sequence -->
   <div id="heroGoldGlow" style="position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse 70% 50% at 30% 50%,rgba(201,165,74,0.07) 0%,transparent 70%);z-index:1;transition:opacity 1s"></div>
@@ -572,30 +580,38 @@ lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(t => lenis.raf(t * 1000));
 gsap.ticker.lagSmoothing(0);
 
-// ── Hero Slideshow (UAE landmarks) ──
-(function(){
-  const slides = document.querySelectorAll('#heroSlideshow .slide');
-  if (!slides.length) return;
+// ── Slideshow factory: returns {start,stop,swap} for a container ──
+function createSlideshow(containerId) {
+  const slides = document.querySelectorAll('#' + containerId + ' .slide');
+  if (!slides.length) return null;
   let current = 0;
   const TOTAL = slides.length;
   const INTERVAL = 6000;
-  function showSlide(idx){
+  let timer = null;
+  function showSlide(idx) {
     const prev = current;
     const next = idx % TOTAL;
     if (prev === next) return;
-    // Remove active + ken-burns from previous
     gsap.set(slides[prev], {clearProps:'all'});
     slides[prev].classList.remove('active','ken-burns');
-    // Set next slide
     slides[next].classList.add('active','ken-burns');
     gsap.fromTo(slides[next], {opacity:0,scale:1.15}, {opacity:0.35,scale:1,duration:1.2,ease:'power3.out'});
     current = next;
   }
+  function start() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(() => showSlide(current + 1), INTERVAL);
+  }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  function swap() { stop(); current = 0; }
+  // Init first slide
   slides[0].classList.add('active','ken-burns');
   gsap.set(slides[0], {opacity:0.35});
-  // Auto-cycle
-  setInterval(() => showSlide(current + 1), INTERVAL);
-})();
+  return { start, stop, swap, showSlide };
+}
+const ss1 = createSlideshow('heroSlideshow');
+const ss2 = createSlideshow('heroSlideshow2');
+if (ss1) ss1.start();
 
 // ── Hero Dual-Sequence Rotation ──
 const ADVANCE_MS = 7500;
@@ -614,6 +630,13 @@ const goldGlow = document.getElementById('heroGoldGlow');
 function enterSeq0() {
   sq1.style.display = 'none';
   sq0.style.display = '';
+  // Swap slideshow: Seq0 = UAE landmarks, Seq1 = workers
+  if (ss1 && ss2) {
+    document.getElementById('heroSlideshow').style.display = '';
+    document.getElementById('heroSlideshow2').style.display = 'none';
+    ss1.swap(); ss1.start();
+    ss2.swap(); ss2.stop();
+  }
   goldGlow.style.opacity = '0';
   prog.className = 'hero-progress-fill';
   dot0.className = 'hero-dot active seq0';
@@ -630,6 +653,13 @@ function enterSeq0() {
 function enterSeq1() {
   sq0.style.display = 'none';
   sq1.style.display = '';
+  // Swap slideshow: Seq1 = workers
+  if (ss1 && ss2) {
+    document.getElementById('heroSlideshow').style.display = 'none';
+    document.getElementById('heroSlideshow2').style.display = '';
+    ss2.swap(); ss2.start();
+    ss1.swap(); ss1.stop();
+  }
   goldGlow.style.opacity = '1';
   prog.className = 'hero-progress-fill gold';
   dot0.className = 'hero-dot';
