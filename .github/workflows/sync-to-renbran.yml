@@ -1,0 +1,22 @@
+name: Sync to renbran (Vercel)
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    name: Mirror main to renbran/eiger-marvel-hr-plat
+    steps:
+      - name: Checkout samana
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to renbran
+        env:
+          RENBRAN_PAT: ${{ secrets.RENBRAN_PAT }}
+        run: |
+          git remote add renbran "https://renbran:${RENBRAN_PAT}@github.com/renbran/eiger-marvel-hr-plat.git"
+          git push renbran main
