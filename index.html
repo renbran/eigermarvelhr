@@ -90,6 +90,7 @@ section{padding:100px 0;position:relative;overflow:hidden}
 .hero-glow{position:absolute;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(201,165,74,0.1)0%,transparent 65%);top:-250px;right:-200px;pointer-events:none}
 .hero-glow-2{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,165,74,0.07)0%,transparent 65%);bottom:-150px;left:-150px;pointer-events:none}
 .hero-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(201,165,74,0.03)80px,rgba(201,165,74,0.03)81px),repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(201,165,74,0.03)80px,rgba(201,165,74,0.03)81px);pointer-events:none}
+.hero-video-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.1;pointer-events:none;z-index:0;filter:grayscale(0.5) brightness(0.7)}
 .hero-seq{position:relative;z-index:2;max-width:960px}
 .hero h1{background:linear-gradient(135deg,var(--text-primary)40%,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
 .gold-divider{height:1.5px;width:100%;background:linear-gradient(90deg,transparent 0%,var(--gold-dark) 20%,var(--gold) 50%,var(--gold-light) 80%,transparent 100%);margin:0 auto;max-width:1280px}
@@ -247,6 +248,9 @@ section{padding:60px 0}
     <div class="hero-glow" id="heroGlow"></div>
     <div class="hero-grid"></div>
     <div class="hero-glow-2"></div>
+    <video class="hero-video-bg" autoplay muted loop playsinline preload="metadata">
+      <source src="/videos/hero-bg.mp4" type="video/mp4" />
+    </video>
   </div>
   <!-- Gold ambient overlay for hook sequence -->
   <div id="heroGoldGlow" style="position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse 70% 50% at 30% 50%,rgba(201,165,74,0.07) 0%,transparent 70%);z-index:1;transition:opacity 1s"></div>
