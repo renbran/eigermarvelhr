@@ -90,7 +90,11 @@ section{padding:100px 0;position:relative;overflow:hidden}
 .hero-glow{position:absolute;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(201,165,74,0.1)0%,transparent 65%);top:-250px;right:-200px;pointer-events:none}
 .hero-glow-2{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,165,74,0.07)0%,transparent 65%);bottom:-150px;left:-150px;pointer-events:none}
 .hero-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(201,165,74,0.03)80px,rgba(201,165,74,0.03)81px),repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(201,165,74,0.03)80px,rgba(201,165,74,0.03)81px);pointer-events:none}
-.hero-video-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.1;pointer-events:none;z-index:0;filter:grayscale(0.5) brightness(0.7)}
+.hero-slideshow{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.hero-slideshow .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:none;transform:scale(1)}
+.hero-slideshow .slide.active{opacity:0.30;z-index:1}
+.hero-slideshow .slide.ken-burns{animation:kenBurns 12s ease-out forwards}
+@keyframes kenBurns{0%{transform:scale(1)}100%{transform:scale(1.12)}}
 .hero-seq{position:relative;z-index:2;max-width:960px}
 .hero h1{background:linear-gradient(135deg,var(--text-primary)40%,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
 .gold-divider{height:1.5px;width:100%;background:linear-gradient(90deg,transparent 0%,var(--gold-dark) 20%,var(--gold) 50%,var(--gold-light) 80%,transparent 100%);margin:0 auto;max-width:1280px}
@@ -248,9 +252,12 @@ section{padding:60px 0}
     <div class="hero-glow" id="heroGlow"></div>
     <div class="hero-grid"></div>
     <div class="hero-glow-2"></div>
-    <video class="hero-video-bg" autoplay muted loop playsinline preload="metadata">
-      <source src="/videos/hero-bg.mp4" type="video/mp4" />
-    </video>
+    <div class="hero-slideshow" id="heroSlideshow">
+      <div class="slide active" style="background-image:url(/images/slides/slide-01.jpg)"></div>
+      <div class="slide" style="background-image:url(/images/slides/slide-02.jpg)"></div>
+      <div class="slide" style="background-image:url(/images/slides/slide-03.jpg)"></div>
+      <div class="slide" style="background-image:url(/images/slides/slide-04.jpg)"></div>
+    </div>
   </div>
   <!-- Gold ambient overlay for hook sequence -->
   <div id="heroGoldGlow" style="position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse 70% 50% at 30% 50%,rgba(201,165,74,0.07) 0%,transparent 70%);z-index:1;transition:opacity 1s"></div>
@@ -563,6 +570,32 @@ const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.p
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(t => lenis.raf(t * 1000));
 gsap.ticker.lagSmoothing(0);
+
+// ── Hero Slideshow (UAE landmarks) ──
+(function(){
+  const slides = document.querySelectorAll('#heroSlideshow .slide');
+  if (!slides.length) return;
+  let current = 0;
+  const TOTAL = slides.length;
+  const INTERVAL = 6000;
+  function showSlide(idx){
+    const prev = current;
+    const next = idx % TOTAL;
+    if (prev === next) return;
+    // Remove active + ken-burns from previous
+    gsap.set(slides[prev], {clearProps:'all'});
+    slides[prev].classList.remove('active','ken-burns');
+    // Set next slide
+    slides[next].classList.add('active','ken-burns');
+    gsap.fromTo(slides[next], {opacity:0,scale:1.15}, {opacity:0.30,scale:1,duration:1.2,ease:'power3.out'});
+    current = next;
+  }
+  // Init: show first
+  slides[0].classList.add('active','ken-burns');
+  gsap.set(slides[0], {opacity:0.30});
+  // Auto-cycle
+  setInterval(() => showSlide(current + 1), INTERVAL);
+})();
 
 // ── Hero Dual-Sequence Rotation ──
 const ADVANCE_MS = 7500;
