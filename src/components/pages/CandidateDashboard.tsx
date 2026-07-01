@@ -38,7 +38,7 @@ export function CandidateDashboard({
   loadApplications();
 }, [user.id]);
 
-  const loadApplications = async () => {
+  async function loadApplications() {
     try {
       const allKeys = await spark.kv.keys()
       const applicationKeys = allKeys.filter(key => key.startsWith('application:'))
