@@ -1,0 +1,490 @@
+- generic [active] [ref=f1e1]:
+  - navigation [ref=f1e2]:
+    - link "Eiger Marvel Eiger Marvel Consultants" [ref=f1e3] [cursor=pointer]:
+      - /url: "#hero"
+      - img "Eiger Marvel" [ref=f1e4]
+      - generic [ref=f1e5]:
+        - strong [ref=f1e6]: Eiger Marvel
+        - generic [ref=f1e7]: Consultants
+    - generic [ref=f1e8]:
+      - link "Solutions" [ref=f1e9] [cursor=pointer]:
+        - /url: "#solutions"
+      - link "Industries" [ref=f1e10] [cursor=pointer]:
+        - /url: "#industries"
+      - link "Capabilities" [ref=f1e11] [cursor=pointer]:
+        - /url: "#capabilities"
+      - link "About" [ref=f1e12] [cursor=pointer]:
+        - /url: "#about"
+      - link "Testimonials" [ref=f1e13] [cursor=pointer]:
+        - /url: "#testimonials"
+      - link "Contact" [ref=f1e14] [cursor=pointer]:
+        - /url: "#contact"
+      - link "Client Portal" [ref=f1e15] [cursor=pointer]:
+        - /url: https://erp.eigermarvelhr.com/
+      - link "Book Consultation" [ref=f1e16] [cursor=pointer]:
+        - /url: "#contact"
+  - generic [ref=f1e17]:
+    - generic [ref=f1e21]:
+      - generic [ref=f1e22]: Master Recruiter — Construction & Hospitality, UAE
+      - heading "Built for Construction & Hospitality" [level=1] [ref=f1e23]
+      - paragraph [ref=f1e24]:
+        - text: UAE's specialist master recruiter for
+        - strong [ref=f1e25]: construction & hospitality
+        - text: — 7 to 14-day placements, not 3 months. If your generalist provider can't deliver, we do. Fully managed, fully compliant, fully integrated.
+      - generic [ref=f1e26]:
+        - link "Book Consultation" [ref=f1e27] [cursor=pointer]:
+          - /url: "#contact"
+        - link "Open Client Portal" [ref=f1e28] [cursor=pointer]:
+          - /url: https://erp.eigermarvelhr.com/
+      - generic [ref=f1e29]:
+        - generic [ref=f1e30]: 500+ Placements
+        - generic [ref=f1e31]: 100% WPS Compliant
+        - generic [ref=f1e32]: 7–14 Day Delivery
+        - generic [ref=f1e33]: Odoo ERP Powered
+      - generic [ref=f1e34]:
+        - generic [ref=f1e35]: Trusted by Industry Leaders
+        - generic [ref=f1e36]:
+          - img "Partner" [ref=f1e37]
+          - img "Partner" [ref=f1e38]
+          - img "Partner" [ref=f1e39]
+          - img "Partner" [ref=f1e40]
+    - generic [ref=f1e43]:
+      - tablist "Hero sequence" [ref=f1e44]:
+        - tab "Brand sequence" [selected] [ref=f1e45] [cursor=pointer]
+        - tab "Hook sequence" [ref=f1e46] [cursor=pointer]
+      - generic [ref=f1e47]: 1 / 2
+  - generic [ref=f1e50]:
+    - generic [ref=f1e51]:
+      - generic [ref=f1e52]: "0"
+      - paragraph [ref=f1e53]: Successful Placements
+    - generic [ref=f1e54]:
+      - generic [ref=f1e55]: "0"
+      - paragraph [ref=f1e56]: "% WPS Compliance"
+    - generic [ref=f1e57]:
+      - generic [ref=f1e58]: "0"
+      - paragraph [ref=f1e59]: Day Avg Delivery
+    - generic [ref=f1e60]:
+      - generic [ref=f1e61]: "0"
+      - paragraph [ref=f1e62]: Industries Served
+    - generic [ref=f1e63]:
+      - generic [ref=f1e64]: "0"
+      - paragraph [ref=f1e65]: "% Client Retention"
+  - generic [ref=f1e67]:
+    - generic [ref=f1e68]:
+      - generic [ref=f1e69]: The Challenge
+      - heading "Your Current Workforce Process Is Costing You" [level=2] [ref=f1e70]:
+        - generic [ref=f1e71]: Your
+        - generic [ref=f1e72]: Current
+        - generic [ref=f1e73]: Workforce
+        - generic [ref=f1e74]: Process
+        - generic [ref=f1e75]: Is
+        - generic [ref=f1e76]: Costing
+        - generic [ref=f1e77]: You
+      - paragraph [ref=f1e78]: Time, money, and competitive advantage — fragmented systems drain all three.
+    - generic [ref=f1e79]:
+      - generic [ref=f1e80]:
+        - generic [ref=f1e81]: ⏱️
+        - heading "Hiring Takes Too Long" [level=3] [ref=f1e82]
+        - paragraph [ref=f1e83]: Intense demand means delays. We compress placement cycles from months to 7-14 days.
+      - generic [ref=f1e84]:
+        - generic [ref=f1e85]: 💰
+        - heading "Payroll Wastes Resources" [level=3] [ref=f1e86]
+        - paragraph [ref=f1e87]: 20+ hours monthly on manual processing. We automate calculations, approvals, and pay runs.
+      - generic [ref=f1e88]:
+        - generic [ref=f1e89]: 📋
+        - heading "Too Many Vendors" [level=3] [ref=f1e90]
+        - paragraph [ref=f1e91]: Recruitment, payroll, compliance, systems — fragmented. We unify everything under one partner.
+      - generic [ref=f1e92]:
+        - generic [ref=f1e93]: ⚠️
+        - heading "Compliance Risks" [level=3] [ref=f1e94]
+        - paragraph [ref=f1e95]: WPS deadlines, MOHRE fines, multi-bank complexity. We monitor, file, and guarantee zero penalties.
+  - generic [ref=f1e97]:
+    - generic [ref=f1e98]:
+      - generic [ref=f1e99]: The Transformation
+      - heading "From Fragmented to Integrated" [level=2] [ref=f1e100]:
+        - generic [ref=f1e101]: From
+        - generic [ref=f1e102]: Fragmented
+        - generic [ref=f1e103]: to
+        - generic [ref=f1e104]: Integrated
+      - paragraph [ref=f1e105]: One partner. One platform. End-to-end workforce management.
+    - generic [ref=f1e106]:
+      - generic [ref=f1e107]:
+        - generic [ref=f1e108]: "01"
+        - heading "Before" [level=3] [ref=f1e109]
+        - paragraph [ref=f1e110]: Fragmented vendors, manual processes, compliance anxiety, slow hiring, data silos.
+      - generic [ref=f1e111]: →
+      - generic [ref=f1e112]:
+        - generic [ref=f1e113]: "02"
+        - heading "Platform" [level=3] [ref=f1e114]
+        - paragraph [ref=f1e115]: Unified Odoo ERP. Integrated recruitment, payroll, WPS compliance, real-time reporting.
+      - generic [ref=f1e116]: →
+      - generic [ref=f1e117]:
+        - generic [ref=f1e118]: "03"
+        - heading "After" [level=3] [ref=f1e119]
+        - paragraph [ref=f1e120]: 7-14 day hiring, 100% compliance, 20+ hours saved monthly, one invoice, full visibility.
+  - generic [ref=f1e122]:
+    - generic [ref=f1e123]:
+      - generic [ref=f1e124]: Our Capabilities
+      - heading "Enterprise-Grade Workforce Solutions" [level=2] [ref=f1e125]:
+        - generic [ref=f1e126]: Enterprise-Grade
+        - generic [ref=f1e127]: Workforce
+        - generic [ref=f1e128]: Solutions
+      - paragraph [ref=f1e129]: Every service engineered for speed, compliance, and business impact.
+    - generic [ref=f1e130]:
+      - generic [ref=f1e131]:
+        - generic [ref=f1e132]: 🔍
+        - heading "Recruitment Engine" [level=3] [ref=f1e133]
+        - paragraph [ref=f1e134]: Skilled trades, engineers, chefs, managers — 7-14 day placement. Industry-specific talent pools covering every major UAE sector.
+        - generic [ref=f1e135]: 3x faster than market average
+      - generic [ref=f1e136]:
+        - generic [ref=f1e137]: 💵
+        - heading "Payroll Management" [level=3] [ref=f1e138]
+        - paragraph [ref=f1e139]: "Full-cycle processing: salary, overtime, allowances, multi-currency. Automated with bank integration and payment confirmations."
+        - generic [ref=f1e140]: Saves 20+ hrs/month
+      - generic [ref=f1e141]:
+        - generic [ref=f1e142]: ✅
+        - heading "WPS Compliance" [level=3] [ref=f1e143]
+        - paragraph [ref=f1e144]: Automated SIF file generation. MOHRE deadline monitoring. Multi-bank support. Zero penalty guarantee — we cover any fines.
+        - generic [ref=f1e145]: 100% compliance guarantee
+      - generic [ref=f1e146]:
+        - generic [ref=f1e147]: ⚙️
+        - heading "Odoo ERP Integration" [level=3] [ref=f1e148]
+        - paragraph [ref=f1e149]: Unified recruitment, HR, and payroll with real-time dashboards. Dedicated account manager. Single source of truth for workforce data.
+        - generic [ref=f1e150]: One system, zero silos
+      - generic [ref=f1e151]:
+        - generic [ref=f1e152]: 🌐
+        - heading "Immigration Services" [level=3] [ref=f1e153]
+        - paragraph [ref=f1e154]: End-to-end visa processing, employment contracts, and government documentation. Smooth employee onboarding and full compliance.
+        - generic [ref=f1e155]: Smooth mobilization
+      - generic [ref=f1e156]:
+        - generic [ref=f1e157]: 📊
+        - heading "Workforce Analytics" [level=3] [ref=f1e158]
+        - paragraph [ref=f1e159]: Custom reporting on headcount, turnover, cost-per-hire, compliance status, and productivity. Data-driven workforce decisions.
+        - generic [ref=f1e160]: Real-time executive insights
+  - generic [ref=f1e162]:
+    - generic [ref=f1e163]:
+      - generic [ref=f1e164]: Why Eiger Marvel
+      - heading "Outcome-Obsessed, Enterprise-Proven" [level=2] [ref=f1e165]:
+        - generic [ref=f1e166]: Outcome-Obsessed,
+        - generic [ref=f1e167]: Enterprise-Proven
+      - paragraph [ref=f1e168]: We don't just provide services — we guarantee outcomes.
+    - img "Eiger Marvel Team — UAE's expert recruitment consultants" [ref=f1e170]
+    - generic [ref=f1e171]:
+      - generic [ref=f1e172]:
+        - generic [ref=f1e173]: 🚀
+        - heading "Speed" [level=3] [ref=f1e174]
+        - paragraph [ref=f1e175]: 7-14 day placements vs industry 90 days. Our recruitment engine works at startup velocity with enterprise quality.
+      - generic [ref=f1e176]:
+        - generic [ref=f1e177]: 🎯
+        - heading "Accuracy" [level=3] [ref=f1e178]
+        - paragraph [ref=f1e179]: Industry-specific talent matching with 97% retention rate. Every candidate pre-vetted for your exact requirements.
+      - generic [ref=f1e180]:
+        - generic [ref=f1e181]: 🤖
+        - heading "Automation" [level=3] [ref=f1e182]
+        - paragraph [ref=f1e183]: End-to-end payroll, compliance filings, and reporting — fully automated via Odoo ERP. Manual work eliminated.
+      - generic [ref=f1e184]:
+        - generic [ref=f1e185]: 👁️
+        - heading "Visibility" [level=3] [ref=f1e186]
+        - paragraph [ref=f1e187]: "Real-time dashboards for every metric: hiring pipeline, payroll status, compliance calendar, workforce costs."
+      - generic [ref=f1e188]:
+        - generic [ref=f1e189]: 📈
+        - heading "Scalability" [level=3] [ref=f1e190]
+        - paragraph [ref=f1e191]: From 10 to 1,000+ employees. Our platform scales with your growth without adding complexity or cost.
+      - generic [ref=f1e192]:
+        - generic [ref=f1e193]: 🛡️
+        - heading "Compliance" [level=3] [ref=f1e194]
+        - paragraph [ref=f1e195]: 100% WPS compliance guarantee. MOHRE-registered, multi-bank integrated. We cover any penalties incurred.
+  - generic [ref=f1e197]:
+    - generic [ref=f1e198]:
+      - generic [ref=f1e199]: The Journey
+      - heading "Discovery to Live Operations" [level=2] [ref=f1e200]:
+        - generic [ref=f1e201]: Discovery
+        - generic [ref=f1e202]: to
+        - generic [ref=f1e203]: Live
+        - generic [ref=f1e204]: Operations
+      - paragraph [ref=f1e205]: A structured, proven 8-step process — no surprises on your path to workforce transformation.
+    - generic [ref=f1e206]:
+      - generic [ref=f1e209]:
+        - generic [ref=f1e210]: Phase 1
+        - heading "Discovery" [level=3] [ref=f1e211]
+        - paragraph [ref=f1e212]: Deep-dive assessment of your workforce needs, pain points, and compliance status.
+      - generic [ref=f1e215]:
+        - generic [ref=f1e216]: Phase 2
+        - heading "Assessment" [level=3] [ref=f1e217]
+        - paragraph [ref=f1e218]: Comprehensive audit of existing processes, systems, and compliance gaps across your organization.
+      - generic [ref=f1e221]:
+        - generic [ref=f1e222]: Phase 3
+        - heading "Strategy" [level=3] [ref=f1e223]
+        - paragraph [ref=f1e224]: Custom workforce plan with clear KPIs, timelines, and cost projections tailored to your business.
+      - generic [ref=f1e227]:
+        - generic [ref=f1e228]: Phase 4
+        - heading "Implementation" [level=3] [ref=f1e229]
+        - paragraph [ref=f1e230]: Full Odoo ERP setup, payroll configuration, compliance automation, and team onboarding.
+      - generic [ref=f1e233]:
+        - generic [ref=f1e234]: Phase 5
+        - heading "Migration" [level=3] [ref=f1e235]
+        - paragraph [ref=f1e236]: Data migration from legacy systems with zero downtime and full integrity verification.
+      - generic [ref=f1e239]:
+        - generic [ref=f1e240]: Phase 6
+        - heading "Training" [level=3] [ref=f1e241]
+        - paragraph [ref=f1e242]: Hands-on team training on Odoo platform, reporting tools, and compliance workflows.
+      - generic [ref=f1e245]:
+        - generic [ref=f1e246]: Phase 7
+        - heading "Go Live" [level=3] [ref=f1e247]
+        - paragraph [ref=f1e248]: Full production launch with dedicated support, real-time monitoring, and performance baselines.
+      - generic [ref=f1e251]:
+        - generic [ref=f1e252]: Phase 8
+        - heading "Optimization" [level=3] [ref=f1e253]
+        - paragraph [ref=f1e254]: Continuous improvement with monthly reviews, quarterly updates, and proactive recommendations.
+  - generic [ref=f1e257]:
+    - generic [ref=f1e258]:
+      - generic [ref=f1e259]: Platform
+      - heading "Odoo-Powered. Enterprise-Ready." [level=2] [ref=f1e260]:
+        - generic [ref=f1e261]: Odoo-Powered.
+        - generic [ref=f1e262]: Enterprise-Ready.
+      - paragraph [ref=f1e263]: Real-time workforce intelligence at your fingertips — from anywhere, on any device.
+    - generic [ref=f1e265]:
+      - generic [ref=f1e270]: eigermarvelhr.com/dashboard
+      - generic [ref=f1e272]:
+        - generic [ref=f1e273]: Real-Time Workforce Dashboard
+        - paragraph [ref=f1e274]: Live hiring pipeline, payroll status, compliance calendar, and analytics — all in one unified view.
+  - generic [ref=f1e276]:
+    - generic [ref=f1e277]:
+      - generic [ref=f1e278]: Industries
+      - heading "We Only Recruit for Two Industries — and We're the Best at Both" [level=2] [ref=f1e279]:
+        - generic [ref=f1e280]: We
+        - generic [ref=f1e281]: Only
+        - generic [ref=f1e282]: Recruit
+        - generic [ref=f1e283]: for
+        - generic [ref=f1e284]: Two
+        - generic [ref=f1e285]: Industries
+        - generic [ref=f1e286]: —
+        - generic [ref=f1e287]: and
+        - generic [ref=f1e288]: We're
+        - generic [ref=f1e289]: the
+        - generic [ref=f1e290]: Best
+        - generic [ref=f1e291]: at
+        - generic [ref=f1e292]: Both
+      - paragraph [ref=f1e293]: Master-level construction & hospitality recruitment. Nothing else.
+    - generic [ref=f1e294]:
+      - generic [ref=f1e295]:
+        - heading "🏗️ Construction" [level=3] [ref=f1e296]
+        - paragraph [ref=f1e297]: Trades, engineers, supervisors, safety officers. Rapid deployment in 7-14 days.
+        - generic [ref=f1e298]: USD 55.81B market by 2031
+      - generic [ref=f1e299]:
+        - heading "🏨 Hospitality" [level=3] [ref=f1e300]
+        - paragraph [ref=f1e301]: Chefs, front desk, housekeeping, management. Pre-screened with service excellence.
+        - generic [ref=f1e302]: 26,000+ new jobs in 2026
+      - generic [ref=f1e303]:
+        - heading "🎪 Events" [level=3] [ref=f1e304]
+        - paragraph [ref=f1e305]: Coordinators, AV tech, setup crews, hospitality staff. On-demand seasonal scaling.
+      - generic [ref=f1e306]:
+        - heading "🏭 Manufacturing" [level=3] [ref=f1e307]
+        - paragraph [ref=f1e308]: Production line workers, quality control, logistics, shift-based workforce management.
+      - generic [ref=f1e309]:
+        - heading "🩺 Healthcare" [level=3] [ref=f1e310]
+        - paragraph [ref=f1e311]: Admin staff, lab technicians, patient coordinators, allied health professionals.
+      - generic [ref=f1e312]:
+        - heading "🛒 Retail" [level=3] [ref=f1e313]
+        - paragraph [ref=f1e314]: Store managers, visual merchandisers, inventory specialists, sales associates across UAE.
+      - generic [ref=f1e315]:
+        - heading "📚 Education" [level=3] [ref=f1e316]
+        - paragraph [ref=f1e317]: Faculty, admin staff, lab assistants, facilities management for schools and universities.
+      - generic [ref=f1e318]:
+        - heading "🏛️ Government" [level=3] [ref=f1e319]
+        - paragraph [ref=f1e320]: Administrative officers, project managers, compliance specialists, IT professionals.
+  - generic [ref=f1e322]:
+    - generic [ref=f1e323]:
+      - generic [ref=f1e324]: Results & Proof
+      - heading "Trusted by UAE Leaders" [level=2] [ref=f1e325]:
+        - generic [ref=f1e326]: Trusted
+        - generic [ref=f1e327]: by
+        - generic [ref=f1e328]: UAE
+        - generic [ref=f1e329]: Leaders
+      - paragraph [ref=f1e330]: Outcomes that speak for themselves — real data from real partnerships.
+    - generic [ref=f1e331]:
+      - generic [ref=f1e332]:
+        - generic [ref=f1e333]: 500+
+        - paragraph [ref=f1e334]: Successful Placements
+      - generic [ref=f1e335]:
+        - generic [ref=f1e336]: 100%
+        - paragraph [ref=f1e337]: WPS Compliance Rate
+      - generic [ref=f1e338]:
+        - generic [ref=f1e339]: 7–14
+        - paragraph [ref=f1e340]: Days Avg Placement
+      - generic [ref=f1e341]:
+        - generic [ref=f1e342]: 20+
+        - paragraph [ref=f1e343]: Hours Saved Monthly
+    - generic [ref=f1e344]:
+      - generic [ref=f1e345]:
+        - generic [ref=f1e346]: "\"Cut hiring time in half — zero WPS issues since partnering with Eiger Marvel.\""
+        - generic [ref=f1e347]:
+          - generic [ref=f1e348]: C
+          - generic [ref=f1e349]:
+            - strong [ref=f1e350]: Construction Client
+            - text: 80 employees, Dubai
+      - generic [ref=f1e351]:
+        - generic [ref=f1e352]: "\"Screening is thorough, payroll integration seamless across our multiple sites.\""
+        - generic [ref=f1e353]:
+          - generic [ref=f1e354]: H
+          - generic [ref=f1e355]:
+            - strong [ref=f1e356]: Hospitality Group
+            - text: UAE property management
+      - generic [ref=f1e357]:
+        - generic [ref=f1e358]: "\"Scales with our seasonality; the WPS guarantee gives us real peace of mind.\""
+        - generic [ref=f1e359]:
+          - generic [ref=f1e360]: E
+          - generic [ref=f1e361]:
+            - strong [ref=f1e362]: Events Company
+            - text: Abu Dhabi
+  - generic [ref=f1e364]:
+    - generic [ref=f1e365]:
+      - generic [ref=f1e366]: FAQ
+      - heading "Common Questions" [level=2] [ref=f1e367]:
+        - generic [ref=f1e368]: Common
+        - generic [ref=f1e369]: Questions
+      - paragraph [ref=f1e370]: Everything you need to know about working with Eiger Marvel Consultants.
+    - button "How fast can you fill a position? +" [ref=f1e372] [cursor=pointer]:
+      - text: How fast can you fill a position?
+      - generic [ref=f1e373]: +
+    - button "What does the WPS guarantee cover? +" [ref=f1e375] [cursor=pointer]:
+      - text: What does the WPS guarantee cover?
+      - generic [ref=f1e376]: +
+    - button "Do you work with small businesses? +" [ref=f1e378] [cursor=pointer]:
+      - text: Do you work with small businesses?
+      - generic [ref=f1e379]: +
+    - button "What industries do you specialize in? +" [ref=f1e381] [cursor=pointer]:
+      - text: What industries do you specialize in?
+      - generic [ref=f1e382]: +
+    - button "How does Odoo ERP integration work? +" [ref=f1e384] [cursor=pointer]:
+      - text: How does Odoo ERP integration work?
+      - generic [ref=f1e385]: +
+    - button "What is the onboarding timeline? +" [ref=f1e387] [cursor=pointer]:
+      - text: What is the onboarding timeline?
+      - generic [ref=f1e388]: +
+  - generic [ref=f1e391]:
+    - generic [ref=f1e392]: Start Your Transformation
+    - heading "Stop Chasing Generalists. Hire a Master Recruiter." [level=2] [ref=f1e393]:
+      - text: Stop Chasing Generalists.
+      - text: Hire a Master Recruiter.
+    - paragraph [ref=f1e394]: Book your Complimentary Workforce Health Check. 30 minutes. No obligation. Walk away with a clear 30-day roadmap and WPS compliance checklist.
+    - generic [ref=f1e395]:
+      - link "Book Consultation" [ref=f1e396] [cursor=pointer]:
+        - /url: "#contact"
+      - link "Open Client Portal →" [ref=f1e397] [cursor=pointer]:
+        - /url: https://erp.eigermarvelhr.com/
+  - generic [ref=f1e399]:
+    - generic [ref=f1e400]:
+      - generic [ref=f1e401]: Get In Touch
+      - heading "Let's Build Your Workforce" [level=2] [ref=f1e402]:
+        - generic [ref=f1e403]: Let's
+        - generic [ref=f1e404]: Build
+        - generic [ref=f1e405]: Your
+        - generic [ref=f1e406]: Workforce
+      - paragraph [ref=f1e407]: We respond within 1 hour during office hours (Sun-Thu, 9AM-6PM GST).
+    - generic [ref=f1e408]:
+      - generic [ref=f1e409]:
+        - heading "Send Us a Message" [level=3] [ref=f1e410]
+        - generic [ref=f1e411]:
+          - generic [ref=f1e412]:
+            - generic [ref=f1e413]: Full Name *
+            - textbox "Full Name *" [ref=f1e414]
+          - generic [ref=f1e415]:
+            - generic [ref=f1e416]: Email Address *
+            - textbox "Email Address *" [ref=f1e417]
+          - generic [ref=f1e418]:
+            - generic [ref=f1e419]: Phone Number
+            - textbox "Phone Number" [ref=f1e420]
+          - generic [ref=f1e421]:
+            - generic [ref=f1e422]: Company Name *
+            - textbox "Company Name *" [ref=f1e423]
+          - generic [ref=f1e424]:
+            - generic [ref=f1e425]: Subject
+            - combobox "Subject" [ref=f1e426]:
+              - option "Select Subject" [selected]
+              - option "General Inquiry"
+              - option "Recruitment Request"
+              - option "Payroll Services"
+              - option "WPS Compliance"
+              - option "Immigration"
+              - option "Partnership"
+              - option "Other"
+          - generic [ref=f1e427]:
+            - generic [ref=f1e428]: Message
+            - textbox "Message" [ref=f1e429]
+          - button "Send Message" [ref=f1e430] [cursor=pointer]
+      - generic [ref=f1e431]:
+        - heading "Contact Information" [level=3] [ref=f1e432]
+        - generic [ref=f1e433]:
+          - paragraph [ref=f1e434]: 📍 Address
+          - paragraph [ref=f1e435]:
+            - text: Al Maseed Building 304, Rigga Road,
+            - text: Near Union Metro Station, Dubai, UAE
+        - generic [ref=f1e436]:
+          - paragraph [ref=f1e437]: 📞 Phone
+          - paragraph [ref=f1e438]:
+            - link "+971 4 575 1100" [ref=f1e439] [cursor=pointer]:
+              - /url: tel:+97145751100
+        - generic [ref=f1e440]:
+          - paragraph [ref=f1e441]: ✉️ Email
+          - paragraph [ref=f1e442]:
+            - link "info@eigermarvelhr.com" [ref=f1e443] [cursor=pointer]:
+              - /url: mailto:info@eigermarvelhr.com
+        - generic [ref=f1e444]:
+          - paragraph [ref=f1e445]: 💬 WhatsApp
+          - paragraph [ref=f1e446]:
+            - link "+971 4 575 1100" [ref=f1e447] [cursor=pointer]:
+              - /url: https://wa.me/97145751100
+        - generic [ref=f1e448]:
+          - paragraph [ref=f1e449]: 🕘 Office Hours
+          - paragraph [ref=f1e450]: Sunday — Thursday, 9:00 AM — 6:00 PM GST
+  - contentinfo [ref=f1e451]:
+    - generic [ref=f1e452]:
+      - generic [ref=f1e453]:
+        - generic [ref=f1e454]:
+          - heading "Eiger Marvel Consultants" [level=4] [ref=f1e455]
+          - paragraph [ref=f1e456]: Enterprise-quality recruitment at startup-friendly pricing. Serving UAE companies with speed, quality, and reliability since 2024.
+        - generic [ref=f1e457]:
+          - heading "Solutions" [level=4] [ref=f1e458]
+          - link "Recruitment & Manpower" [ref=f1e459] [cursor=pointer]:
+            - /url: "#capabilities"
+          - link "Payroll Management" [ref=f1e460] [cursor=pointer]:
+            - /url: "#capabilities"
+          - link "WPS Compliance" [ref=f1e461] [cursor=pointer]:
+            - /url: "#capabilities"
+          - link "Odoo ERP Integration" [ref=f1e462] [cursor=pointer]:
+            - /url: "#capabilities"
+          - link "Immigration Services" [ref=f1e463] [cursor=pointer]:
+            - /url: "#capabilities"
+        - generic [ref=f1e464]:
+          - heading "Industries" [level=4] [ref=f1e465]
+          - link "Construction" [ref=f1e466] [cursor=pointer]:
+            - /url: "#industries"
+          - link "Hospitality" [ref=f1e467] [cursor=pointer]:
+            - /url: "#industries"
+          - link "Events" [ref=f1e468] [cursor=pointer]:
+            - /url: "#industries"
+          - link "Manufacturing" [ref=f1e469] [cursor=pointer]:
+            - /url: "#industries"
+          - link "Healthcare" [ref=f1e470] [cursor=pointer]:
+            - /url: "#industries"
+        - generic [ref=f1e471]:
+          - heading "Contact" [level=4] [ref=f1e472]
+          - paragraph [ref=f1e473]: +971 4 575 1100
+          - paragraph [ref=f1e474]: info@eigermarvelhr.com
+          - paragraph [ref=f1e475]:
+            - link "WhatsApp Us" [ref=f1e476] [cursor=pointer]:
+              - /url: https://wa.me/97145751100
+          - paragraph [ref=f1e477]:
+            - text: Al Maseed Bldg 304, Rigga Road
+            - text: Near Union Metro Station, Dubai, UAE
+      - paragraph [ref=f1e479]:
+        - text: © 2026 Eiger Marvel Consultants. All rights reserved. |
+        - link "Privacy Policy" [ref=f1e480] [cursor=pointer]:
+          - /url: "#"
+        - text: "|"
+        - link "Terms of Service" [ref=f1e481] [cursor=pointer]:
+          - /url: "#"
+  - link "Chat on WhatsApp" [ref=f1e482] [cursor=pointer]:
+    - /url: https://wa.me/97145751100
+    - img [ref=f1e483]
