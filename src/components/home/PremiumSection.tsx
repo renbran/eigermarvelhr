@@ -1,200 +1,231 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { CrownSimple, Check, X, Sparkle } from '@phosphor-icons/react'
+import { gsap } from '@/lib/gsap'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 
-gsap.registerPlugin(ScrollTrigger)
+const TEAM_IMAGE =
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/f_auto,q_auto,c_fill,g_auto:faces,ar_16:9/v1772907258/qgrjckaexnewfjjlnpif.png'
+const EXEC_IMAGE =
+  'https://res.cloudinary.com/dsl5fhclj/image/upload/f_auto,q_auto,c_fill,g_auto,ar_4:3,w_800/v1773034091/pmhd832m4b2qdfxg2rcf.jpg'
 
-const GOLD = 'oklch(0.82 0.12 85)'
-const GOLD_LIGHT = 'oklch(0.87 0.13 85)'
+const highlights = [
+  { stat: '50+', label: 'Workforce Experts' },
+  { stat: '150+', label: 'Successful Placements' },
+  { stat: '18-Day', label: 'Average Fill Time' },
+  { stat: '90%', label: 'Retention Rate' },
+]
 
-interface PremiumSectionProps {
-  onUpgrade: () => void
-}
-
-export function PremiumSection({ onUpgrade }: PremiumSectionProps) {
-  const sectionRef = useRef<HTMLDivElement>(null)
+export function PremiumSection() {
+  const sectionRef = useRef<HTMLElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
-  const freeCardRef = useRef<HTMLDivElement>(null)
-  const premCardRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLDivElement>(null)
+  const reducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header reveal
-      if (headerRef.current) {
-        gsap.fromTo(
-          headerRef.current.querySelectorAll('div, h2, p'),
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',
-            scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true }
-          }
-        )
-      }
-
-      // Free card slides from left
-      if (freeCardRef.current) {
-        gsap.fromTo(
-          freeCardRef.current,
-          { opacity: 0, x: -80 },
-          { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out',
-            scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true }
-          }
-        )
-      }
-
-      // Premium card slides from right with a slight delay
-      if (premCardRef.current) {
-        gsap.fromTo(
-          premCardRef.current,
-          { opacity: 0, x: 80 },
-          { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out',
-            scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true }
-          }
-        )
-      }
-
-      // Gold shimmer line
       gsap.fromTo(
-        sectionRef.current?.querySelector('.prem-gold-line'),
-        { scaleX: 0 },
-        { scaleX: 1, duration: 1.2, ease: 'power3.out',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 70%', once: true }
+        headerRef.current?.querySelectorAll('[data-reveal]') ?? [],
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 85%', once: true },
         }
       )
-    }, [sectionRef])
+
+      gsap.fromTo(
+        imageRef.current,
+        { opacity: 0, y: 32 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
+        }
+      )
+    }, sectionRef)
 
     return () => ctx.revert()
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-16 sm:py-20 relative overflow-hidden bg-black">
-      {/* Gold ambient glows */}
-      <div className="absolute top-0 right-0 w-96 h-96 opacity-[0.05] pointer-events-none"
-        style={{ background: `radial-gradient(ellipse, ${GOLD}, transparent 70%)` }}
-      />
-      <div className="absolute bottom-0 left-0 w-96 h-96 opacity-[0.05] pointer-events-none"
-        style={{ background: `radial-gradient(ellipse, ${GOLD}, transparent 70%)` }}
+    <section
+      ref={sectionRef}
+      className="relative py-20 sm:py-28 overflow-hidden"
+      style={{ background: '#07080F' }}
+    >
+      {/* Ambient gold glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 60% 50% at 50% 30%, rgba(184,145,44,0.07) 0%, transparent 70%)',
+        }}
+        aria-hidden="true"
       />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div ref={headerRef} className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4 shadow-lg"
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
+        {/* Header */}
+        <div ref={headerRef} className="text-center mb-12 sm:mb-16">
+          <div className="flex items-center justify-center gap-3 mb-4" data-reveal>
+            <span className="h-px w-8 bg-amber-500/55" />
+            <span className="text-xs uppercase tracking-[0.18em] font-medium text-amber-400/80">
+              Our Team
+            </span>
+            <span className="h-px w-8 bg-amber-500/55" />
+          </div>
+
+          <h2
+            data-reveal
+            className="font-heading font-light mb-4"
             style={{
-              background: `linear-gradient(135deg, oklch(0.82 0.12 85 / 0.2), oklch(0.82 0.12 85 / 0.05))`,
-              border: `1px solid oklch(0.82 0.12 85 / 0.3)`,
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              color: '#F4F4F5',
+              letterSpacing: '-0.02em',
             }}
           >
-            <CrownSimple size={18} weight="fill" style={{ color: GOLD }} />
-            <span className="text-xs sm:text-sm font-bold uppercase tracking-wide" style={{ color: GOLD_LIGHT }}>
-              Premium Membership
-            </span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
-            10x Your Career Visibility
+            Backed by <span style={{ color: '#D4A84B' }}>50+ Workforce Experts</span>
           </h2>
-          <p className="text-base sm:text-lg text-gray-400">
-            Premium candidates get hired 3x faster with enhanced visibility and AI matching
+
+          <p
+            data-reveal
+            className="font-body max-w-2xl mx-auto"
+            style={{ color: 'rgba(156,163,175,0.7)', fontSize: '1rem', lineHeight: 1.65 }}
+          >
+            Our team spans recruiters, compliance specialists, payroll analysts, and ERP consultants —
+            each with deep UAE market expertise across construction, hospitality, and events.
           </p>
         </div>
 
-        {/* Gold shimmer line */}
-        <div className="flex justify-center mb-10">
-          <div className="prem-gold-line h-[1px] w-20 scale-x-0 origin-center rounded-full"
-            style={{ background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)` }}
-          />
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-          {/* Free Card */}
-          <div ref={freeCardRef} className="relative overflow-hidden rounded-xl p-6 sm:p-8 border border-white/10 bg-white/[0.03] backdrop-blur-sm">
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-6">Free Membership</h3>
-            <div className="space-y-3 mb-6">
-              {[
-                { text: 'Basic profile visibility', included: true },
-                { text: 'Weekly AI job matches', included: true },
-                { text: 'Standard application process', included: true },
-                { text: 'Priority employer visibility', included: false },
-                { text: 'Daily personalized matches', included: false },
-                { text: 'Application analytics', included: false },
-              ].map((item, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  {item.included ? (
-                    <Check size={18} weight="bold" className="text-gray-400 flex-shrink-0 mt-0.5" />
-                  ) : (
-                    <X size={18} weight="bold" className="text-gray-600 flex-shrink-0 mt-0.5" />
-                  )}
-                  <span className={`text-sm ${item.included ? 'text-gray-300' : 'text-gray-600'}`}>{item.text}</span>
-                </div>
-              ))}
-            </div>
-            <div className="text-2xl font-bold text-white">Free</div>
-          </div>
-
-          {/* Premium Card */}
-          <div ref={premCardRef} className="relative overflow-hidden rounded-xl p-6 sm:p-8 border-2"
+        {/* Image grid */}
+        <div
+          ref={imageRef}
+          className="grid lg:grid-cols-3 gap-6 items-stretch"
+          style={{ opacity: 0 }}
+        >
+          {/* Main wide image */}
+          <div
+            className="lg:col-span-2 rounded-2xl overflow-hidden relative group"
             style={{
-              borderColor: `oklch(0.82 0.12 85 / 0.4)`,
-              background: 'rgba(255,255,255,0.03)',
-              backdropFilter: 'blur(8px)',
-              boxShadow: '0 0 40px rgba(214,184,92,0.15)',
+              border: '1px solid rgba(184,145,44,0.25)',
+              boxShadow: '0 0 60px rgba(184,145,44,0.08)',
             }}
           >
-            {/* Decorative top-right glow */}
-            <div className="absolute top-0 right-0 w-40 h-40 opacity-20 pointer-events-none"
-              style={{ background: `radial-gradient(ellipse, ${GOLD}, transparent 70%)` }}
-            />
-
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-6">
-                <CrownSimple size={24} weight="fill" style={{ color: GOLD }} />
-                <h3 className="text-lg sm:text-xl font-bold text-white">Premium Membership</h3>
-              </div>
-              <div className="space-y-3 mb-6">
-                {[
-                  'Featured profile with premium badge',
-                  'Daily AI-powered job matches',
-                  'Priority placement in search results',
-                  '15% AI match score boost',
-                  'Detailed application analytics',
-                  'Direct employer messaging',
-                ].map((text, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <Check size={18} weight="bold" style={{ color: GOLD }} className="flex-shrink-0 mt-0.5" />
-                    <span className="text-sm font-medium text-gray-200">{text}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mb-4">
-                <div className="text-2xl font-bold mb-1" style={{ background: `linear-gradient(135deg, ${GOLD}, ${GOLD_LIGHT})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                  AED 299/month
-                </div>
-                <p className="text-xs text-gray-500">Average ROI within first placement</p>
-              </div>
-              <button
-                onClick={onUpgrade}
-                className="group relative overflow-hidden w-full font-bold py-3 px-6 rounded-lg text-sm transition-all duration-300 hover:scale-105 border-none"
+            <div className="relative aspect-video">
+              <img
+                src={TEAM_IMAGE}
+                alt="Eiger Marvel consultants meeting clients in Dubai"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                loading="lazy"
+                decoding="async"
+              />
+              <div
+                className="absolute inset-0 pointer-events-none"
                 style={{
-                  background: `linear-gradient(135deg, oklch(0.82 0.12 85), oklch(0.72 0.09 85))`,
-                  color: '#000',
-                  boxShadow: '0 0 20px rgba(214,184,92,0.3)',
+                  background:
+                    'linear-gradient(to top, rgba(7,8,15,0.55) 0%, transparent 40%)',
+                }}
+              />
+              <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
+                <div>
+                  <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-amber-400 mb-1">
+                    Leadership & Client Engagement
+                  </div>
+                  <div className="text-white text-lg sm:text-xl font-semibold leading-snug">
+                    Meeting clients across Dubai & the UAE
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Side card with execution team */}
+          <div
+            className="rounded-2xl p-6 flex flex-col justify-between gap-5"
+            style={{
+              border: '1px solid rgba(184,145,44,0.25)',
+              background:
+                'linear-gradient(160deg, rgba(184,145,44,0.06) 0%, rgba(7,8,15,0.6) 60%)',
+              boxShadow: '0 0 60px rgba(184,145,44,0.06)',
+            }}
+          >
+            <div
+              className="rounded-xl overflow-hidden"
+              style={{ border: '1px solid rgba(184,145,44,0.3)' }}
+            >
+              <img
+                src={EXEC_IMAGE}
+                alt="Eiger Marvel execution team delivering recruitment operations in Dubai"
+                className="w-full h-44 object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div>
+              <h3
+                className="font-heading text-xl font-bold mb-2"
+                style={{ color: '#F4F4F5' }}
+              >
+                Execution Excellence
+              </h3>
+              <p
+                className="text-sm leading-relaxed"
+                style={{ color: 'rgba(212,212,216,0.7)' }}
+              >
+                We combine relationship-first consulting with rigorous delivery standards to help UAE
+                employers hire faster, safer, and smarter — with zero compliance penalties.
+              </p>
+            </div>
+            <a
+              href="tel:+97145751100"
+              className="inline-flex items-center justify-center w-full font-semibold py-2.5 px-4 rounded-lg transition-all hover:scale-[1.02]"
+              style={{
+                background: 'linear-gradient(135deg, #B8912C 0%, #D4A84B 100%)',
+                color: '#07080F',
+                boxShadow: '0 0 24px rgba(184,145,44,0.25)',
+              }}
+            >
+              Speak to Our Team
+            </a>
+          </div>
+        </div>
+
+        {/* Stat strip */}
+        <div className="mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          {highlights.map((h) => (
+            <div
+              key={h.label}
+              className="text-center p-4 rounded-xl"
+              style={{
+                border: '1px solid rgba(184,145,44,0.15)',
+                background: 'rgba(184,145,44,0.04)',
+              }}
+            >
+              <div
+                className="font-heading font-bold mb-1"
+                style={{
+                  fontSize: '1.6rem',
+                  background: 'linear-gradient(135deg, #D4A84B 0%, #B8912C 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
                 }}
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  <Sparkle size={16} weight="fill" />
-                  Upgrade to Premium
-                </span>
-              </button>
+                {h.stat}
+              </div>
+              <div
+                className="text-[11px] uppercase tracking-[0.1em]"
+                style={{ color: 'rgba(156,163,175,0.6)' }}
+              >
+                {h.label}
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-500">
-            Join <span className="font-bold" style={{ background: `linear-gradient(135deg, ${GOLD}, ${GOLD_LIGHT})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>500+</span> premium members who landed their dream jobs faster
-          </p>
+          ))}
         </div>
       </div>
     </section>
