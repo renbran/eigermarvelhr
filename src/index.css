@@ -1,17 +1,10 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
+@import './styles/fonts.css';
 
 @layer base {
   * {
     @apply border-border
-  }
-  
-  body {
-    font-family: 'Outfit', 'Segoe UI', sans-serif;
-  }
-
-  h1, h2, h3 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
   }
 }
 

@@ -319,7 +319,7 @@ function Seq0Content({
         {seq.headlineWords.map((word, wi) => (
           <div key={word} className="overflow-hidden">
             <span
-              className="hero-word block font-display tracking-tight"
+              className="hero-word block font-heading tracking-tight"
               style={{
                 fontSize: 'clamp(3.5rem, 10vw, 7.5rem)',
                 fontWeight: wi === 1 ? 700 : 300,
@@ -538,7 +538,7 @@ function Seq1Content({
         className="mb-6 leading-none"
       >
         <span
-          className="font-display font-light"
+          className="font-heading font-light"
           style={{
             fontSize: 'clamp(2rem, 5vw, 3.5rem)',
             color: 'rgba(244,244,245,0.9)',
