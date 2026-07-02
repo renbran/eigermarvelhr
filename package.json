@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "vite",
         "kill": "fuser -k 5000/tcp",
-        "build": "tsc -b --noCheck && vite build && powershell -Command \"if (Test-Path dist/proxy.js) { Remove-Item dist/proxy.js -Force; Write-Host 'Removed dist/proxy.js' }\"",
+        "build": "tsc -b --noCheck && vite build && node -e \"'proxy.js,package.json'.split(',').forEach(f=>{try{require('fs').unlinkSync('dist/'+f)}catch(e){}});\"",
         "lint": "eslint .",
         "optimize": "vite optimize",
         "preview": "vite preview"
