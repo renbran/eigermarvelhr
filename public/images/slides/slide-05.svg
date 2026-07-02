@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e1f;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1a1f3a;stop-opacity:1"/>
+    </linearGradient>
+    <radialGradient id="glow5" cx="60%" cy="40%" r="50%">
+      <stop offset="0%" style="stop-color:#B8912C;stop-opacity:0.16"/>
+      <stop offset="100%" style="stop-color:#B8912C;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg5)"/>
+  <rect width="1920" height="1080" fill="url(#glow5)"/>
+  <g transform="translate(560,360)" opacity="0.35">
+    <path d="M400 0 L0 400 L800 400 Z" fill="none" stroke="#B8912C" stroke-width="2"/>
+    <path d="M400 60 L80 400 L720 400 Z" fill="#B8912C" opacity="0.20"/>
+    <circle cx="400" cy="280" r="50" fill="#B8912C" opacity="0.6"/>
+    <circle cx="400" cy="280" r="80" fill="none" stroke="#B8912C" stroke-width="1" opacity="0.5"/>
+    <circle cx="400" cy="280" r="120" fill="none" stroke="#B8912C" stroke-width="1" opacity="0.3"/>
+  </g>
+  <g transform="translate(1280,500)" opacity="0.32">
+    <rect x="0" y="0" width="80" height="80" rx="6" fill="#F4F4F5" opacity="0.25"/>
+    <rect x="100" y="20" width="80" height="80" rx="6" fill="#F4F4F5" opacity="0.35"/>
+    <rect x="200" y="-20" width="80" height="80" rx="6" fill="#B8912C" opacity="0.7"/>
+    <rect x="300" y="40" width="80" height="80" rx="6" fill="#F4F4F5" opacity="0.35"/>
+    <line x1="0" y1="120" x2="380" y2="120" stroke="#B8912C" stroke-width="1" opacity="0.6"/>
+  </g>
+  <g opacity="0.12" stroke="#F4F4F5" stroke-width="0.5">
+    <line x1="0" y1="180" x2="1920" y2="180"/>
+    <line x1="0" y1="900" x2="1920" y2="900"/>
+  </g>
+  <text x="120" y="1020" font-family="sans-serif" font-size="18" fill="#B8912C" opacity="0.6" letter-spacing="3">STRATEGIC CONSULTING</text>
+</svg>

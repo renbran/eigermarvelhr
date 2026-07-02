@@ -54,16 +54,16 @@ export function IndustriesPages() {
           {industries.map((ind) => (
             <div
               key={ind.title}
-              className={`group relative bg-card/50 backdrop-blur-sm border border-border/60 rounded-2xl p-6 sm:p-8 overflow-hidden transition-all duration-500 hover:shadow-xl ${ind.border}`}
+              className={`group relative bg-card border border-border/60 rounded-2xl p-6 sm:p-8 overflow-hidden transition-all duration-500 hover:shadow-xl ${ind.border}`}
             >
-              <div className={`absolute inset-0 bg-gradient-to-b ${ind.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+              <div className={`absolute inset-0 bg-gradient-to-b ${ind.gradient} opacity-100 transition-opacity duration-500 pointer-events-none`} />
               <div className="relative z-10">
                 <h3 className="text-2xl font-bold text-foreground mb-2">{ind.title}</h3>
-                <p className="text-sm text-accent/80 font-medium mb-4">{ind.subtitle}</p>
-                <p className="text-muted-foreground leading-relaxed text-sm mb-6">{ind.desc}</p>
+                <p className="text-sm text-accent font-medium mb-4">{ind.subtitle}</p>
+                <p className="text-foreground/80 leading-relaxed text-sm mb-6">{ind.desc}</p>
                 <div className="flex flex-wrap gap-2">
                   {ind.stats.map((stat) => (
-                    <span key={stat} className="text-xs bg-accent/10 text-accent/90 px-3 py-1.5 rounded-full font-semibold">
+                    <span key={stat} className="text-xs bg-accent/10 text-accent px-3 py-1.5 rounded-full font-semibold">
                       {stat}
                     </span>
                   ))}

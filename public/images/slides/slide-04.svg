@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#07080F;stop-opacity:1"/>
+      <stop offset="50%" style="stop-color:#161b3e;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#07080F;stop-opacity:1"/>
+    </linearGradient>
+    <radialGradient id="glow4" cx="35%" cy="60%" r="55%">
+      <stop offset="0%" style="stop-color:#D4A84B;stop-opacity:0.14"/>
+      <stop offset="100%" style="stop-color:#D4A84B;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg4)"/>
+  <rect width="1920" height="1080" fill="url(#glow4)"/>
+  <g transform="translate(280,380)" opacity="0.35">
+    <path d="M0 280 L0 100 L120 60 L120 240 Z" fill="#F4F4F5" opacity="0.15"/>
+    <path d="M140 280 L140 40 L260 0 L260 240 Z" fill="#F4F4F5" opacity="0.30"/>
+    <path d="M280 280 L280 80 L400 40 L400 260 Z" fill="#B8912C" opacity="0.40"/>
+    <path d="M420 280 L420 120 L540 80 L540 260 Z" fill="#F4F4F5" opacity="0.20"/>
+    <line x1="0" y1="280" x2="540" y2="280" stroke="#F4F4F5" stroke-width="1" opacity="0.4"/>
+    <text x="270" y="320" font-family="sans-serif" font-size="14" fill="#B8912C" text-anchor="middle" letter-spacing="2">GROWTH</text>
+  </g>
+  <g transform="translate(1340,420)" opacity="0.32">
+    <circle cx="80" cy="80" r="70" fill="none" stroke="#B8912C" stroke-width="2"/>
+    <text x="80" y="95" font-family="sans-serif" font-size="42" fill="#B8912C" text-anchor="middle" font-weight="700">7</text>
+    <text x="80" y="115" font-family="sans-serif" font-size="14" fill="#F4F4F5" text-anchor="middle" opacity="0.7">DAYS</text>
+  </g>
+  <g transform="translate(1500,420)" opacity="0.28">
+    <circle cx="80" cy="80" r="70" fill="none" stroke="#F4F4F5" stroke-width="2"/>
+    <text x="80" y="95" font-family="sans-serif" font-size="36" fill="#F4F4F5" text-anchor="middle" font-weight="700">14</text>
+    <text x="80" y="115" font-family="sans-serif" font-size="14" fill="#F4F4F5" text-anchor="middle" opacity="0.7">MAX</text>
+  </g>
+  <g opacity="0.15" stroke="#B8912C" stroke-width="1" fill="none">
+    <line x1="0" y1="200" x2="1920" y2="200"/>
+    <line x1="0" y1="880" x2="1920" y2="880"/>
+  </g>
+  <text x="120" y="1020" font-family="sans-serif" font-size="18" fill="#B8912C" opacity="0.6" letter-spacing="3">PERFORMANCE METRICS</text>
+</svg>
