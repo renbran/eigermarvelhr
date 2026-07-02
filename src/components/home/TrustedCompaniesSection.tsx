@@ -13,18 +13,18 @@ interface BadgeItem {
 }
 
 const awards: BadgeItem[] = [
-  { title: 'UAE Top Recruiter 2024', subtitle: 'Gulf Business Awards',       level: 'gold',     variant: 'award' },
-  { title: 'MOHRE Licensed',         subtitle: 'Ministry of Human Resources', level: 'platinum', variant: 'stamp' },
-  { title: 'WPS Compliant',          subtitle: 'Wage Protection System',      level: 'gold',     variant: 'badge' },
-  { title: 'ISO 9001:2024',          subtitle: 'Quality Management',          level: 'silver',   variant: 'certificate' },
-  { title: 'Best HR Consultancy',    subtitle: 'GCC Business Awards 2025',    level: 'gold',     variant: 'award' },
-  { title: 'KHDA Accredited',        subtitle: 'Dubai Knowledge Authority',   level: 'silver',   variant: 'stamp' },
-  { title: 'Great Place to Work UAE', subtitle: 'Workplace Excellence 2026',  level: 'gold',     variant: 'badge' },
-  { title: 'Dubai Chamber Approved', subtitle: 'Chamber of Commerce Member',  level: 'platinum', variant: 'id-card' },
-  { title: 'Excellence in Recruitment', subtitle: 'HR Summit Middle East',    level: 'gold',     variant: 'award' },
-  { title: 'Odoo Gold Partner',      subtitle: 'ERP Implementation',          level: 'gold',     variant: 'badge' },
-  { title: 'Fastest Growing HR Firm',subtitle: 'SME Awards UAE 2025',         level: 'silver',   variant: 'sticker' },
-  { title: 'Tawteen Partner',        subtitle: 'UAE National Development',    level: 'bronze',   variant: 'stamp' },
+  { title: 'UAE Top Recruiter 2024',  subtitle: 'Gulf Business Awards',        level: 'gold',     variant: 'badge' },
+  { title: 'MOHRE Licensed',          subtitle: 'Ministry of Human Resources', level: 'platinum', variant: 'badge' },
+  { title: 'WPS Compliant',           subtitle: 'Wage Protection System',      level: 'gold',     variant: 'badge' },
+  { title: 'ISO 9001:2024',           subtitle: 'Quality Management',          level: 'silver',   variant: 'badge' },
+  { title: 'Best HR Consultancy',     subtitle: 'GCC Business Awards 2025',    level: 'gold',     variant: 'badge' },
+  { title: 'KHDA Accredited',         subtitle: 'Dubai Knowledge Authority',   level: 'silver',   variant: 'badge' },
+  { title: 'Great Place to Work UAE', subtitle: 'Workplace Excellence 2026',   level: 'gold',     variant: 'badge' },
+  { title: 'Dubai Chamber Approved',  subtitle: 'Chamber of Commerce Member',  level: 'platinum', variant: 'badge' },
+  { title: 'Excellence in Recruitment', subtitle: 'HR Summit Middle East',     level: 'gold',     variant: 'badge' },
+  { title: 'Odoo Gold Partner',       subtitle: 'ERP Implementation',          level: 'gold',     variant: 'badge' },
+  { title: 'Fastest Growing HR Firm', subtitle: 'SME Awards UAE 2025',         level: 'silver',   variant: 'badge' },
+  { title: 'Tawteen Partner',         subtitle: 'UAE National Development',    level: 'bronze',   variant: 'badge' },
 ]
 
 // ─── Marquee track ────────────────────────────────────────────────────────────
