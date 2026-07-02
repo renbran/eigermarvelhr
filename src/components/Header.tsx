@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { List, X, User as UserIcon, SignOut } from '@phosphor-icons/react'
 import type { User, CandidateProfile } from '@/lib/types'
-import logoIcon from 'https://res.cloudinary.com/dsl5fhclj/image/upload/v1769770778/krvcbd9clp1pfb8rbjxb.webp'
+const logoIcon = 'https://res.cloudinary.com/dsl5fhclj/image/upload/v1769770778/krvcbd9clp1pfb8rbjxb.webp'
 
 interface HeaderProps {
   onNavigate: (page: string) => void
