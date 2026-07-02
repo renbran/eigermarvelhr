@@ -176,17 +176,17 @@ export function Awards({
             {level.toUpperCase()}
           </div>
 
-          <h1 className={cn("text-4xl font-black tracking-tight")}>{title}</h1>
+          <h1 className={cn("text-2xl font-black tracking-tight text-white drop-shadow-md")}>{title}</h1>
 
-          <div className="bg-primary mx-auto my-3 h-[1px] w-40" />
+          <div className="bg-amber-400 mx-auto my-3 h-[1px] w-32" />
 
-          <h2 className={cn("mb-4 w-60 text-xl font-light")}>{subtitle}</h2>
+          <h2 className={cn("mb-3 w-56 text-sm font-medium text-amber-100/90")}>{subtitle}</h2>
 
           {recipient && (
-            <p className={cn("text-primary/60 italic")}>{recipient}</p>
+            <p className={cn("text-amber-200/80 italic text-sm")}>{recipient}</p>
           )}
 
-          <div className={cn("text-xl font-bold")}>{date}</div>
+          <div className={cn("text-amber-300 text-base font-bold mt-1")}>{date}</div>
         </div>
       </div>
     )
