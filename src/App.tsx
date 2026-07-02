@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useKV } from '@github/spark/hooks'
+
 import { Toaster } from 'sonner'
 import { toast } from 'sonner'
 import { Header } from '@/components/Header'
@@ -39,7 +39,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [showLoadingScreen, setShowLoadingScreen] = useState(true)
   
-  const [jobs] = useKV<JobPosting[]>('jobs', [])
+  const [jobs] = useState<JobPosting[]>(sampleJobs)
 
   useEffect(() => {
     loadCurrentUser()
