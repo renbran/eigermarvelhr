@@ -43,8 +43,28 @@ function SlideshowHero({ seq }: SlideshowHeroProps) {
   const active2Ref = useRef(0)
   const isMountedRef = useRef(true)
   const reducedMotion = useReducedMotion()
+  const [imagesLoaded, setImagesLoaded] = useState(false)
 
-  const getSlidePaths = (s: number) => (s === 0 ? SLIDE_PATHS : SLIDE2_PATHS)
+  // Preload all slideshow images to prevent blank frames
+  useEffect(() => {
+    const allPaths = [...SLIDE_PATHS, ...SLIDE2_PATHS]
+    let loaded = 0
+    let errored = 0
+
+    allPaths.forEach((src) => {
+      const img = new Image()
+      img.onload = () => {
+        loaded++
+        if (loaded + errored >= allPaths.length) setImagesLoaded(true)
+      }
+      img.onerror = () => {
+        errored++
+        console.warn(`[SlideshowHero] Failed to load image: ${src}`)
+        if (loaded + errored >= allPaths.length) setImagesLoaded(true)
+      }
+      img.src = src
+    })
+  }, [])
 
   const crossfadeTo = useCallback(
     (slides: NodeListOf<Element>, nextIdx: number, duration: number) => {
@@ -52,43 +72,53 @@ function SlideshowHero({ seq }: SlideshowHeroProps) {
       const prev = slides[prevIdx] as HTMLElement
       const next = slides[nextIdx] as HTMLElement
 
-      // Kill any in-progress tweens
       gsap.killTweensOf(prev)
       gsap.killTweensOf(next)
-
       next.classList.remove('ken-burns')
-      void (next as HTMLElement).offsetWidth
-      next.classList.add('ken-burns')
 
-      gsap.set(prev, { clearProps: 'all' })
       prev.classList.remove('active', 'ken-burns')
-
       next.classList.add('active')
+
       if (!reducedMotion) {
         gsap.fromTo(
           next,
           { opacity: 0, scale: 1.15 },
-          { opacity: 0.35, scale: 1, duration, ease: 'power3.out' }
+          {
+            opacity: 0.35,
+            scale: 1,
+            duration,
+            ease: 'power3.out',
+            onComplete: () => {
+              gsap.set(next, { clearProps: 'transform' })
+              next.classList.add('ken-burns')
+            },
+          }
         )
         gsap.to(prev, { opacity: 0, duration, ease: 'power3.in' })
       } else {
         gsap.set(next, { opacity: 0.35 })
+        next.classList.add('ken-burns')
       }
     },
     [reducedMotion]
   )
 
   const startTimer = useCallback(
-    (containerRef: React.RefObject<HTMLDivElement | null>, activeRef: React.MutableRefObject<number>, paths: string[], seqNum: number) => {
+    (
+      containerRef: React.RefObject<HTMLDivElement | null>,
+      activeRef: React.MutableRefObject<number>,
+      paths: string[],
+      timerRef: React.MutableRefObject<ReturnType<typeof setTimeout> | null>
+    ) => {
       const tick = () => {
         if (!isMountedRef.current) return
         const slides = containerRef.current?.querySelectorAll('.slide')
         if (!slides?.length) return
         activeRef.current = (activeRef.current + 1) % paths.length
         crossfadeTo(slides, activeRef.current, CROSSFADE_DURATION)
-        timer1Ref.current = setTimeout(tick, SLIDE_INTERVAL)
+        timerRef.current = setTimeout(tick, SLIDE_INTERVAL)
       }
-      timer1Ref.current = setTimeout(tick, SLIDE_INTERVAL)
+      timerRef.current = setTimeout(tick, SLIDE_INTERVAL)
     },
     [crossfadeTo]
   )
@@ -100,7 +130,7 @@ function SlideshowHero({ seq }: SlideshowHeroProps) {
       containerRef: React.RefObject<HTMLDivElement | null>,
       activeRef: React.MutableRefObject<number>,
       paths: string[],
-      seqNum: number,
+      timerRef: React.MutableRefObject<ReturnType<typeof setTimeout> | null>,
       startImmediately: boolean
     ) => {
       const container = containerRef.current
@@ -110,15 +140,15 @@ function SlideshowHero({ seq }: SlideshowHeroProps) {
 
       activeRef.current = 0
       slides[0].classList.add('active', 'ken-burns')
-      gsap.set(slides[0], { opacity: reducedMotion ? 0.35 : 0.35 })
+      gsap.set(slides[0], { opacity: 0.35 })
 
       if (startImmediately) {
-        startTimer(containerRef, activeRef, paths, seqNum)
+        startTimer(containerRef, activeRef, paths, timerRef)
       }
     }
 
-    initSlides(container1Ref, active1Ref, SLIDE_PATHS, 0, true)
-    initSlides(container2Ref, active2Ref, SLIDE2_PATHS, 1, false)
+    initSlides(container1Ref, active1Ref, SLIDE_PATHS, timer1Ref, true)
+    initSlides(container2Ref, active2Ref, SLIDE2_PATHS, timer2Ref, false)
 
     return () => {
       isMountedRef.current = false
@@ -137,22 +167,19 @@ function SlideshowHero({ seq }: SlideshowHeroProps) {
     const slides2 = c2.querySelectorAll('.slide')
     if (!slides1.length || !slides2.length) return
 
+    if (timer1Ref.current) { clearTimeout(timer1Ref.current); timer1Ref.current = null }
+    if (timer2Ref.current) { clearTimeout(timer2Ref.current); timer2Ref.current = null }
+
     if (seq === 0) {
       c1.style.display = ''
       c2.style.display = 'none'
-      if (timer2Ref.current) { clearTimeout(timer2Ref.current); timer2Ref.current = null }
-      if (!timer1Ref.current) {
-        active1Ref.current = (active1Ref.current) % SLIDE_PATHS.length
-        startTimer(container1Ref, active1Ref, SLIDE_PATHS, 0)
-      }
+      active1Ref.current = (active1Ref.current) % SLIDE_PATHS.length
+      startTimer(container1Ref, active1Ref, SLIDE_PATHS, timer1Ref)
     } else {
       c1.style.display = 'none'
       c2.style.display = ''
-      if (timer1Ref.current) { clearTimeout(timer1Ref.current); timer1Ref.current = null }
-      if (!timer2Ref.current) {
-        active2Ref.current = (active2Ref.current) % SLIDE2_PATHS.length
-        startTimer(container2Ref, active2Ref, SLIDE2_PATHS, 1)
-      }
+      active2Ref.current = (active2Ref.current) % SLIDE2_PATHS.length
+      startTimer(container2Ref, active2Ref, SLIDE2_PATHS, timer2Ref)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seq])
