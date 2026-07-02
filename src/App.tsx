@@ -24,12 +24,14 @@ import { IndustriesPages } from '@/components/pages/IndustriesPages'
 import { PricingPage } from '@/components/pages/PricingPage'
 import { InsightsPage } from '@/components/pages/InsightsPage'
 import { HealthCheckPage } from '@/components/pages/HealthCheckPage'
+import { AboutPage } from '@/components/pages/AboutPage'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { LoadingScreen } from '@/components/ui/LoadingScreen'
 import { ScrollProgress } from '@/components/ui/ScrollProgress'
 import { CustomCursor } from '@/components/ui/CustomCursor'
 import { FloatingCTA } from '@/components/ui/FloatingCTA'
 import { LenisProvider } from '@/components/LenisProvider'
+import { kv } from '@/lib/kv'
 import type { UserType, JobPosting, CandidateProfile, User } from '@/lib/types'
 import { sampleJobs } from '@/lib/sample-jobs'
 
@@ -54,14 +56,14 @@ function App() {
   const loadCurrentUser = async () => {
     try {
       setIsLoading(true)
-      const userId = await spark.kv.get<string>('currentUser')
+      const userId = await kv.get<string>('currentUser')
       if (userId) {
-        const user = await spark.kv.get<User>(`user:${userId}`)
+        const user = await kv.get<User>(`user:${userId}`)
         if (user) {
           setCurrentUser(user)
           
           if (user.userType === 'candidate') {
-            const profile = await spark.kv.get<CandidateProfile>(`candidate_profile:${userId}`)
+            const profile = await kv.get<CandidateProfile>(`candidate_profile:${userId}`)
             if (profile) {
               setCandidateProfile({ ...profile, isPremium: user.isPremium })
             }
@@ -83,7 +85,7 @@ function App() {
 
   const handleAuthSuccess = async (userId: string, userType: UserType) => {
     if (userType === 'candidate') {
-      const profile = await spark.kv.get<CandidateProfile>(`candidate_profile:${userId}`)
+      const profile = await kv.get<CandidateProfile>(`candidate_profile:${userId}`)
       
       if (!profile) {
         setNewCandidateId(userId)
@@ -145,7 +147,7 @@ function App() {
       const { calculateMatchScore } = await import('@/lib/matching')
       const matchScore = calculateMatchScore(candidateProfile, job).totalScore
 
-      await spark.kv.set(`application:${applicationId}`, {
+      await kv.set(`application:${applicationId}`, {
         id: applicationId,
         jobId,
         candidateId: currentUser.id,
@@ -186,7 +188,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await spark.kv.delete('currentUser')
+      await kv.delete('currentUser')
       setCurrentUser(null)
       setCandidateProfile(null)
       setCurrentPage('home')
@@ -290,6 +292,18 @@ function App() {
           <HowItWorksPage onNavigate={setCurrentPage} />
         )}
 
+        {currentPage === 'solutions' && (
+          <HowItWorksPage onNavigate={setCurrentPage} />
+        )}
+
+        {currentPage === 'about' && (
+          <AboutPage />
+        )}
+
+        {currentPage === 'industries' && (
+          <IndustriesPages onNavigate={setCurrentPage} />
+        )}
+
         {currentPage === 'industries-page' && (
           <IndustriesPages onNavigate={setCurrentPage} />
         )}
@@ -299,6 +313,10 @@ function App() {
         )}
 
         {currentPage === 'insights' && (
+          <InsightsPage />
+        )}
+
+        {currentPage === 'resources' && (
           <InsightsPage />
         )}
 

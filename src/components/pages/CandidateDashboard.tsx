@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { kv } from '@/lib/kv'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
@@ -40,12 +41,12 @@ export function CandidateDashboard({
 
   async function loadApplications() {
     try {
-      const allKeys = await spark.kv.keys()
+      const allKeys = await kv.keys()
       const applicationKeys = allKeys.filter(key => key.startsWith('application:'))
       
       const userApplications: Application[] = []
       for (const key of applicationKeys) {
-        const app = await spark.kv.get<Application>(key)
+        const app = await kv.get<Application>(key)
         if (app && app.candidateId === user.id) {
           userApplications.push(app)
         }

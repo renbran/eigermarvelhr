@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { kv } from '@/lib/kv'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -150,7 +151,7 @@ export function ProfileBuilderDialog({ isOpen, userId, onComplete, existingProfi
         isPremium: existingProfile?.isPremium
       }
 
-      await spark.kv.set(`candidate_profile:${userId}`, profile)
+      await kv.set(`candidate_profile:${userId}`, profile)
       
       if (existingProfile) {
         toast.success('Profile updated successfully!')

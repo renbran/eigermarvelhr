@@ -1,0 +1,14 @@
+- main [ref=f2e3]:
+  - paragraph [ref=f2e4]:
+    - generic [ref=f2e5]:
+      - strong [ref=f2e6]: "404"
+      - text: ": NOT_FOUND"
+    - generic [ref=f2e7]:
+      - text: "Code:"
+      - code [ref=f2e8]: "`DEPLOYMENT_NOT_FOUND`"
+    - generic [ref=f2e9]:
+      - text: "ID:"
+      - code [ref=f2e10]: "`bom1::fxsnf-1783001500671-95e89a9660cf`"
+  - link "This deployment cannot be found. For more information and troubleshooting, see our documentation." [ref=f2e11] [cursor=pointer]:
+    - /url: https://vercel.com/docs/errors/DEPLOYMENT_NOT_FOUND
+    - generic [ref=f2e12]: This deployment cannot be found. For more information and troubleshooting, see our documentation.

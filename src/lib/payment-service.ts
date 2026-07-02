@@ -1,3 +1,4 @@
+import { kv } from '@/lib/kv'
 import { getStripe, PREMIUM_CONFIG } from './stripe-config'
 import type { PaymentIntent, Subscription, User } from './types'
 
@@ -45,7 +46,7 @@ export async function processPayment(
     }
     
     // Update payment intent status
-    await spark.kv.set(`payment_intent:${paymentIntentId}`, {
+    await kv.set(`payment_intent:${paymentIntentId}`, {
       id: paymentIntentId,
       userId,
       amount: PREMIUM_CONFIG.price,
@@ -59,7 +60,7 @@ export async function processPayment(
     const errorMessage = error instanceof Error ? error.message : 'Payment failed'
     
     // Log failed payment
-    await spark.kv.set(`payment_intent:${paymentIntentId}`, {
+    await kv.set(`payment_intent:${paymentIntentId}`, {
       id: paymentIntentId,
       userId,
       amount: PREMIUM_CONFIG.price,
@@ -95,12 +96,12 @@ export async function activatePremiumSubscription(
   }
   
   // Save subscription
-  await spark.kv.set(`subscription:${userId}`, subscription)
+  await kv.set(`subscription:${userId}`, subscription)
   
   // Update user premium status
-  const user = await spark.kv.get<User>(`user:${userId}`)
+  const user = await kv.get<User>(`user:${userId}`)
   if (user) {
-    await spark.kv.set(`user:${userId}`, {
+    await kv.set(`user:${userId}`, {
       ...user,
       isPremium: true,
       premiumExpiresAt: expiryDate,
@@ -108,9 +109,9 @@ export async function activatePremiumSubscription(
   }
   
   // Update candidate profile
-  const profile = await spark.kv.get(`candidate_profile:${userId}`)
+  const profile = await kv.get(`candidate_profile:${userId}`)
   if (profile) {
-    await spark.kv.set(`candidate_profile:${userId}`, {
+    await kv.set(`candidate_profile:${userId}`, {
       ...profile,
       isPremium: true,
     })
@@ -123,7 +124,7 @@ export async function activatePremiumSubscription(
  * Checks subscription status and handles grace period
  */
 export async function checkSubscriptionStatus(userId: string): Promise<Subscription | null> {
-  const subscription = await spark.kv.get<Subscription>(`subscription:${userId}`)
+  const subscription = await kv.get<Subscription>(`subscription:${userId}`)
   
   if (!subscription) {
     return null
@@ -141,7 +142,7 @@ export async function checkSubscriptionStatus(userId: string): Promise<Subscript
       ...subscription,
       status: 'grace_period',
     }
-    await spark.kv.set(`subscription:${userId}`, updatedSubscription)
+    await kv.set(`subscription:${userId}`, updatedSubscription)
     return updatedSubscription
   }
   
@@ -152,12 +153,12 @@ export async function checkSubscriptionStatus(userId: string): Promise<Subscript
       ...subscription,
       status: 'expired',
     }
-    await spark.kv.set(`subscription:${userId}`, updatedSubscription)
+    await kv.set(`subscription:${userId}`, updatedSubscription)
     
     // Update user premium status
-    const user = await spark.kv.get<User>(`user:${userId}`)
+    const user = await kv.get<User>(`user:${userId}`)
     if (user) {
-      await spark.kv.set(`user:${userId}`, {
+      await kv.set(`user:${userId}`, {
         ...user,
         isPremium: false,
       })
@@ -173,7 +174,7 @@ export async function checkSubscriptionStatus(userId: string): Promise<Subscript
  * Cancels an active subscription
  */
 export async function cancelSubscription(userId: string): Promise<boolean> {
-  const subscription = await spark.kv.get<Subscription>(`subscription:${userId}`)
+  const subscription = await kv.get<Subscription>(`subscription:${userId}`)
   
   if (!subscription) {
     return false
@@ -185,6 +186,6 @@ export async function cancelSubscription(userId: string): Promise<boolean> {
     autoRenew: false,
   }
   
-  await spark.kv.set(`subscription:${userId}`, updatedSubscription)
+  await kv.set(`subscription:${userId}`, updatedSubscription)
   return true
 }

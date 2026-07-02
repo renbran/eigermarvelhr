@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
+import { kv } from '@/lib/kv'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
@@ -125,7 +126,7 @@ export function TalentTechSection() {
       submittedAt: new Date().toISOString()
     }
 
-    await spark.kv.set(`talenttech_waitlist:${waitlistEntry.id}`, waitlistEntry)
+    await kv.set(`talenttech_waitlist:${waitlistEntry.id}`, waitlistEntry)
 
     toast.success("You're on the list! We'll be in touch soon.", {
       description: 'Our team will contact you within 24 hours.'

@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { toast } from 'sonner'
+import { kv } from '@/lib/kv'
 import type { UserType, User } from '@/lib/types'
 
 interface AuthDialogProps {
@@ -28,7 +29,7 @@ export function AuthDialog({ isOpen, onClose, mode, onSuccess }: AuthDialogProps
       if (mode === 'register') {
         const userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
         
-        await spark.kv.set(`user:${userId}`, {
+        await kv.set(`user:${userId}`, {
           id: userId,
           email,
           userType,
@@ -36,17 +37,17 @@ export function AuthDialog({ isOpen, onClose, mode, onSuccess }: AuthDialogProps
           createdAt: new Date().toISOString()
         })
 
-        await spark.kv.set('currentUser', userId)
+        await kv.set('currentUser', userId)
         
         toast.success('Account created successfully!')
         onSuccess(userId, userType)
       } else {
-        const allKeys = await spark.kv.keys()
+        const allKeys = await kv.keys()
         const userKeys = allKeys.filter(key => key.startsWith('user:'))
         
         let foundUser: User | null = null
         for (const key of userKeys) {
-          const user = await spark.kv.get<User>(key)
+          const user = await kv.get<User>(key)
           if (user && user.email === email) {
             foundUser = user
             break
@@ -54,7 +55,7 @@ export function AuthDialog({ isOpen, onClose, mode, onSuccess }: AuthDialogProps
         }
 
         if (foundUser) {
-          await spark.kv.set('currentUser', foundUser.id)
+          await kv.set('currentUser', foundUser.id)
           toast.success('Welcome back!')
           onSuccess(foundUser.id, foundUser.userType)
         } else {
