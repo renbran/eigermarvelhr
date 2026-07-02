@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Toaster } from 'sonner'
 import { toast } from 'sonner'
+import { Analytics } from '@vercel/analytics/react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { AuthDialog } from '@/components/AuthDialog'
@@ -495,6 +496,7 @@ function App() {
     </div>
     <FloatingCTA />
     </LenisProvider>
+    <Analytics />
     </ErrorBoundary>
   )
 }
