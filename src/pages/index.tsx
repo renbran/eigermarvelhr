@@ -10,6 +10,8 @@ import { TalentTechSection } from '@/components/home/TalentTechSection'
 import { ServicesSection } from '@/components/home/ServicesSection'
 import { PremiumSection } from '@/components/home/PremiumSection'
 
+import '../main'
+
 gsap.registerPlugin(ScrollTrigger)
 
 /**
