@@ -10,7 +10,7 @@ import {
   UsersThree,
   ClockCounterClockwise,
   ClipboardText,
-  Airplane,
+  SealCheck,
   ShieldCheck,
 } from '@phosphor-icons/react'
 
@@ -45,11 +45,11 @@ const services = [
       'Structured competency interviews, background verification, and reference checks. You only meet the top 3–5% who pass our rigorous process.',
   },
   {
-    icon: Airplane,
-    title: 'UAE Visa & Work Permit',
-    tag: 'Documentation',
+    icon: SealCheck,
+    title: 'ISO Certification Consulting',
+    tag: 'Accreditation',
     description:
-      'End-to-end PRO services — employment visa, medical fitness, Emirates ID, and labour card processing handled from abroad or in-country.',
+      'Expert guidance through ISO 9001, 45001, and 14001 certification. We help construction and hospitality firms achieve accreditation that unlocks government tenders and corporate contracts.',
   },
   {
     icon: ShieldCheck,
