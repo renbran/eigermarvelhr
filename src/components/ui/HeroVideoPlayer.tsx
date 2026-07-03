@@ -1,44 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
-
-declare global {
-  interface Window {
-    YT?: { Player: new (el: HTMLElement | string, opts: Record<string, unknown>) => YTPlayerInstance }
-    onYouTubeIframeAPIReady?: () => void
-  }
-}
-
-interface YTPlayerInstance {
-  unMute: () => void
-  mute: () => void
-  setVolume: (n: number) => void
-  playVideo: () => void
-  pauseVideo: () => void
-  destroy: () => void
-}
-
-let apiPromise: Promise<Window['YT']> | null = null
-
-function loadYouTubeAPI(): Promise<Window['YT']> {
-  if (typeof window === 'undefined') return Promise.reject(new Error('SSR'))
-  if (window.YT?.Player) return Promise.resolve(window.YT)
-  if (apiPromise) return apiPromise
-
-  apiPromise = new Promise((resolve, reject) => {
-    const prev = window.onYouTubeIframeAPIReady
-    window.onYouTubeIframeAPIReady = () => {
-      prev?.()
-      if (window.YT) resolve(window.YT)
-      else reject(new Error('YT API failed to load'))
-    }
-    const tag = document.createElement('script')
-    tag.src = 'https://www.youtube.com/iframe_api'
-    tag.async = true
-    tag.onerror = () => reject(new Error('Failed to load YT API script'))
-    document.head.appendChild(tag)
-  })
-
-  return apiPromise
-}
+import { useMemo, useState, type ReactNode } from 'react'
 
 export interface HeroVideoPlayerProps {
   videoId: string
@@ -53,72 +13,13 @@ export function HeroVideoPlayer({
   minHeight = 'min-h-[78vh]',
   className = '',
 }: HeroVideoPlayerProps) {
-  const playerTargetRef = useRef<HTMLDivElement>(null)
-  const playerRef = useRef<YTPlayerInstance | null>(null)
   const [muted, setMuted] = useState(true)
-  const [apiReady, setApiReady] = useState(false)
 
-  const src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&playsinline=1&disablekb=1&fs=0&iv_load_policy=3&loop=1&playlist=${videoId}&enablejsapi=1`
-
-  useEffect(() => {
-    let cancelled = false
-    loadYouTubeAPI()
-      .then((YT) => {
-        if (cancelled || !YT) return
-        const node = playerTargetRef.current
-        if (!node) return
-        try {
-          playerRef.current = new YT.Player(node, {
-            videoId,
-            playerVars: {
-              autoplay: 1,
-              mute: 1,
-              controls: 0,
-              modestbranding: 1,
-              showinfo: 0,
-              rel: 0,
-              playsinline: 1,
-              disablekb: 1,
-              fs: 0,
-              iv_load_policy: 3,
-              loop: 1,
-              playlist: videoId,
-            },
-            events: {
-              onReady: () => setApiReady(true),
-            },
-          })
-        } catch (e) {
-          console.error('[HeroVideoPlayer] YT.Player init failed:', e)
-        }
-      })
-      .catch((err) => console.error('[HeroVideoPlayer] YT API load failed:', err))
-
-    return () => {
-      cancelled = true
-      try {
-        playerRef.current?.destroy?.()
-      } catch {
-        /* ignore */
-      }
-      playerRef.current = null
-    }
-  }, [videoId])
-
-  const toggleMute = () => {
-    const p = playerRef.current
-    if (!p) {
-      setMuted((m) => !m)
-      return
-    }
-    if (muted) {
-      p.unMute()
-      p.setVolume(50)
-    } else {
-      p.mute()
-    }
-    setMuted(!muted)
-  }
+  const src = useMemo(
+    () =>
+      `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=${muted ? 1 : 0}&controls=0&modestbranding=1&showinfo=0&rel=0&playsinline=1&disablekb=1&fs=0&iv_load_policy=3&loop=1&playlist=${videoId}`,
+    [videoId, muted]
+  )
 
   return (
     <section
@@ -126,11 +27,12 @@ export function HeroVideoPlayer({
       aria-label="Eiger Marvel hero video"
     >
       <iframe
+        key={muted ? 'muted' : 'unmuted'}
         src={src}
         title="Eiger Marvel hero video"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
-        className="absolute inset-0 w-full h-full border-0 object-cover"
+        className="absolute inset-0 w-full h-full border-0"
         style={{ pointerEvents: 'none' }}
       />
 
@@ -143,15 +45,9 @@ export function HeroVideoPlayer({
         }}
       />
 
-      <div
-        ref={playerTargetRef}
-        className="absolute inset-0 pointer-events-none opacity-0"
-        aria-hidden="true"
-      />
-
       <button
         type="button"
-        onClick={toggleMute}
+        onClick={() => setMuted((m) => !m)}
         aria-label={muted ? 'Unmute hero video' : 'Mute hero video'}
         className="absolute top-6 right-6 z-30 flex items-center gap-2 rounded-full bg-black/55 hover:bg-black/75 backdrop-blur-md px-4 py-2 text-white text-xs uppercase tracking-[0.18em] font-semibold border border-white/15 transition-all hover:scale-105"
       >
@@ -172,7 +68,7 @@ export function HeroVideoPlayer({
       </button>
 
       <div className="absolute bottom-2 right-4 z-20 text-[10px] uppercase tracking-[0.2em] text-white/40 pointer-events-none select-none">
-        {apiReady ? '' : 'YouTube'}
+        YouTube
       </div>
 
       <div className="relative z-20 h-full flex items-end pb-16 sm:pb-20 pointer-events-none">
