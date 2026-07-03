@@ -5,11 +5,15 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "kill": "fuser -k 5000/tcp",
+        "kill": "node -e \"const{execSync}=require('child_process');try{execSync('npx --yes kill-port 5000',{stdio:'ignore'})}catch(e){}\"",
         "build": "tsc -b --noCheck && vite build && node -e \"'proxy.js,package.json'.split(',').forEach(f=>{try{require('fs').unlinkSync('dist/'+f)}catch(e){}});\"",
+        "typecheck": "tsc -b --pretty",
+        "typecheck:strict": "tsc -b --pretty --noEmit",
         "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
         "optimize": "vite optimize",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "audit:seo": "node scripts/seo-audit.mjs"
     },
     "dependencies": {
         "@fontsource/inter": "^5.2.8",

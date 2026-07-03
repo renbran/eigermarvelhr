@@ -16,6 +16,7 @@ export const easings = {
 
   // Cinematic — balanced in/out for hero transitions
   cinematic: 'power2.inOut' as const,
+  cinematicFM: [0.65, 0, 0.35, 1] as [number, number, number, number],
 
   // Micro — instant state feedback
   micro: 'power1.out' as const,

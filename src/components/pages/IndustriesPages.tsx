@@ -27,7 +27,7 @@ const industries = [
   },
 ]
 
-export function IndustriesPages() {
+export function IndustriesPages({ onNavigate: _onNavigate }: { onNavigate?: (page: string) => void } = {}) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary">
       {/* Hero */}

@@ -1,4 +1,5 @@
 import React from 'react'
+import { HeroVideoPlayer } from '@/components/ui/HeroVideoPlayer'
 
 const VIDEO_ID = 'CjXcj29zhM8'
 const ABOUT_IMAGE =
@@ -63,47 +64,20 @@ const milestones = [
 export function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary">
-      {/* Hero */}
-      <section className="relative py-20 sm:py-28 px-4 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 30%, rgba(184,145,44,0.06) 0%, transparent 70%)' }} />
-        <div className="max-w-4xl mx-auto text-center relative">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="h-px w-8 bg-accent/50" />
-            <span className="text-xs uppercase tracking-[0.18em] font-medium text-accent/70">Our Story</span>
-            <span className="h-px w-8 bg-accent/50" />
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-foreground">
-            About <span className="text-accent">Eiger Marvel</span>
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            From a single office in Dubai to a regional workforce partner across the GCC — built on speed, compliance, and integrity.
-          </p>
+      {/* Hero with full-bleed video */}
+      <HeroVideoPlayer videoId={VIDEO_ID}>
+        <div className="flex items-center gap-3 mb-4">
+          <span className="h-px w-8 bg-accent/70" />
+          <span className="text-xs uppercase tracking-[0.18em] font-semibold text-accent">Our Story</span>
+          <span className="h-px w-8 bg-accent/70" />
         </div>
-      </section>
-
-      {/* Video showcase */}
-      <section className="pb-16 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div
-            className="relative rounded-3xl overflow-hidden border border-border/60 shadow-2xl"
-            style={{ background: '#000' }}
-          >
-            <div className="relative" style={{ paddingBottom: '56.25%' }}>
-              <iframe
-                src={`https://www.youtube.com/embed/${VIDEO_ID}?rel=0&modestbranding=1`}
-                title="Eiger Marvel — About Us"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                loading="lazy"
-                className="absolute inset-0 w-full h-full"
-              />
-            </div>
-          </div>
-          <p className="text-center text-xs uppercase tracking-[0.16em] text-muted-foreground/70 mt-4">
-            Watch the Eiger Marvel story
-          </p>
-        </div>
-      </section>
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-white drop-shadow-lg">
+          About <span className="text-accent">Eiger Marvel</span>
+        </h1>
+        <p className="text-lg sm:text-xl text-white/85 max-w-2xl leading-relaxed drop-shadow-md">
+          From a single office in Dubai to a regional workforce partner across the GCC — built on speed, compliance, and integrity.
+        </p>
+      </HeroVideoPlayer>
 
       {/* Mission + image */}
       <section className="pb-20 px-4">

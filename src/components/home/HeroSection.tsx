@@ -20,8 +20,8 @@ const ADVANCE_MS = 7500
 const SLIDE_INTERVAL = 6000
 const CROSSFADE_DURATION = 1.2
 
-const SLIDE_PATHS = Array.from({ length: 8 }, (_, i) => `/images/slides/slide-${String(i + 1).padStart(2, '0')}.jpg`)
-const SLIDE2_PATHS = Array.from({ length: 8 }, (_, i) => `/images/slides2/slide2-${String(i + 1).padStart(2, '0')}.jpg`)
+const SLIDE_PATHS = Array.from({ length: 8 }, (_, i) => `/images/slides/slide-${String(i + 1).padStart(2, '0')}.webp`)
+const SLIDE2_PATHS = Array.from({ length: 8 }, (_, i) => `/images/slides2/slide2-${String(i + 1).padStart(2, '0')}.webp`)
 
 const GOLD = {
   base: '#B8912C',

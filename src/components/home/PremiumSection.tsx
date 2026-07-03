@@ -16,7 +16,7 @@ const highlights = [
   { stat: '90%', label: 'Retention Rate' },
 ]
 
-export function PremiumSection() {
+export function PremiumSection({ onUpgrade }: { onUpgrade?: () => void } = {}) {
   const sectionRef = useRef<HTMLElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLDivElement>(null)

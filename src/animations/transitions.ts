@@ -15,7 +15,7 @@ export const springTransition: Transition = {
 
 export const cinematicTransition: Transition = {
   duration: durations.cinematic,
-  ease: easings.cinematic,
+  ease: easings.cinematicFM,
 }
 
 export const pageEnterTransition: Transition = {

@@ -17,12 +17,34 @@ import {
   SyncLog,
 } from './odoo-models';
 
-// Get config from environment variables
+// SECURITY: All Odoo credentials MUST be provided via environment variables.
+// NEVER default to 'admin'/'admin' — that would bundle fallback credentials
+// into the production client bundle and ship them to every visitor.
+//
+// Required env vars (configure at build time on Cloudflare/Vercel):
+//   VITE_ODOO_URL         e.g. https://eigermarvelhr.com
+//   VITE_ODOO_DATABASE    e.g. eigermarvel
+//   VITE_ODOO_USERNAME    Odoo user (preferably a limited-role read-only account)
+//   VITE_ODOO_PASSWORD    Odoo password (rotate immediately if exposed)
+//
+// TODO(security): Move Odoo RPC behind a server-side proxy (Cloudflare Worker
+// in `workers-site/`) so admin credentials never ship to the client bundle.
+function requireEnv(name: string): string {
+  const value = import.meta.env[name as keyof ImportMetaEnv] as string | undefined;
+  if (!value) {
+    throw new Error(
+      `[OdooService] Missing required env var: ${name}. ` +
+      `Refusing to start with insecure default credentials.`,
+    );
+  }
+  return value;
+}
+
 const ODOO_CONFIG: OdooConnectionConfig = {
-  url: import.meta.env.VITE_ODOO_URL || 'https://eigermarvelhr.com',
-  database: import.meta.env.VITE_ODOO_DATABASE || 'eigermarvel',
-  username: import.meta.env.VITE_ODOO_USERNAME || 'admin',
-  password: import.meta.env.VITE_ODOO_PASSWORD || 'admin',
+  url: requireEnv('VITE_ODOO_URL'),
+  database: requireEnv('VITE_ODOO_DATABASE'),
+  username: requireEnv('VITE_ODOO_USERNAME'),
+  password: requireEnv('VITE_ODOO_PASSWORD'),
   version: 'v18',
 };
 
