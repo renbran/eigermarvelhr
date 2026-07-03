@@ -1,1 +1,15 @@
+# Cloudflare Pages redirects
+# Order matters: more specific rules first, SPA fallback last.
+
+# SEO files — serve explicitly (do NOT SPA-fallback)
+/robots.txt /robots.txt 200
+/sitemap.xml /sitemap.xml 200
+/llms.txt /llms.txt 200
+
+# Asset paths (if Cloudflare rewrites are needed)
+/assets/* /assets/:splat 200
+/favicon/* /favicon/:splat 200
+/images/* /images/:splat 200
+
+# SPA fallback — must be LAST
 /* /index.html 200
