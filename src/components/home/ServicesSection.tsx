@@ -115,7 +115,7 @@ export function ServicesSection() {
 
       // Divider draw
       gsap.fromTo(
-        sectionRef.current?.querySelector('.svc-divider'),
+        sectionRef.current?.querySelector('.svc-divider')!,
         { scaleX: 0 },
         {
           scaleX: 1, duration: 1.3, ease: 'power3.inOut', transformOrigin: 'left',

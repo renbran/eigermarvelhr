@@ -75,7 +75,7 @@ export function StatsSection() {
 
       // Gold line draws across
       gsap.fromTo(
-        sectionRef.current?.querySelector('.stats-line'),
+        sectionRef.current?.querySelector('.stats-line')!,
         { scaleX: 0 },
         {
           scaleX: 1, duration: 1.4, ease: 'power3.inOut', transformOrigin: 'left',

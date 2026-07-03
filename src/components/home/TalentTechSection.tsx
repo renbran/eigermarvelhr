@@ -105,7 +105,7 @@ export function TalentTechSection() {
 
       // Gold line reveal
       gsap.fromTo(
-        sectionRef.current?.querySelector('.tt-gold-line'),
+        sectionRef.current?.querySelector('.tt-gold-line')!,
         { scaleX: 0 },
         { scaleX: 1, duration: 1.2, ease: 'power3.out',
           scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true }

@@ -17,7 +17,9 @@ interface HeaderProps {
 export function Header({ onNavigate, currentPage, onAuthClick, currentUser, candidateProfile, onLogout }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const baseNavItems = [
+  type NavItem = { label: string; value: string; badge?: string }
+
+  const baseNavItems: NavItem[] = [
     { label: 'Home', value: 'home' },
     { label: 'About', value: 'about' },
     { label: 'Solutions', value: 'solutions' },
@@ -26,7 +28,7 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
     { label: 'Contact', value: 'contact' },
   ]
 
-  const candidateNavItems = [
+  const candidateNavItems: NavItem[] = [
     { label: 'Dashboard', value: 'dashboard' },
     ...baseNavItems
   ]

@@ -75,7 +75,7 @@ export function ParticleField({
     camera.position.z = 15
 
     // Animation loop
-    let animationId: number
+    let animationId = 0
     let time = 0
 
     function animate() {

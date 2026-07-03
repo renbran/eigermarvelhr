@@ -657,10 +657,10 @@ function ProgressBar({ seq, paused }: { seq: number; paused: boolean }) {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 interface HeroSectionProps {
-  onNavigate: (page: string) => void
+  onNavigate?: (page: string) => void
 }
 
-export function HeroSection({ onNavigate }: HeroSectionProps) {
+export function HeroSection({ onNavigate = () => {} }: HeroSectionProps) {
   const [seq, setSeq] = useState(0)
   const [paused, setPaused] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
