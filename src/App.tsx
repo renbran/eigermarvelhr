@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react'
+import { Helmet } from 'react-helmet-async'
 
 import { Toaster } from 'sonner'
 import { toast } from 'sonner'
@@ -6,24 +7,53 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { AuthDialog } from '@/components/AuthDialog'
 import { ProfileBuilderDialog } from '@/components/onboarding/ProfileBuilderDialog'
-import { CandidateDashboard } from '@/components/pages/CandidateDashboard'
-import { PremiumUpgradePage } from '@/components/pages/PremiumUpgradePage'
 import { HeroSection } from '@/components/home/HeroSection'
-import { LiveJobsSection } from '@/components/home/LiveJobsSection'
-import { TrustedCompaniesSection } from '@/components/home/TrustedCompaniesSection'
-import { ProcessSection } from '@/components/home/ProcessSection'
+import { StatsSection } from '@/components/home/StatsSection'
 import { ServicesSection } from '@/components/home/ServicesSection'
 import { IndustriesSection } from '@/components/home/IndustriesSection'
-import { StatsSection } from '@/components/home/StatsSection'
-import { PremiumSection } from '@/components/home/PremiumSection'
-import { JobsPage } from '@/components/pages/JobsPage'
-import { PrivacyPolicyPage } from '@/components/pages/PrivacyPolicyPage'
-import { HowItWorksPage } from '@/components/pages/HowItWorksPage'
-import { IndustriesPages } from '@/components/pages/IndustriesPages'
-import { PricingPage } from '@/components/pages/PricingPage'
-import { InsightsPage } from '@/components/pages/InsightsPage'
-import { HealthCheckPage } from '@/components/pages/HealthCheckPage'
-import { AboutPage } from '@/components/pages/AboutPage'
+
+const CandidateDashboard = lazy(() =>
+  import('@/components/pages/CandidateDashboard').then((m) => ({ default: m.CandidateDashboard }))
+)
+const PremiumUpgradePage = lazy(() =>
+  import('@/components/pages/PremiumUpgradePage').then((m) => ({ default: m.PremiumUpgradePage }))
+)
+const LiveJobsSection = lazy(() =>
+  import('@/components/home/LiveJobsSection').then((m) => ({ default: m.LiveJobsSection }))
+)
+const TrustedCompaniesSection = lazy(() =>
+  import('@/components/home/TrustedCompaniesSection').then((m) => ({ default: m.TrustedCompaniesSection }))
+)
+const ProcessSection = lazy(() =>
+  import('@/components/home/ProcessSection').then((m) => ({ default: m.ProcessSection }))
+)
+const PremiumSection = lazy(() =>
+  import('@/components/home/PremiumSection').then((m) => ({ default: m.PremiumSection }))
+)
+const JobsPage = lazy(() =>
+  import('@/components/pages/JobsPage').then((m) => ({ default: m.JobsPage }))
+)
+const PrivacyPolicyPage = lazy(() =>
+  import('@/components/pages/PrivacyPolicyPage').then((m) => ({ default: m.PrivacyPolicyPage }))
+)
+const HowItWorksPage = lazy(() =>
+  import('@/components/pages/HowItWorksPage').then((m) => ({ default: m.HowItWorksPage }))
+)
+const IndustriesPages = lazy(() =>
+  import('@/components/pages/IndustriesPages').then((m) => ({ default: m.IndustriesPages }))
+)
+const PricingPage = lazy(() =>
+  import('@/components/pages/PricingPage').then((m) => ({ default: m.PricingPage }))
+)
+const InsightsPage = lazy(() =>
+  import('@/components/pages/InsightsPage').then((m) => ({ default: m.InsightsPage }))
+)
+const HealthCheckPage = lazy(() =>
+  import('@/components/pages/HealthCheckPage').then((m) => ({ default: m.HealthCheckPage }))
+)
+const AboutPage = lazy(() =>
+  import('@/components/pages/AboutPage').then((m) => ({ default: m.AboutPage }))
+)
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { LoadingScreen } from '@/components/ui/LoadingScreen'
 import { ScrollProgress } from '@/components/ui/ScrollProgress'
@@ -33,6 +63,79 @@ import { LenisProvider } from '@/components/LenisProvider'
 import { kv } from '@/lib/kv'
 import type { UserType, JobPosting, CandidateProfile, User } from '@/lib/types'
 import { sampleJobs } from '@/lib/sample-jobs'
+
+const ROUTE_META: Record<string, { title: string; description: string }> = {
+  home: {
+    title: 'Eiger Marvel — Master Recruiter for Construction & Hospitality | UAE',
+    description: "UAE's master recruiter for construction & hospitality. 7–14 day placements, specialist talent pools, full WPS compliance.",
+  },
+  dashboard: {
+    title: 'Candidate Dashboard | Eiger Marvel',
+    description: 'Manage your applications, profile, and premium membership.',
+  },
+  'premium-upgrade': {
+    title: 'Upgrade to Premium | Eiger Marvel',
+    description: 'Unlock priority placement, advanced matching, and dedicated recruiter support.',
+  },
+  jobs: {
+    title: 'Live Jobs | Eiger Marvel',
+    description: 'Browse open positions in UAE construction, hospitality, and events.',
+  },
+  'how-it-works': {
+    title: 'How It Works — Workforce 360° | Eiger Marvel',
+    description: 'Integrated recruitment, payroll, WPS compliance, and Odoo ERP — one partner, four solutions.',
+  },
+  solutions: {
+    title: 'Solutions | Eiger Marvel',
+    description: 'Workforce 360°: recruitment, payroll, WPS compliance, and Odoo ERP for UAE employers.',
+  },
+  about: {
+    title: 'About Eiger Marvel | UAE',
+    description: '50+ workforce experts serving UAE construction, hospitality, and events since 2018.',
+  },
+  industries: {
+    title: 'Industries We Serve | Eiger Marvel',
+    description: 'Recruitment and workforce services for UAE construction, hospitality, and events.',
+  },
+  pricing: {
+    title: 'Pricing | Eiger Marvel',
+    description: 'Transparent pricing for UAE recruitment, payroll, and WPS compliance.',
+  },
+  insights: {
+    title: 'Insights | Eiger Marvel',
+    description: 'Practical hiring, payroll, and compliance insights for UAE employers.',
+  },
+  'health-check': {
+    title: 'Workforce Health Check | Eiger Marvel',
+    description: 'Free 30-minute Workforce Health Check — find time-waste, cost-savings, and compliance risks.',
+  },
+  contact: {
+    title: 'Contact Eiger Marvel | UAE',
+    description: 'Speak to a UAE workforce consultant. Dubai office, +971 4 575 1100.',
+  },
+  privacy: {
+    title: 'Privacy Policy | Eiger Marvel',
+    description: 'Eiger Marvel Consultants privacy policy and data handling practices.',
+  },
+}
+
+const BASE_URL = 'https://eigermarvelhr.com'
+const canonicalFor = (page: string) => page === 'home' ? `${BASE_URL}/` : `${BASE_URL}/#${page}`
+
+function RouteHelmet({ page }: { page: string }) {
+  const meta = ROUTE_META[page] ?? ROUTE_META.home
+  const canonical = canonicalFor(page)
+  return (
+    <Helmet>
+      <title>{meta.title}</title>
+      <meta name="description" content={meta.description} />
+      <link rel="canonical" href={canonical} />
+      <meta property="og:title" content={meta.title} />
+      <meta property="og:description" content={meta.description} />
+      <meta property="og:url" content={canonical} />
+    </Helmet>
+  )
+}
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home')
@@ -232,6 +335,7 @@ function App() {
       <LoadingScreen minDuration={2000} onComplete={handleLoadingComplete} />
       <ScrollProgress />
       <CustomCursor />
+      <RouteHelmet page={currentPage} />
       <div className="flex flex-col min-h-screen">
       <Header 
         onNavigate={setCurrentPage}
@@ -243,6 +347,7 @@ function App() {
       />
 
       <main className="flex-1">
+        <Suspense fallback={<div className="min-h-[60vh]" aria-busy="true" />}>
         {currentPage === 'home' && (
           <>
             <HeroSection onNavigate={setCurrentPage} />
@@ -432,6 +537,7 @@ function App() {
         {currentPage === 'privacy' && (
           <PrivacyPolicyPage />
         )}
+        </Suspense>
       </main>
 
       <Footer onNavigate={setCurrentPage} />
