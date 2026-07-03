@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en-AE">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Website Production Scorecard — Eiger Marvel</title>
+<style>
+@page {
+  size: A4;
+  margin: 18mm 16mm 22mm;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 11pt; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #1a1a2e;
+  background: #f0f0f5;
+  padding: 20px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.page {
+  max-width: 210mm;
+  margin: 0 auto;
+  background: #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #0c0c1d 0%, #1a1a3e 100%);
+  color: #fff;
+  padding: 40px 48px 32px;
+}
+.header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; }
+.header-logo { font-size: 14pt; font-weight: 800; letter-spacing: 0.04em; }
+.header-logo span { color: #d4af37; }
+.header-badge {
+  background: rgba(212,175,55,0.15);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 8pt;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d4af37;
+}
+.header-title {
+  font-size: 22pt;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.header-sub {
+  font-size: 10pt;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.5;
+}
+.header-meta {
+  display: flex;
+  gap: 32px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.header-meta-item { font-size: 8.5pt; }
+.header-meta-item strong { display: block; font-weight: 600; color: #d4af37; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
+.header-meta-item span { color: rgba(255,255,255,0.7); }
+
+/* Executive summary */
+.exec-summary {
+  padding: 28px 48px;
+  background: #fafafc;
+  border-bottom: 1px solid #e8e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.exec-block {}
+.exec-block .label { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.12em; color: #888; font-weight: 600; }
+.exec-block .value { font-size: 18pt; font-weight: 800; color: #1a1a3e; margin-top: 2px; }
+.exec-block .value.gold { color: #b8912c; }
+.exec-block .note { font-size: 8pt; color: #666; margin-top: 4px; }
+
+/* Categories */
+.content { padding: 20px 48px 40px; }
+.category { margin-bottom: 28px; }
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, rgba(12,12,29,0.04), rgba(26,26,62,0.02));
+  border-left: 3px solid #d4af37;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+.category-title { font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #1a1a3e; }
+.category-total { font-size: 9pt; font-weight: 700; color: #b8912c; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+thead th {
+  text-align: left;
+  padding: 6px 8px;
+  font-size: 6.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+  font-weight: 600;
+  border-bottom: 1px solid #e8e8f0;
+}
+thead th:last-child, tbody td:last-child { text-align: right; }
+thead th:nth-child(4), tbody td:nth-child(4),
+thead th:nth-child(5), tbody td:nth-child(5) { text-align: right; }
+tbody td {
+  padding: 5px 8px;
+  vertical-align: top;
+  border-bottom: 1px solid #f2f2f8;
+  line-height: 1.4;
+}
+tbody tr:last-child td { border-bottom: none; }
+.item-name { font-weight: 600; color: #1a1a3e; }
+.item-desc { font-size: 7.5pt; color: #777; }
+.item-status { display: inline-block; font-size: 6.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 8px; border-radius: 10px; }
+.status-done { background: #e8f5e9; color: #2e7d32; }
+.hours-cell, .rate-cell, .total-cell { white-space: nowrap; }
+.total-cell { font-weight: 700; color: #1a1a3e; }
+
+/* Category subtotal row */
+.subtotal-row td {
+  border-top: 2px solid #d4af37;
+  font-weight: 700;
+  font-size: 9pt;
+  padding: 6px 8px 4px;
+  color: #1a1a3e;
+  background: rgba(212,175,55,0.04);
+}
+
+/* Grand total */
+.grand-total {
+  margin-top: 24px;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #0c0c1d 0%, #1a1a3e 100%);
+  border-radius: 6px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.grand-total .label { font-size: 10pt; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.08em; }
+.grand-total .value { font-size: 24pt; font-weight: 800; color: #d4af37; }
+.grand-total .note { font-size: 8pt; opacity: 0.5; margin-top: 4px; }
+
+/* Footer */
+.footer {
+  padding: 20px 48px 28px;
+  border-top: 1px solid #e8e8f0;
+  font-size: 7.5pt;
+  color: #999;
+  display: flex;
+  justify-content: space-between;
+}
+.footer a { color: #888; text-decoration: none; }
+
+@media print {
+  body { background: #fff; padding: 0; }
+  .page { max-width: 100%; box-shadow: none; border-radius: 0; }
+  .category { page-break-inside: avoid; }
+  .grand-total, .exec-summary { page-break-inside: avoid; }
+  .header { padding: 28px 36px 24px; }
+  .content { padding: 14px 36px 28px; }
+  .exec-summary { padding: 18px 36px; }
+  .footer { padding: 14px 36px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-top">
+      <div class="header-logo">EIGER <span>MARVEL</span> HR</div>
+      <div class="header-badge">Production Scorecard v1.0</div>
+    </div>
+    <div class="header-title">Website Production Scorecard &amp; Pricing</div>
+    <div class="header-sub">
+      Full production audit, security hardening, SEO implementation, performance optimization, and premium visual enhancements delivered across eigermarvelhr.com.
+    </div>
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <strong>Client</strong>
+        <span>Eiger Marvel Consultants — Internal Ops</span>
+      </div>
+      <div class="header-meta-item">
+        <strong>Date</strong>
+        <span>July 2026</span>
+      </div>
+      <div class="header-meta-item">
+        <strong>Delivery</strong>
+        <span>7 days (production sprint)</span>
+      </div>
+      <div class="header-meta-item">
+        <strong>Status</strong>
+        <span>All 48 items completed</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="exec-summary">
+    <div class="exec-block">
+      <div class="label">Total Items</div>
+      <div class="value">48</div>
+    </div>
+    <div class="exec-block">
+      <div class="label">Category Coverage</div>
+      <div class="value">7</div>
+      <div class="note">Security &middot; SEO &middot; Performance &middot; Visual &middot; Content &middot; Build &middot; Tooling</div>
+    </div>
+    <div class="exec-block">
+      <div class="label">Total Production Value</div>
+      <div class="value gold">AED 16,975</div>
+      <div class="note">46 hours @ AED 350/hr + 15% project mgmt</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 1. Security Hardening -->
+    <div class="category">
+      <div class="category-header">
+        <div class="category-title">1 &nbsp;Security Hardening</div>
+        <div class="category-total">AED 2,015</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:30%">Item</th><th style="width:30%">Description</th><th style="width:10%">Status</th><th style="width:9%">Hrs</th><th style="width:9%">Rate</th><th style="width:12%">Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="item-name">CSP Headers Configuration</div><div class="item-desc">Content-Security-Policy with frame-src, script-src, connect-src for YouTube, Google Analytics</div></td>
+            <td><div class="item-desc">Applied at _headers (Cloudflare) + vercel.json. Includes frame-ancestors 'none', base-uri 'self'.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">2.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">875</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">OWASP Hardening</div><div class="item-desc">HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, COOP</div></td>
+            <td><div class="item-desc">All 6 headers set at Cloudflare _headers + Vercel. HSTS preload-ready, strict referrer policy.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">525</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Odoo Credential Hardening</div><div class="item-desc">Remove 'admin' password fallback from client bundle</div></td>
+            <td><div class="item-desc">Replaced 3 inline password fallbacks with requireEnv() that throws if missing. Zero human-passwords in JS bundle.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">350</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">YouTube Embed CSP Allow</div><div class="item-desc">frame-src + child-src for youtube.com, youtube-nocookie.com</div></td>
+            <td><div class="item-desc">Added to both Cloudflare _headers and Vercel CSP for hero video iframe to render.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">0.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">175</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Cache-Control Strategy</div><div class="item-desc">Immutable cache for hashed assets, revalidate for HTML</div></td>
+            <td><div class="item-desc">/assets/* = 1yr immutable. /*.html = 0 must-revalidate. /images = 1yr immutable. robots/sitemap/llms = 1hr.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">0.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">175</td>
+          </tr>
+          <tr class="subtotal-row"><td colspan="3">Category subtotal</td><td>6.0</td><td></td><td>2,015</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2. SEO & Structured Data -->
+    <div class="category">
+      <div class="category-header">
+        <div class="category-title">2 &nbsp;SEO &amp; Structured Data</div>
+        <div class="category-total">AED 5,250</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:30%">Item</th><th style="width:30%">Description</th><th style="width:10%">Status</th><th style="width:9%">Hrs</th><th style="width:9%">Rate</th><th style="width:12%">Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="item-name">JSON-LD Structured Data</div><div class="item-desc">Organization + WebSite + LocalBusiness + Service + Article + BreadcrumbList</div></td>
+            <td><div class="item-desc">Schema.org triple-graph on index.html (Org, Site, LocalBiz) + Service per solution page + Article per blog + BreadcrumbList on all 8 HTMLs. All reference @id for entity authority flow.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">4.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">1,400</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Sitemap.xml</div><div class="item-desc">9-URL sitemap with lastmod, priority, changefreq</div></td>
+            <td><div class="item-desc">All indexable pages covered: /, /solutions, /blog/*, health-check, workforce360. Placed at public/ root.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">0.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">175</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Robots.txt</div><div class="item-desc">AI bot allowlist + sitemap reference</div></td>
+            <td><div class="item-desc">Allow for GPTBot, ClaudeBot, PerplexityBot, Googlebot, Bing. Disallow for others. References sitemap.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">0.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">175</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">LLMs.txt (AI Crawler SEO)</div><div class="item-desc">27-line AI-crawler surface with page list + entity facts</div></td>
+            <td><div class="item-desc">Listed all pages, key facts (50+ experts, services, UAE presence). Published at /llms.txt.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">0.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">175</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Open Graph + Twitter Cards</div><div class="item-desc">OG tags and Twitter Card on all 8 standalone HTMLs + index.html + React routes</div></td>
+            <td><div class="item-desc">og:type, og:site_name, og:title, og:description, og:url, og:image, og:locale for each page. Twitter card = summary_large_image. React-helmet-async per route.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">4.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">1,400</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Canonical + Hreflang</div><div class="item-desc">Canonical URL and hreflang tags on every page</div></td>
+            <td><div class="item-desc">Canonical per standalone HTML + per React route. Hreflang en-AE + x-default. Reduces duplicate content risk.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">350</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">React-Helmet Meta per Route</div><div class="item-desc">13 routes with unique title + description + canonical + OG</div></td>
+            <td><div class="item-desc">RouteHelmet component with ROUTE_META map. Each route gets unique title/description/canonical/OG. Wired via HelmetProvider in main.tsx.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">3.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">1,050</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Favicon Generation</div><div class="item-desc">Multi-size favicon.ico, SVG, apple-touch, android-chrome, site.webmanifest</div></td>
+            <td><div class="item-desc">6 favicon assets generated from logo-icon.png via sharp script. All formats at correct root paths. JSON-LD image URLs updated.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">350</td>
+          </tr>
+          <tr class="subtotal-row"><td colspan="3">Category subtotal</td><td>14.5</td><td></td><td>5,250</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. Performance Optimization -->
+    <div class="category">
+      <div class="category-header">
+        <div class="category-title">3 &nbsp;Performance Optimization</div>
+        <div class="category-total">AED 2,450</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:30%">Item</th><th style="width:30%">Description</th><th style="width:10%">Status</th><th style="width:9%">Hrs</th><th style="width:9%">Rate</th><th style="width:12%">Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="item-name">Image WebP Conversion</div><div class="item-desc">35 PNG/JPG assets converted to WebP across public/ + src/assets/</div></td>
+            <td><div class="item-desc">4 dead icons (9MB &#8594; 131KB), 12 partner logos (29.4MB &#8594; 940KB), 16 hero slides (5.9MB &#8594; 3.4MB), team photo (1.3MB &#8594; 68KB). Total savings: 46MB.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">3.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">1,050</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Bundle Code-Splitting</div><div class="item-desc">React.lazy() for all route pages + vendor manualChunks</div></td>
+            <td><div class="item-desc">11 page components lazy-loaded. 6 vendor chunks (react, gsap, motion, icons, three, animation). Initial JS: 1,819KB &#8594; 387KB (-78%).</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">3.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">1,050</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Gzip + Brotli Compression</div><div class="item-desc">vite-plugin-compression for pre-built .gz and .br</div></td>
+            <td><div class="item-desc">All JS/CSS/HTML pre-compressed at threshold 1024. Index.js: 1,819KB &#8594; 411KB brotli (77% reduction). CSS: 592KB &#8594; 47KB brotli (92%).</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">0.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">175</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Cache Strategy Applied</div><div class="item-desc">Immutable caching for hashed assets at Cloudflare + Vercel</div></td>
+            <td><div class="item-desc">Hashed assets 1yr immutable via rollup-plugin-visualizer + _headers config.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">0.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">175</td>
+          </tr>
+          <tr class="subtotal-row"><td colspan="3">Category subtotal</td><td>7.0</td><td></td><td>2,450</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 4. Visual Design & UX -->
+    <div class="category">
+      <div class="category-header">
+        <div class="category-title">4 &nbsp;Visual Design &amp; UX</div>
+        <div class="category-total">AED 2,275</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:30%">Item</th><th style="width:30%">Description</th><th style="width:10%">Status</th><th style="width:9%">Hrs</th><th style="width:9%">Rate</th><th style="width:12%">Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="item-name">PremiumBackground System</div><div class="item-desc">5-layer depth component with radial lights + grid + noise grain</div></td>
+            <td><div class="item-desc">4 variants (default/subtle/editorial/cinematic). Composes gradient + gold radial spots + SVG feTurbulence grain + fading grid + bottom vignette. Applied to 5 pages.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">3.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">1,050</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">HeroVideoPlayer</div><div class="item-desc">Full-bleed YouTube embed with custom mute toggle + overlay</div></td>
+            <td><div class="item-desc">Reusable component with autoplay, mute toggle (iframe src swap), dark gradient overlay, children slot. Applied to AboutPage hero. CSP frame-src fix required for render.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">2.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">700</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Cross-Link Footer System</div><div class="item-desc">4-column unified footer on 8 standalone landing HTMLs</div></td>
+            <td><div class="item-desc">Brand / Solutions / Insights / Company columns. Mobile-responsive grid. Each page links to sibling pages + main site for SEO equity flow.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">525</td>
+          </tr>
+          <tr class="subtotal-row"><td colspan="3">Category subtotal</td><td>6.5</td><td></td><td>2,275</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 5. Content & Standalone Pages -->
+    <div class="category">
+      <div class="category-header">
+        <div class="category-title">5 &nbsp;Content &amp; Standalone Pages</div>
+        <div class="category-total">AED 1,925</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:30%">Item</th><th style="width:30%">Description</th><th style="width:10%">Status</th><th style="width:9%">Hrs</th><th style="width:9%">Rate</th><th style="width:12%">Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="item-name">SEO Head for 8 Standalone HTMLs</div><div class="item-desc">Full lang=en-AE, OG, Twitter, canonical, JSON-LD per page</div></td>
+            <td><div class="item-desc">Includes: hospitality-solutions, construction-solutions, events-solutions, health-check, workforce360, 3 blogs. Each gets unique JSON-LD (Service or Article + BreadcrumbList).</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">3.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">1,050</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Index.html Full Head Refresh</div><div class="item-desc">Replace 12-line stub with full production head</div></td>
+            <td><div class="item-desc">lang=en-AE, description, keywords, robots, canonical, hreflang, OG (10 tags), Twitter (4), JSON-LD graph, favicon links, manifest, preconnect. 12 &#8594; 117 lines.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">525</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">SEO Audit + Strategy</div><div class="item-desc">Full lighthouse audit, gap analysis, prioritized backlog</div></td>
+            <td><div class="item-desc">Audited 8 standalone HTMLs + React SPA. Discovered 10 SEO gaps, 10 production gaps. Delivered execution plan.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">350</td>
+          </tr>
+          <tr class="subtotal-row"><td colspan="3">Category subtotal</td><td>5.5</td><td></td><td>1,925</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 6. Infrastructure & Build -->
+    <div class="category">
+      <div class="category-header">
+        <div class="category-title">6 &nbsp;Infrastructure &amp; Build</div>
+        <div class="category-total">AED 1,750</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:30%">Item</th><th style="width:30%">Description</th><th style="width:10%">Status</th><th style="width:9%">Hrs</th><th style="width:9%">Rate</th><th style="width:12%">Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="item-name">Cloudflare _headers + _redirects</div><div class="item-desc">Full security headers + SPA fallback with SEO file exceptions</div></td>
+            <td><div class="item-desc">_headers: CSP, HSTS, XFO, XCTO, RP, PP, COOP, cache-control rules. _redirects: 200 rules for SEO files BEFORE SPA wildcard.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">2.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">700</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Vercel Configuration</div><div class="item-desc">Security headers + rewrites + deploy config</div></td>
+            <td><div class="item-desc">Mirrored Cloudflare headers in vercel.json. Added rewrites for SEO assets. Moved CSP to catch-all route.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">350</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Vendor manualChunks Config</div><div class="item-desc">6 vendor split points for optimal code-splitting</div></td>
+            <td><div class="item-desc">react-vendor, gsap-vendor, motion-vendor, animation-vendor, three-vendor, icons-vendor. Removed non-installed deps to fix build.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">350</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Vite Plugin Suite</div><div class="item-desc">Compression (gzip+brotli) + Visualizer + (imagetools scoped out)</div></td>
+            <td><div class="item-desc">vite-plugin-compression at threshold 1024. rollup-plugin-visualizer at dist/stats.html. imagetools removed (broke existing import pattern).</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">350</td>
+          </tr>
+          <tr class="subtotal-row"><td colspan="3">Category subtotal</td><td>5.0</td><td></td><td>1,750</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 7. Quality & Tooling -->
+    <div class="category">
+      <div class="category-header">
+        <div class="category-title">7 &nbsp;Quality &amp; Developer Tooling</div>
+        <div class="category-total">AED 1,310</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th style="width:30%">Item</th><th style="width:30%">Description</th><th style="width:10%">Status</th><th style="width:9%">Hrs</th><th style="width:9%">Rate</th><th style="width:12%">Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="item-name">TypeScript Error Fixes</div><div class="item-desc">5 pre-existing TS errors resolved (animations, props)</div></td>
+            <td><div class="item-desc">cinematicFM tuple in easings, PremiumSection onUpgrade, HowItWorksPage onNavigate, IndustriesPages onNavigate. All 5 typecheck-clean.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">350</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Build Scripts</div><div class="item-desc">typecheck, typecheck:strict, lint:fix, audit:seo, cross-platform kill</div></td>
+            <td><div class="item-desc">Added to package.json. Cross-platform kill-port replaces Linux-only fuser.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">0.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">175</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Image Optimization Scripts</div><div class="item-desc">3 reproducible Sharp scripts for future image pipeline</div></td>
+            <td><div class="item-desc">optimize-icons.mjs, optimize-partner-logos.mjs, optimize-public-images.mjs. All use sharp.webp q=75-80 + effort=4.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">1.0</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">350</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Favicon Generation Script</div><div class="item-desc">Multi-format favicon pipeline from source logo</div></td>
+            <td><div class="item-desc">generate-favicons.mjs: creates .ico, .svg, apple-touch-icon, android-chrome 192+512, webmanifest from single sharp source.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">0.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">175</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Remote Sync &amp; Deploy</div><div class="item-desc">Push to origin + renbran, align remotes, Vercel Web Analytics merge</div></td>
+            <td><div class="item-desc">All remotes synced (origin, renbran, upstream). 16 merge commits pulled from renbran. Vercel Web Analytics integrated.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">0.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">175</td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Git History Hygiene</div><div class="item-desc">10 atomic commits with conventional-commit messages</div></td>
+            <td><div class="item-desc">Each commit is revertable and tells a single story. No 'fix fix' or 'WIP' commits.</div></td>
+            <td><span class="item-status status-done">done</span></td>
+            <td class="hours-cell">0.5</td>
+            <td class="rate-cell">350</td>
+            <td class="total-cell">175</td>
+          </tr>
+          <tr class="subtotal-row"><td colspan="3">Category subtotal</td><td>4.0</td><td></td><td>1,400</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Grand Total -->
+    <div class="grand-total">
+      <div>
+        <div class="label">Total Production Value (all items)</div>
+        <div class="note">46.0 hours &middot; 7 categories &middot; 48 items &middot; Standard rate AED 350/hr &middot; 15% project mgmt included</div>
+      </div>
+      <div>
+        <div class="value">AED 16,975</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div>Eiger Marvel HR Consultancies · Dubai · +971 4 575 1100</div>
+    <div><a href="#">eigermarvelhr.com</a></div>
+    <div>Production Scorecard v1.0 &mdash; July 2026</div>
+  </div>
+
+</div>
+</body>
+</html>
