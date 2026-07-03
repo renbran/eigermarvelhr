@@ -1,4 +1,5 @@
 import React from 'react'
+import { PremiumBackground } from '@/components/ui/PremiumBackground'
 
 const articles = [
   {
@@ -32,7 +33,8 @@ const articles = [
 
 export function InsightsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary">
+    <div className="min-h-screen">
+      <PremiumBackground variant="default" />
       {/* Hero */}
       <section className="relative py-20 sm:py-28 px-4 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 30%, rgba(184,145,44,0.06) 0%, transparent 70%)' }} />
