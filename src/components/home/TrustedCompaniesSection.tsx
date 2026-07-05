@@ -181,7 +181,7 @@ export function TrustedCompaniesSection() {
 
         <h2
           data-reveal
-          className="font-heading font-light mb-2"
+          className="font-heading font-bold mb-2"
           style={{
             fontSize: 'clamp(1.6rem, 3vw, 2.2rem)',
             color: '#F4F4F5',

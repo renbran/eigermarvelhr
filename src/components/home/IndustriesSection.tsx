@@ -214,7 +214,7 @@ function IndustryCard({
         </div>
 
         <h3
-          className="font-display font-light leading-tight mb-3"
+          className="font-display font-bold leading-tight mb-3"
           style={{
             fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)',
             color: '#F4F4F5',
@@ -390,7 +390,7 @@ export function IndustriesSection() {
 
           <h2
             data-reveal
-            className="font-display font-light leading-tight mb-4"
+            className="font-display font-bold leading-tight mb-4"
             style={{
               fontSize: 'clamp(2rem, 4vw, 3rem)',
               color: '#F4F4F5',

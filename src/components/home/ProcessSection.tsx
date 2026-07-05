@@ -135,7 +135,7 @@ export function ProcessSection() {
 
           <h2
             data-reveal
-            className="font-display font-light leading-tight mb-4"
+            className="font-display font-bold leading-tight mb-4"
             style={{
               fontSize: 'clamp(2rem, 4vw, 3rem)',
               color: '#F4F4F5',

@@ -82,7 +82,7 @@ export function PremiumSection({ onUpgrade }: { onUpgrade?: () => void } = {}) {
 
           <h2
             data-reveal
-            className="font-heading font-light mb-4"
+            className="font-heading font-bold mb-4"
             style={{
               fontSize: 'clamp(2rem, 4vw, 3rem)',
               color: '#F4F4F5',
