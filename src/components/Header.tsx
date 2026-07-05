@@ -58,17 +58,17 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
           <div className="flex items-center gap-4 sm:gap-8 min-w-0">
             <button 
               onClick={() => onNavigate('home')} 
-              className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-all duration-300 hover:scale-105 min-w-0"
+              className="flex items-center gap-3 sm:gap-4 hover:opacity-80 transition-all duration-300 hover:scale-105 min-w-0"
               aria-label="Eiger Marvel Home"
             >
               <img 
                 src={logoIcon} 
                 alt="Eiger Marvel Logo" 
-                className="h-8 w-8 sm:h-10 sm:w-10 rounded-lg object-cover shadow-md flex-shrink-0"
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl object-cover shadow-lg ring-1 ring-white/10 flex-shrink-0"
               />
               <div className="flex flex-col leading-tight min-w-0">
-                <span className="text-base sm:text-xl font-bold tracking-tight break-words">Eiger Marvel</span>
-                <span className="text-[10px] sm:text-xs gradient-gold-shine font-semibold whitespace-nowrap">Exceed Your Expectations</span>
+                <span className="text-lg sm:text-2xl font-bold tracking-tight text-white drop-shadow-sm">Eiger Marvel</span>
+                <span className="text-xs sm:text-sm gradient-gold-shine font-semibold tracking-wider">Exceed Your Expectations</span>
               </div>
             </button>
 
