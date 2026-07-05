@@ -196,7 +196,7 @@ export function TrustedCompaniesSection() {
           className="font-body"
           style={{ color: 'rgba(156,163,175,0.6)', fontSize: '0.9rem' }}
         >
-          Industry awards, government licenses, and compliance certifications earned on our journey
+          EIGER MARVEL HUMAN RESOURCE CONSULTANCIES LLC — Industry awards, government licenses, and compliance certifications earned on our journey
         </p>
       </div>
 

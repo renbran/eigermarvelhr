@@ -82,6 +82,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 Exceed Your Expectations
               </span>
             </div>
+            <p className="text-[10px] sm:text-xs text-gray-500 leading-relaxed uppercase tracking-wider mb-1">
+              EIGER MARVEL HUMAN RESOURCE CONSULTANCIES LLC
+            </p>
             <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
               Specialized HR &amp; Management Consultants serving the MENA region since 2022.
             </p>
