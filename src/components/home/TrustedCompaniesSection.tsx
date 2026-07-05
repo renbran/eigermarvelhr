@@ -70,7 +70,8 @@ function MarqueeTrack({
     }
   }, [reverse, speed, reducedMotion, onTweenReady])
 
-  const doubled = [...items, ...items]
+  // Repeat items 4x to ensure seamless infinite scroll on all screen widths
+  const repeated = [...items, ...items, ...items, ...items]
 
   return (
     <div className="overflow-hidden">
@@ -79,7 +80,7 @@ function MarqueeTrack({
         className="flex gap-3 items-center py-1.5"
         style={{ willChange: 'transform' }}
       >
-        {doubled.map((item, i) => (
+        {repeated.map((item, i) => (
           <div
             key={`${item.title}-${i}`}
             className="flex-shrink-0"
@@ -214,7 +215,7 @@ export function TrustedCompaniesSection() {
           <MarqueeTrack
             items={awards}
             reverse={false}
-            speed={60}
+            speed={45}
             reducedMotion={reducedMotion}
             onTweenReady={registerTween}
           />
