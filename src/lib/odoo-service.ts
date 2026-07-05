@@ -17,64 +17,60 @@ import {
   SyncLog,
 } from './odoo-models';
 
-// SECURITY: All Odoo credentials MUST be provided via environment variables.
-// NEVER default to 'admin'/'admin' — that would bundle fallback credentials
-// into the production client bundle and ship them to every visitor.
-//
-// Required env vars (configure at build time on Cloudflare/Vercel):
-//   VITE_ODOO_URL         e.g. https://eigermarvelhr.com
-//   VITE_ODOO_DATABASE    e.g. eigermarvel
-//   VITE_ODOO_USERNAME    Odoo user (preferably a limited-role read-only account)
-//   VITE_ODOO_PASSWORD    Odoo password (rotate immediately if exposed)
-//
-// TODO(security): Move Odoo RPC behind a server-side proxy (Cloudflare Worker
-// in `workers-site/`) so admin credentials never ship to the client bundle.
-function requireEnv(name: string): string {
-  const value = import.meta.env[name as keyof ImportMetaEnv] as string | undefined;
-  if (!value) {
-    throw new Error(
-      `[OdooService] Missing required env var: ${name}. ` +
-      `Refusing to start with insecure default credentials.`,
-    );
-  }
-  return value;
-}
-
-const ODOO_CONFIG: OdooConnectionConfig = {
-  url: requireEnv('VITE_ODOO_URL'),
-  database: requireEnv('VITE_ODOO_DATABASE'),
-  username: requireEnv('VITE_ODOO_USERNAME'),
-  password: requireEnv('VITE_ODOO_PASSWORD'),
-  version: 'v18',
-};
-
 class OdooService {
   private connection: OdooConnection | null = null;
   private syncLogs: SyncLog[] = [];
   private isSyncing = false;
   private connectionAttempts = 0;
+  private initError: string | null = null;
 
   /**
    * Initialize Odoo connection
    */
   async initConnection(): Promise<boolean> {
     try {
+      // Check for required environment variables
+      const missing: string[] = [];
+      const url = import.meta.env.VITE_ODOO_URL;
+      if (!url) missing.push('VITE_ODOO_URL');
+      const database = import.meta.env.VITE_ODOO_DATABASE;
+      if (!database) missing.push('VITE_ODOO_DATABASE');
+      const username = import.meta.env.VITE_ODOO_USERNAME;
+      if (!username) missing.push('VITE_ODOO_USERNAME');
+      const password = import.meta.env.VITE_ODOO_PASSWORD;
+      if (!password) missing.push('VITE_ODOO_PASSWORD');
+
+      if (missing.length > 0) {
+        this.initError = `[OdooService] Missing required env vars: ${missing.join(', ')}. Refusing to start with insecure default credentials.`;
+        return false;
+      }
+
+      const ODOO_CONFIG: OdooConnectionConfig = {
+        url,
+        database,
+        username,
+        password,
+        version: 'v18',
+      };
+
       console.log(`[OdooService] Initializing connection to ${ODOO_CONFIG.database}...`);
-      
+
       this.connection = new OdooConnection(ODOO_CONFIG);
       const authenticated = await this.connection.authenticate();
-      
+
       if (authenticated) {
         console.log('[OdooService] ✓ Connection established and authenticated');
         this.connectionAttempts = 0;
+        this.initError = null; // Clear any previous init error on success
         return true;
       }
-      
+
       throw new Error('Authentication failed');
     } catch (error) {
       console.error('[OdooService] Failed to initialize connection:', error);
       this.connectionAttempts++;
-      
+      this.initError = `[OdooService] Failed to initialize Odoo connection: ${error instanceof Error ? error.message : String(error)}`;
+
       // Retry logic with exponential backoff
       if (this.connectionAttempts < 3) {
         const waitTime = Math.pow(2, this.connectionAttempts) * 1000;
@@ -82,7 +78,7 @@ class OdooService {
         await new Promise(resolve => setTimeout(resolve, waitTime));
         return this.initConnection();
       }
-      
+
       return false;
     }
   }
@@ -91,6 +87,9 @@ class OdooService {
    * Ensure connection is active
    */
   private async ensureConnection(): Promise<void> {
+    if (this.initError) {
+      throw new Error(this.initError);
+    }
     if (!this.connection?.isAuthenticated()) {
       await this.initConnection();
       if (!this.connection?.isAuthenticated()) {
@@ -105,9 +104,9 @@ class OdooService {
   async fetchJobs(filters: Record<string, unknown> = {}): Promise<OdooJob[]> {
     try {
       await this.ensureConnection();
-      
-      const domain = Object.keys(filters).length > 0 
-        ? filters 
+
+      const domain = Object.keys(filters).length > 0
+        ? filters
         : [['active', '=', true]];
 
       const jobs = await this.connection!.rpcCall<OdooJob[]>(
@@ -137,9 +136,9 @@ class OdooService {
   async fetchJobApplicants(filters: Record<string, unknown> = {}): Promise<OdooJobApplicant[]> {
     try {
       await this.ensureConnection();
-      
-      const domain = Object.keys(filters).length > 0 
-        ? filters 
+
+      const domain = Object.keys(filters).length > 0
+        ? filters
         : [['active', '=', true]];
 
       const applicants = await this.connection!.rpcCall<OdooJobApplicant[]>(
@@ -169,9 +168,9 @@ class OdooService {
   async fetchEmployees(filters: Record<string, unknown> = {}): Promise<OdooEmployee[]> {
     try {
       await this.ensureConnection();
-      
-      const domain = Object.keys(filters).length > 0 
-        ? filters 
+
+      const domain = Object.keys(filters).length > 0
+        ? filters
         : [['active', '=', true]];
 
       const employees = await this.connection!.rpcCall<OdooEmployee[]>(
@@ -460,4 +459,5 @@ class OdooService {
   }
 }
 
+// Export a singleton instance
 export default new OdooService();
