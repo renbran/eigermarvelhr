@@ -1,0 +1,10 @@
+{
+  "spec_path": ".omc/specs/deep-interview-eiger-audit.md",
+  "active": false,
+  "_meta": {
+    "mode": "deep-interview",
+    "sessionId": null,
+    "updatedAt": "2026-07-06T16:01:01.966Z",
+    "updatedBy": "state_write_tool"
+  }
+}

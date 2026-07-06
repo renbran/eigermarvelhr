@@ -56,15 +56,14 @@ export function PremiumSection({ onUpgrade }: { onUpgrade?: () => void } = {}) {
   return (
     <section
       ref={sectionRef}
-      className="relative py-20 sm:py-28 overflow-hidden"
-      style={{ background: '#07080F' }}
+      className="relative py-20 sm:py-28 overflow-hidden bg-background"
     >
       {/* Ambient gold glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 60% 50% at 50% 30%, rgba(184,145,44,0.07) 0%, transparent 70%)',
+            'radial-gradient(ellipse 60% 50% at 50% 30%, color-mix(in oklab, var(--color-accent) 7%, transparent) 0%, transparent 70%)',
         }}
         aria-hidden="true"
       />
@@ -73,29 +72,28 @@ export function PremiumSection({ onUpgrade }: { onUpgrade?: () => void } = {}) {
         {/* Header */}
         <div ref={headerRef} className="text-center mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-3 mb-4" data-reveal>
-            <span className="h-px w-8 bg-amber-500/55" />
-            <span className="text-xs uppercase tracking-[0.18em] font-medium text-amber-400/80">
+            <span className="h-px w-8 bg-accent/55" />
+            <span className="text-xs uppercase tracking-[0.18em] font-medium text-accent/80">
               Our Team
             </span>
-            <span className="h-px w-8 bg-amber-500/55" />
+            <span className="h-px w-8 bg-accent/55" />
           </div>
 
           <h2
             data-reveal
-            className="font-heading font-bold mb-4"
+            className="font-heading font-bold mb-4 text-foreground"
             style={{
               fontSize: 'clamp(2rem, 4vw, 3rem)',
-              color: '#F4F4F5',
               letterSpacing: '-0.02em',
             }}
           >
-            Backed by <span style={{ color: '#D4A84B' }}>50+ Workforce Experts</span>
+            Backed by <span className="text-accent">50+ Workforce Experts</span>
           </h2>
 
           <p
             data-reveal
-            className="font-body max-w-2xl mx-auto"
-            style={{ color: 'rgba(156,163,175,0.7)', fontSize: '1rem', lineHeight: 1.65 }}
+            className="font-body max-w-2xl mx-auto text-muted-foreground/80"
+            style={{ fontSize: '1rem', lineHeight: 1.65 }}
           >
             Our team spans recruiters, compliance specialists, payroll analysts, and ERP consultants —
             each with deep UAE market expertise across construction, hospitality, and events.
@@ -112,8 +110,8 @@ export function PremiumSection({ onUpgrade }: { onUpgrade?: () => void } = {}) {
           <div
             className="lg:col-span-2 rounded-2xl overflow-hidden relative group"
             style={{
-              border: '1px solid rgba(184,145,44,0.25)',
-              boxShadow: '0 0 60px rgba(184,145,44,0.08)',
+              border: '1px solid color-mix(in oklab, var(--color-accent) 25%, transparent)',
+              boxShadow: '0 0 60px color-mix(in oklab, var(--color-accent) 8%, transparent)',
             }}
           >
             <div className="relative aspect-video">
@@ -127,13 +125,12 @@ export function PremiumSection({ onUpgrade }: { onUpgrade?: () => void } = {}) {
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                  background:
-                    'linear-gradient(to top, rgba(7,8,15,0.55) 0%, transparent 40%)',
+                  background: 'linear-gradient(to top, color-mix(in oklab, var(--color-background) 55%, transparent) 0%, transparent 40%)',
                 }}
               />
               <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
                 <div>
-                  <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-amber-400 mb-1">
+                  <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-accent mb-1">
                     Leadership & Client Engagement
                   </div>
                   <div className="text-white text-lg sm:text-xl font-semibold leading-snug">
@@ -148,15 +145,14 @@ export function PremiumSection({ onUpgrade }: { onUpgrade?: () => void } = {}) {
           <div
             className="rounded-2xl p-6 flex flex-col justify-between gap-5"
             style={{
-              border: '1px solid rgba(184,145,44,0.25)',
-              background:
-                'linear-gradient(160deg, rgba(184,145,44,0.06) 0%, rgba(7,8,15,0.6) 60%)',
-              boxShadow: '0 0 60px rgba(184,145,44,0.06)',
+              border: '1px solid color-mix(in oklab, var(--color-accent) 25%, transparent)',
+              background: 'linear-gradient(160deg, color-mix(in oklab, var(--color-accent) 6%, transparent) 0%, color-mix(in oklab, var(--color-background) 60%, transparent) 60%)',
+              boxShadow: '0 0 60px color-mix(in oklab, var(--color-accent) 6%, transparent)',
             }}
           >
             <div
               className="rounded-xl overflow-hidden"
-              style={{ border: '1px solid rgba(184,145,44,0.3)' }}
+              style={{ border: '1px solid color-mix(in oklab, var(--color-accent) 30%, transparent)' }}
             >
               <img
                 src={EXEC_IMAGE}
@@ -168,14 +164,12 @@ export function PremiumSection({ onUpgrade }: { onUpgrade?: () => void } = {}) {
             </div>
             <div>
               <h3
-                className="font-heading text-xl font-bold mb-2"
-                style={{ color: '#F4F4F5' }}
+                className="font-heading text-xl font-bold mb-2 text-foreground"
               >
                 Execution Excellence
               </h3>
               <p
-                className="text-sm leading-relaxed"
-                style={{ color: 'rgba(212,212,216,0.7)' }}
+                className="text-sm leading-relaxed text-foreground/70"
               >
                 We combine relationship-first consulting with rigorous delivery standards to help UAE
                 employers hire faster, safer, and smarter — with zero compliance penalties.
@@ -185,9 +179,9 @@ export function PremiumSection({ onUpgrade }: { onUpgrade?: () => void } = {}) {
               href="tel:+97145751100"
               className="inline-flex items-center justify-center w-full font-semibold py-2.5 px-4 rounded-lg transition-all hover:scale-[1.02]"
               style={{
-                background: 'linear-gradient(135deg, #B8912C 0%, #D4A84B 100%)',
-                color: '#07080F',
-                boxShadow: '0 0 24px rgba(184,145,44,0.25)',
+                background: 'linear-gradient(135deg, var(--color-accent), var(--color-accent))',
+                color: 'var(--color-accent-foreground)',
+                boxShadow: '0 0 24px color-mix(in oklab, var(--color-accent) 25%, transparent)',
               }}
             >
               Speak to Our Team
@@ -202,26 +196,19 @@ export function PremiumSection({ onUpgrade }: { onUpgrade?: () => void } = {}) {
               key={h.label}
               className="text-center p-4 rounded-xl"
               style={{
-                border: '1px solid rgba(184,145,44,0.15)',
-                background: 'rgba(184,145,44,0.04)',
+                border: '1px solid color-mix(in oklab, var(--color-accent) 15%, transparent)',
+                background: 'color-mix(in oklab, var(--color-accent) 4%, transparent)',
               }}
             >
               <div
-                className="font-heading font-bold mb-1"
+                className="font-heading font-bold mb-1 text-accent"
                 style={{
                   fontSize: '1.6rem',
-                  background: 'linear-gradient(135deg, #D4A84B 0%, #B8912C 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
                 }}
               >
                 {h.stat}
               </div>
-              <div
-                className="text-[11px] uppercase tracking-[0.1em]"
-                style={{ color: 'rgba(156,163,175,0.6)' }}
-              >
+              <div className="text-[11px] uppercase tracking-[0.1em] text-muted-foreground/80">
                 {h.label}
               </div>
             </div>

@@ -582,7 +582,7 @@ function App() {
     </div>
     <FloatingCTA />
     </LenisProvider>
-    <Analytics />
+    {!globalThis.location?.hostname.includes('localhost') && <Analytics />}
     </ErrorBoundary>
   )
 }

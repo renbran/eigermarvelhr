@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { List, X, User as UserIcon, SignOut } from '@phosphor-icons/react'
+import { List, X, User as UserIcon, SignOut, SunDim, MoonStars } from '@phosphor-icons/react'
+import { useTheme } from '@/providers/ThemeProvider'
 import type { User, CandidateProfile } from '@/lib/types'
 const logoIcon = 'https://res.cloudinary.com/dsl5fhclj/image/upload/v1769770778/krvcbd9clp1pfb8rbjxb.webp'
 
@@ -16,6 +17,7 @@ interface HeaderProps {
 
 export function Header({ onNavigate, currentPage, onAuthClick, currentUser, candidateProfile, onLogout }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { theme, toggle } = useTheme()
 
   type NavItem = { label: string; value: string; badge?: string }
 
@@ -54,12 +56,11 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
   return (
     <header className="bg-primary/98 backdrop-blur-md text-primary-foreground sticky top-0 z-50 shadow-lg border-b border-accent/20" role="banner">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-4 sm:gap-8 min-w-0">
-            <button 
+          <div className="flex items-center justify-between h-16">
+              <button 
               onClick={() => onNavigate('home')} 
-              className="flex items-center gap-3 sm:gap-4 hover:opacity-80 transition-all duration-300 hover:scale-105 min-w-0"
-              aria-label="Eiger Marvel Home"
+              className="flex items-center gap-3 sm:gap-4 hover:opacity-80 transition-all duration-300 hover:scale-105 min-w-0 flex-shrink-0"
+              aria-label="Eiger Marvel - Exceed Your Expectations Home"
             >
               <img 
                 src={logoIcon} 
@@ -72,7 +73,7 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
               </div>
             </button>
 
-            <nav className="hidden md:flex items-center gap-4 lg:gap-6" role="navigation" aria-label="Main navigation">
+            <nav className="hidden md:flex items-center gap-4 lg:gap-6 ml-auto mr-4 lg:mr-8" role="navigation" aria-label="Main navigation">
               {navItems.map(item => (
                 <button
                   key={item.value}
@@ -95,9 +96,17 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
                 </button>
               ))}
             </nav>
-          </div>
 
           <div className="hidden md:flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <button
+              onClick={toggle}
+              className="p-2 rounded-lg hover:bg-primary-foreground/10 transition-colors text-primary-foreground/70 hover:text-accent"
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              {theme === 'dark' ? <SunDim size={18} weight="bold" /> : <MoonStars size={18} weight="bold" />}
+            </button>
+
             {currentUser ? (
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="text-right min-w-0">
@@ -179,6 +188,13 @@ export function Header({ onNavigate, currentPage, onAuthClick, currentUser, cand
                 </button>
               ))}
               <div className="flex flex-col gap-2 mt-2 pt-4 border-t border-primary-foreground/20">
+                <button
+                  onClick={toggle}
+                  className="flex items-center gap-3 px-4 py-2 text-sm font-semibold rounded-lg text-primary-foreground hover:bg-primary-foreground/10 transition-colors"
+                >
+                  {theme === 'dark' ? <SunDim size={18} weight="bold" /> : <MoonStars size={18} weight="bold" />}
+                  {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                </button>
                 {currentUser ? (
                   <>
                     <div className="px-4 py-2">

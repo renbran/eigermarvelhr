@@ -23,6 +23,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+    modulePreload: false,
     rollupOptions: {
       input: resolve(projectRoot, 'src/pages/index.html'),
       output: {

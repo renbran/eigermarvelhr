@@ -108,14 +108,13 @@ export function ProcessSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 sm:py-32 overflow-hidden"
-      style={{ background: '#0C0C0F' }}
+      className="relative py-24 sm:py-32 overflow-hidden bg-background"
     >
       {/* Ambient glow top-left */}
       <div
         className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(184,145,44,0.04) 0%, transparent 65%)',
+          background: 'radial-gradient(circle, color-mix(in oklab, var(--color-accent) 4%, transparent) 0%, transparent 65%)',
           filter: 'blur(60px)',
         }}
       />
@@ -124,32 +123,28 @@ export function ProcessSection() {
         {/* Header */}
         <div ref={headerRef} className="mb-16 max-w-2xl">
           <div className="flex items-center gap-3 mb-5" data-reveal>
-            <span className="inline-block h-px w-8" style={{ background: '#B8912C' }} />
-            <span
-              className="text-xs uppercase tracking-[0.16em] font-medium"
-              style={{ color: 'rgba(184,145,44,0.8)' }}
-            >
+            <span className="inline-block h-px w-8 bg-accent" />
+            <span className="text-xs uppercase tracking-[0.16em] font-medium text-accent/80">
               Our Process
             </span>
           </div>
 
           <h2
             data-reveal
-            className="font-display font-bold leading-tight mb-4"
+            className="font-display font-bold leading-tight mb-4 text-foreground"
             style={{
               fontSize: 'clamp(2rem, 4vw, 3rem)',
-              color: '#F4F4F5',
               letterSpacing: '-0.02em',
             }}
           >
             How We Place Talent<br />
-            <span style={{ color: '#D4A84B' }}>In 7–14 Days</span>
+            <span className="text-accent">In 7–14 Days</span>
           </h2>
 
           <p
             data-reveal
-            className="font-body leading-relaxed"
-            style={{ color: 'rgba(209,213,219,0.65)', fontSize: '1.05rem' }}
+            className="font-body leading-relaxed text-foreground/65"
+            style={{ fontSize: '1.05rem' }}
           >
             Six steps. Zero guesswork. Every placement is backed by our structured process
             — built for speed without sacrificing quality or compliance.
@@ -164,13 +159,13 @@ export function ProcessSection() {
           {/* Vertical connecting line (desktop left column) */}
           <div
             className="hidden md:block absolute left-0 top-6 bottom-6 w-px"
-            style={{ left: 'calc(50% - 0.5px)', background: 'rgba(255,255,255,0.05)' }}
+            style={{ left: 'calc(50% - 0.5px)', background: 'color-mix(in oklab, var(--color-foreground) 5%, transparent)' }}
           >
             <div
               ref={lineRef}
               className="w-full h-full"
               style={{
-                background: 'linear-gradient(180deg, #B8912C 0%, rgba(184,145,44,0.15) 100%)',
+                background: 'linear-gradient(180deg, var(--color-accent) 0%, color-mix(in oklab, var(--color-accent) 15%, transparent) 100%)',
               }}
             />
           </div>
@@ -183,11 +178,10 @@ export function ProcessSection() {
               {/* Number */}
               <div className="flex-shrink-0 flex flex-col items-center">
                 <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center font-heading font-bold text-sm relative z-10"
+                  className="w-12 h-12 rounded-full flex items-center justify-center font-heading font-bold text-sm relative z-10 text-accent"
                   style={{
-                    background: '#0C0C0F',
-                    border: '1px solid rgba(184,145,44,0.3)',
-                    color: '#D4A84B',
+                    background: 'var(--color-background)',
+                    border: '1px solid color-mix(in oklab, var(--color-accent) 30%, transparent)',
                     letterSpacing: '0.04em',
                   }}
                 >
@@ -197,7 +191,7 @@ export function ProcessSection() {
                 {i < steps.length - 1 && (
                   <div
                     className="md:hidden w-px flex-1 mt-2"
-                    style={{ background: 'rgba(184,145,44,0.12)', minHeight: 32 }}
+                    style={{ background: 'color-mix(in oklab, var(--color-accent) 12%, transparent)', minHeight: 32 }}
                   />
                 )}
               </div>
@@ -205,23 +199,23 @@ export function ProcessSection() {
               {/* Content */}
               <div className="pt-2 pb-2">
                 <h3
-                  className="font-heading font-semibold mb-2"
-                  style={{ color: '#F4F4F5', fontSize: '1.1rem' }}
+                  className="font-heading font-semibold mb-2 text-foreground"
+                  style={{ fontSize: '1.1rem' }}
                 >
                   {step.title}
                 </h3>
                 <p
-                  className="font-body leading-relaxed mb-3"
-                  style={{ color: 'rgba(156,163,175,0.75)', fontSize: '0.9rem' }}
+                  className="font-body leading-relaxed mb-3 text-muted-foreground"
+                  style={{ fontSize: '0.9rem' }}
                 >
                   {step.body}
                 </p>
                 <span
                   className="proc-pill inline-block text-[10px] uppercase tracking-[0.1em] px-2.5 py-1 rounded"
                   style={{
-                    background: 'rgba(184,145,44,0.07)',
-                    border: '1px solid rgba(184,145,44,0.15)',
-                    color: 'rgba(212,168,75,0.75)',
+                    background: 'color-mix(in oklab, var(--color-accent) 7%, transparent)',
+                    border: '1px solid color-mix(in oklab, var(--color-accent) 15%, transparent)',
+                    color: 'color-mix(in oklab, var(--color-accent) 75%, transparent)',
                   }}
                 >
                   {step.detail}

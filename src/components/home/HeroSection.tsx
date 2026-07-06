@@ -300,11 +300,8 @@ function Seq0Content({
         transition={{ duration: 0.5, delay: 0.05 }}
         className="mb-6 flex items-center gap-3"
       >
-        <span className="inline-block h-px w-8" style={{ background: 'rgba(255,255,255,0.2)' }} />
-        <span
-          className="text-xs uppercase tracking-[0.16em] font-medium"
-          style={{ color: 'rgba(255,255,255,0.45)' }}
-        >
+        <span className="inline-block h-px w-8 bg-foreground/20" />
+        <span className="text-xs uppercase tracking-[0.16em] font-medium text-foreground/45">
           {seq.tag}
         </span>
       </motion.div>
@@ -314,17 +311,17 @@ function Seq0Content({
         ref={headlineRef}
         className="mb-6 leading-none"
         style={{ perspective: '800px', perspectiveOrigin: '50% 40%' }}
-        aria-label="EIGER MARVEL HR"
+        aria-label={seq.headlineWords.join(' ')}
       >
         {seq.headlineWords.map((word, wi) => (
           <div key={word} className="overflow-hidden">
             <span
-              className="hero-word block font-display tracking-tight"
+              className={`hero-word block font-display tracking-tight ${wi !== 2 ? 'text-foreground' : ''}`}
               style={{
                 fontSize: 'clamp(3.5rem, 10vw, 7.5rem)',
                 fontWeight: wi === 2 ? 400 : 700,
                 lineHeight: 1.05,
-                color: wi === 2 ? GOLD.light : '#F4F4F5',
+                color: wi === 2 ? GOLD.light : undefined,
                 letterSpacing: wi === 2 ? '0.22em' : '-0.02em',
               }}
             >
@@ -339,8 +336,8 @@ function Seq0Content({
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-8 max-w-xl font-body leading-relaxed"
-        style={{ color: 'rgba(209,213,219,0.8)', fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)' }}
+        className="mb-8 max-w-xl font-body leading-relaxed text-foreground/80"
+        style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)' }}
       >
         {seq.subline}
       </motion.p>
@@ -374,9 +371,9 @@ function Seq0Content({
           onClick={() => onNavigate(seq.cta2.page)}
           className="h-auto py-3.5 px-7 rounded-md font-semibold transition-all duration-300"
           style={{
-            borderColor: 'rgba(255,255,255,0.2)',
-            background: 'rgba(255,255,255,0.04)',
-            color: 'rgba(244,244,245,0.85)',
+            borderColor: 'color-mix(in oklab, var(--color-foreground) 20%, transparent)',
+            background: 'color-mix(in oklab, var(--color-foreground) 4%, transparent)',
+            color: 'color-mix(in oklab, var(--color-foreground) 85%, transparent)',
             backdropFilter: 'blur(8px)',
           }}
         >
@@ -395,11 +392,10 @@ function Seq0Content({
         {seq.badges.map((badge, i) => (
           <span
             key={badge}
-            className="flex items-center gap-3 text-[11px] uppercase tracking-[0.12em] font-medium"
-            style={{ color: 'rgba(255,255,255,0.38)' }}
+            className="flex items-center gap-3 text-[11px] uppercase tracking-[0.12em] font-medium text-foreground/38"
           >
             {i > 0 && (
-              <span className="block w-px h-3" style={{ background: 'rgba(255,255,255,0.15)' }} />
+              <span className="block w-px h-3 bg-foreground/15" />
             )}
             {badge}
           </span>
@@ -411,13 +407,9 @@ function Seq0Content({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 1.15 }}
-        className="mt-7 pt-5"
-        style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+        className="mt-7 pt-5 border-t border-foreground/6"
       >
-        <div
-          className="text-[10px] uppercase tracking-[0.14em] mb-3 font-medium"
-          style={{ color: 'rgba(255,255,255,0.25)' }}
-        >
+        <div className="text-[10px] uppercase tracking-[0.14em] mb-3 font-medium text-foreground/25">
           Trusted by
         </div>
         <div className="flex items-center gap-2.5 flex-wrap">
@@ -429,11 +421,10 @@ function Seq0Content({
               title={logo.name}
             >
               <div
-                className="w-full h-full rounded-xl overflow-hidden flex items-center justify-center"
+                className="w-full h-full rounded-xl overflow-hidden flex items-center justify-center transition-[border-color,background] duration-250"
                 style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.07)',
-                  transition: 'border-color 0.25s ease, background 0.25s ease',
+                  background: 'color-mix(in oklab, var(--color-foreground) 3%, transparent)',
+                  border: '1px solid color-mix(in oklab, var(--color-foreground) 7%, transparent)',
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement
@@ -442,8 +433,8 @@ function Seq0Content({
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget as HTMLElement
-                  el.style.borderColor = 'rgba(255,255,255,0.07)'
-                  el.style.background = 'rgba(255,255,255,0.03)'
+                  el.style.borderColor = 'color-mix(in oklab, var(--color-foreground) 7%, transparent)'
+                  el.style.background = 'color-mix(in oklab, var(--color-foreground) 3%, transparent)'
                 }}
               >
                 <img
@@ -498,11 +489,8 @@ function Seq1Content({
         transition={{ duration: 0.5, delay: 0.05 }}
         className="mb-6 flex items-center gap-3"
       >
-        <span className="inline-block h-px w-8" style={{ background: GOLD.base }} />
-        <span
-          className="text-xs uppercase tracking-[0.16em] font-semibold"
-          style={{ color: GOLD.text }}
-        >
+        <span className="inline-block h-px w-8 bg-accent" />
+        <span className="text-xs uppercase tracking-[0.16em] font-semibold text-accent">
           {seq.tag}
         </span>
       </motion.div>
@@ -538,10 +526,9 @@ function Seq1Content({
         className="mb-6 leading-none"
       >
         <span
-          className="font-heading font-light"
+          className="font-heading font-light text-foreground/90"
           style={{
             fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-            color: 'rgba(244,244,245,0.9)',
             letterSpacing: '-0.02em',
           }}
         >
@@ -557,8 +544,8 @@ function Seq1Content({
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-8 max-w-xl font-body leading-relaxed"
-        style={{ color: 'rgba(209,213,219,0.75)', fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)' }}
+        className="mb-8 max-w-xl font-body leading-relaxed text-foreground/75"
+        style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)' }}
       >
         {seq.subline}
       </motion.p>
@@ -592,9 +579,9 @@ function Seq1Content({
           onClick={() => onNavigate(seq.cta2.page)}
           className="h-auto py-3.5 px-7 rounded-md font-semibold transition-all duration-300"
           style={{
-            borderColor: `rgba(184,145,44,0.35)`,
-            background: 'rgba(184,145,44,0.05)',
-            color: 'rgba(244,244,245,0.85)',
+            borderColor: 'color-mix(in oklab, var(--color-accent) 35%, transparent)',
+            background: 'color-mix(in oklab, var(--color-accent) 5%, transparent)',
+            color: 'color-mix(in oklab, var(--color-foreground) 85%, transparent)',
             backdropFilter: 'blur(8px)',
           }}
         >
@@ -613,11 +600,10 @@ function Seq1Content({
         {seq.badges.map((badge, i) => (
           <span
             key={badge}
-            className="flex items-center gap-3 text-[11px] uppercase tracking-[0.12em] font-medium"
-            style={{ color: 'rgba(184,145,44,0.55)' }}
+            className="flex items-center gap-3 text-[11px] uppercase tracking-[0.12em] font-medium text-accent/55"
           >
             {i > 0 && (
-              <span className="block w-px h-3" style={{ background: 'rgba(184,145,44,0.2)' }} />
+              <span className="block w-px h-3 bg-accent/20" />
             )}
             {badge}
           </span>
@@ -637,7 +623,7 @@ function ProgressBar({ seq, paused }: { seq: number; paused: boolean }) {
           to   { width: 100% }
         }
       `}</style>
-      <div className="h-[1.5px] w-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
+      <div className="h-[1.5px] w-full bg-foreground/6">
         <div
           key={`${seq}-progress`}
           style={{
@@ -645,7 +631,8 @@ function ProgressBar({ seq, paused }: { seq: number; paused: boolean }) {
             background:
               seq === 1
                 ? `linear-gradient(90deg, ${GOLD.base}, ${GOLD.light})`
-                : 'rgba(255,255,255,0.45)',
+                : 'var(--color-foreground)',
+            opacity: seq === 1 ? 1 : 0.45,
             animation: `em-hero-progress ${ADVANCE_MS}ms linear forwards`,
             animationPlayState: paused ? 'paused' : 'running',
           }}
@@ -691,8 +678,7 @@ export function HeroSection({ onNavigate = () => {} }: HeroSectionProps) {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[100svh] overflow-hidden"
-      style={{ background: '#07080F' }}
+      className="relative min-h-[100svh] overflow-hidden bg-background"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-label="Hero — Eiger Marvel HR"
@@ -703,29 +689,13 @@ export function HeroSection({ onNavigate = () => {} }: HeroSectionProps) {
       </div>
 
       {/* ── Gradient overlays for text legibility (z-1) ─────────────── */}
-      <div
-        className="absolute inset-0 pointer-events-none z-[1]"
-        style={{
-          background:
-            'linear-gradient(to right, rgba(7,8,15,0.75) 0%, rgba(7,8,15,0.45) 55%, rgba(7,8,15,0.1) 100%)',
-        }}
-      />
-      <div
-        className="absolute inset-0 pointer-events-none z-[1]"
-        style={{
-          background:
-            'linear-gradient(to bottom, rgba(7,8,15,0.3) 0%, transparent 40%, rgba(7,8,15,0.5) 100%)',
-        }}
-      />
+      <div className="absolute inset-0 pointer-events-none z-[1] hero-overlay-dark" />
+      <div className="absolute inset-0 pointer-events-none z-[1] hero-overlay-bottom" />
 
       {/* Gold ambient when hook sequence is active (z-2) */}
       <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-1000 z-[2]"
-        style={{
-          opacity: seq === 1 ? 1 : 0,
-          background:
-            'radial-gradient(ellipse 70% 50% at 30% 50%, rgba(184,145,44,0.07) 0%, transparent 70%)',
-        }}
+        className="absolute inset-0 pointer-events-none transition-opacity duration-1000 z-[2] ambient-glow-gold"
+        style={{ opacity: seq === 1 ? 1 : 0 }}
       />
 
       {/* ── Content ───────────────────────────────────────────── */}
@@ -770,8 +740,9 @@ export function HeroSection({ onNavigate = () => {} }: HeroSectionProps) {
                       i === seq
                         ? seq === 1
                           ? GOLD.light
-                          : 'rgba(255,255,255,0.85)'
-                        : 'rgba(255,255,255,0.18)',
+                          : 'var(--color-foreground)'
+                        : 'var(--color-foreground)',
+                    opacity: i === seq ? (seq === 1 ? 1 : 0.85) : 0.18,
                   }}
                 />
               ))}
@@ -779,18 +750,16 @@ export function HeroSection({ onNavigate = () => {} }: HeroSectionProps) {
 
             {/* Right: sequence label + scroll hint */}
             <div className="flex items-center gap-5">
-              <span
-                className="hidden sm:block text-[10px] uppercase tracking-[0.14em]"
-                style={{ color: 'rgba(255,255,255,0.25)' }}
-              >
+              <span className="hidden sm:block text-[10px] uppercase tracking-[0.14em] text-foreground/25">
                 {seq + 1} / {totalSeqs}
               </span>
 
               <motion.div
                 animate={{ y: [0, 6, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                style={{ color: 'rgba(255,255,255,0.25)' }}
-                aria-label="Scroll down"
+                className="text-foreground/25"
+                aria-hidden="true"
+                role="presentation"
               >
                 <CaretDown size={20} />
               </motion.div>
