@@ -90,8 +90,7 @@ export function StatsSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-20 sm:py-24 overflow-hidden"
-      style={{ background: '#09090D', borderTop: '1px solid rgba(255,255,255,0.04)' }}
+      className="relative py-12 sm:py-16 bg-background border-t border-foreground/4"
     >
       {/* Top gold rule */}
       <div
@@ -103,47 +102,41 @@ export function StatsSection() {
       />
 
       <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px"
-          style={{ background: 'rgba(255,255,255,0.05)' }}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/5"
         >
           {stats.map((stat, i) => (
             <div
               key={i}
-              className="stat-item relative text-center py-10 px-6 group"
-              style={{ background: '#09090D' }}
+              className="stat-item relative text-center py-10 px-6 group bg-background"
             >
               {/* Hover glow */}
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={{
-                  background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(184,145,44,0.05) 0%, transparent 70%)',
+                  background: 'radial-gradient(ellipse 80% 70% at 50% 50%, color-mix(in oklab, var(--color-accent) 5%, transparent) 0%, transparent 70%)',
                 }}
               />
 
               <div
-                className="font-heading tabular-nums leading-none mb-2"
+                className="font-heading tabular-nums leading-none mb-2 text-accent"
                 style={{
                   fontSize: 'clamp(2.4rem, 5vw, 3.6rem)',
                   fontWeight: 800,
-                  background: `linear-gradient(135deg, ${GOLD_LIGHT} 0%, ${GOLD} 100%)`,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
                 }}
               >
                 <CounterEl value={stat.value} suffix={stat.suffix} />
               </div>
 
               <div
-                className="font-heading font-semibold mb-1"
-                style={{ color: '#F4F4F5', fontSize: '0.9rem' }}
+                className="font-heading font-semibold mb-1 text-foreground"
+                style={{ fontSize: '0.9rem' }}
               >
                 {stat.label}
               </div>
 
               <div
-                className="font-body"
-                style={{ color: 'rgba(156,163,175,0.55)', fontSize: '0.75rem', letterSpacing: '0.04em' }}
+                className="font-body text-muted-foreground/60"
+                style={{ fontSize: '0.75rem', letterSpacing: '0.04em' }}
               >
                 {stat.sublabel}
               </div>

@@ -150,42 +150,29 @@ export function TrustedCompaniesSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-16 sm:py-20 overflow-hidden"
-      style={{
-        background: '#0A0A0E',
-        borderTop: '1px solid rgba(255,255,255,0.04)',
-        borderBottom: '1px solid rgba(255,255,255,0.04)',
-      }}
+      className="relative py-16 sm:py-20 overflow-hidden bg-background border-t border-foreground/4 border-b border-foreground/4"
     >
       {/* Ambient centre glow */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(184,145,44,0.04) 0%, transparent 70%)',
-        }}
+        className="absolute inset-0 pointer-events-none ambient-glow-gold"
         aria-hidden="true"
       />
 
       {/* ── Header ─────────────────────────────────────────────── */}
       <div ref={headerRef} className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 mb-10 text-center">
         <div className="flex items-center justify-center gap-4 mb-3" data-reveal>
-          <span className="h-px w-8 block" style={{ background: 'rgba(184,145,44,0.55)' }} />
-          <span
-            className="text-xs uppercase tracking-[0.18em] font-medium"
-            style={{ color: 'rgba(184,145,44,0.75)' }}
-          >
+          <span className="h-px w-8 block bg-accent/55" />
+          <span className="text-xs uppercase tracking-[0.18em] font-medium text-accent/75">
             Awards & Recognition
           </span>
-          <span className="h-px w-8 block" style={{ background: 'rgba(184,145,44,0.55)' }} />
+          <span className="h-px w-8 block bg-accent/55" />
         </div>
 
         <h2
           data-reveal
-          className="font-heading font-bold mb-2"
+          className="font-heading font-bold mb-2 text-foreground"
           style={{
             fontSize: 'clamp(1.6rem, 3vw, 2.2rem)',
-            color: '#F4F4F5',
             letterSpacing: '-0.02em',
           }}
         >
@@ -194,8 +181,8 @@ export function TrustedCompaniesSection() {
 
         <p
           data-reveal
-          className="font-body"
-          style={{ color: 'rgba(156,163,175,0.6)', fontSize: '0.9rem' }}
+          className="font-body text-muted-foreground/80"
+          style={{ fontSize: '0.9rem' }}
         >
           EIGER MARVEL HUMAN RESOURCE CONSULTANCIES LLC — Industry awards, government licenses, and compliance certifications earned on our journey
         </p>
@@ -206,11 +193,11 @@ export function TrustedCompaniesSection() {
         <div ref={marqueeWrap} className="relative" style={{ opacity: 0 }}>
           <div
             className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(90deg, #0A0A0E, transparent)' }}
+            style={{ background: 'linear-gradient(90deg, var(--color-background), transparent)' }}
           />
           <div
             className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(-90deg, #0A0A0E, transparent)' }}
+            style={{ background: 'linear-gradient(-90deg, var(--color-background), transparent)' }}
           />
           <MarqueeTrack
             items={awards}
@@ -232,21 +219,14 @@ export function TrustedCompaniesSection() {
           ].map((item) => (
             <div key={item.val} className="text-center">
               <div
-                className="font-heading font-bold mb-0.5"
+                className="font-heading font-bold mb-0.5 text-accent"
                 style={{
                   fontSize: '1.2rem',
-                  background: 'linear-gradient(135deg, #D4A84B 0%, #B8912C 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
                 }}
               >
                 {item.val}
               </div>
-              <div
-                className="font-body text-[11px] uppercase tracking-[0.1em]"
-                style={{ color: 'rgba(156,163,175,0.45)' }}
-              >
+              <div className="font-body text-[11px] uppercase tracking-[0.1em] text-muted-foreground/60">
                 {item.label}
               </div>
             </div>
