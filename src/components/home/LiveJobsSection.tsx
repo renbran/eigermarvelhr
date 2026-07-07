@@ -10,7 +10,7 @@ import type { JobPosting } from '@/lib/types'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const GOLD = 'oklch(0.82 0.12 85)'
+const GOLD = 'var(--color-gold-300)'
 
 interface LiveJobsSectionProps {
   jobs: JobPosting[]
@@ -54,7 +54,7 @@ export function LiveJobsSection({ jobs, onNavigate, onViewJob }: LiveJobsSection
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-16 sm:py-20 bg-black relative overflow-hidden">
+    <section ref={sectionRef} className="py-16 sm:py-20 bg-background relative overflow-hidden">
       {/* Ambient gold glow */}
       <div className="absolute top-0 right-0 w-96 h-96 opacity-[0.03] pointer-events-none"
         style={{ background: `radial-gradient(ellipse, ${GOLD}, transparent 70%)` }}
@@ -84,7 +84,7 @@ export function LiveJobsSection({ jobs, onNavigate, onViewJob }: LiveJobsSection
           <Button
             variant="outline"
             onClick={() => onNavigate('jobs')}
-            className="hidden sm:flex items-center gap-2 flex-shrink-0 whitespace-nowrap border-[oklch(0.82_0.12_85/0.3)] text-[oklch(0.82_0.12_85)] hover:bg-[oklch(0.82_0.12_85/0.1)]"
+            className="hidden sm:flex items-center gap-2 flex-shrink-0 whitespace-nowrap border-gold-300/30 text-gold-300 hover:bg-gold-300/10"
           >
             View All Jobs
             <ArrowRight size={16} weight="bold" />
@@ -111,7 +111,7 @@ export function LiveJobsSection({ jobs, onNavigate, onViewJob }: LiveJobsSection
         <div className="mt-8 text-center sm:hidden">
           <Button
             onClick={() => onNavigate('jobs')}
-            className="bg-gradient-to-r from-[oklch(0.82_0.12_85)] to-[oklch(0.87_0.13_85)] text-black font-semibold"
+            className="bg-gradient-to-r from-gold-300 to-gold-200 text-black font-semibold"
           >
             View All Jobs
             <ArrowRight size={16} weight="bold" className="ml-2" />

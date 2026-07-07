@@ -16,7 +16,7 @@ import { COMPANY_SIZES } from '@/lib/matching'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const GOLD = 'oklch(0.82 0.12 85)'
+const GOLD = 'var(--color-gold-300)'
 
 const bundles = [
   {
@@ -144,7 +144,7 @@ export function TalentTechSection() {
 
   return (
     <>
-      <section ref={sectionRef} className="py-16 sm:py-20 relative overflow-hidden bg-black">
+      <section ref={sectionRef} className="py-16 sm:py-20 relative overflow-hidden bg-background">
         {/* Gold ambient glow */}
         <div className="absolute top-0 right-0 w-96 h-96 opacity-[0.04] pointer-events-none"
           style={{ background: `radial-gradient(ellipse, ${GOLD}, transparent 70%)` }}
@@ -155,9 +155,9 @@ export function TalentTechSection() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div ref={headerRef} className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4 border border-[oklch(0.82_0.12_85/0.3)] bg-[oklch(0.82_0.12_85/0.08)]">
-              <Lightning size={20} weight="fill" className="text-[oklch(0.82_0.12_85)] flex-shrink-0" />
-              <span className="text-xs sm:text-sm font-semibold uppercase tracking-wide text-[oklch(0.87_0.13_85)]">Coming Soon</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4 border border-gold-300/30 bg-gold-300/10">
+              <Lightning size={20} weight="fill" className="text-gold-300 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-semibold uppercase tracking-wide text-gold-200">Coming Soon</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4">
               The Future of HR: Integrated Technology Solutions
@@ -188,8 +188,8 @@ export function TalentTechSection() {
                   style={{
                     background: 'rgba(255,255,255,0.03)',
                     backdropFilter: 'blur(8px)',
-                    borderColor: bundle.featured ? `oklch(0.82 0.12 85 / 0.4)` : undefined,
-                    boxShadow: bundle.featured ? `0 0 30px rgba(214,184,92,0.15)` : undefined,
+                    borderColor: bundle.featured ? `rgba(var(--gold-rgb), 0.4)` : undefined,
+                    boxShadow: bundle.featured ? `0 0 30px rgba(var(--gold-rgb), 0.15)` : undefined,
                   }}
                 >
                   {bundle.featured && (
@@ -208,8 +208,8 @@ export function TalentTechSection() {
                   <CardHeader className="relative">
                     <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 shadow-md"
                       style={{
-                        background: `linear-gradient(135deg, oklch(0.82 0.12 85 / 0.25), oklch(0.82 0.12 85 / 0.05))`,
-                        border: `1px solid oklch(0.82 0.12 85 / 0.2)`,
+                        background: `linear-gradient(135deg, rgba(var(--gold-rgb), 0.25), rgba(var(--gold-rgb), 0.05))`,
+                        border: `1px solid rgba(var(--gold-rgb), 0.2)`,
                       }}
                     >
                       <Icon size={28} weight="bold" style={{ color: GOLD }} />
@@ -238,7 +238,7 @@ export function TalentTechSection() {
                     <Button
                       className="w-full font-semibold shadow-md text-sm"
                       style={{
-                        background: `linear-gradient(135deg, oklch(0.82 0.12 85), oklch(0.72 0.09 85))`,
+                        background: `linear-gradient(135deg, var(--color-gold-300), var(--color-gold-500))`,
                         color: '#000',
                       }}
                       onClick={() => {
@@ -327,8 +327,8 @@ export function TalentTechSection() {
               type="submit"
               className="w-full font-semibold"
               style={{
-                background: `linear-gradient(135deg, oklch(0.82 0.12 85), oklch(0.72 0.09 85))`,
-                color: '#000',
+                        background: `linear-gradient(135deg, var(--color-gold-300), var(--color-gold-500))`,
+                        color: '#000',
               }}
             >
               Submit

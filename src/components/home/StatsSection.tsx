@@ -11,8 +11,8 @@ const stats = [
   { value: 100,  suffix: '%',  label: 'WPS Compliant',          sublabel: 'Every placement, guaranteed' },
 ]
 
-const GOLD = '#B8912C'
-const GOLD_LIGHT = '#D4A84B'
+const GOLD = 'var(--color-gold-600)'
+const GOLD_LIGHT = 'var(--color-gold-200)'
 
 function CounterEl({ value, suffix }: { value: number; suffix: string }) {
   const numRef = useRef<HTMLSpanElement>(null)
