@@ -73,7 +73,7 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section ref={heroRef} className="relative h-screen overflow-hidden bg-black">
+    <section ref={heroRef} className="relative h-screen overflow-hidden bg-background">
       {/* Layered animated background particles */}
       <div className="absolute inset-0">
         {[...Array(30)].map((_, i) => (

@@ -7,7 +7,7 @@ import { Phone, Envelope, MapPin, ArrowUp } from '@phosphor-icons/react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const GOLD = 'oklch(0.82 0.12 85)'
+const GOLD = 'var(--color-gold-300)'
 
 interface FooterProps {
   onNavigate?: (page: string) => void
@@ -60,7 +60,7 @@ export function Footer({ onNavigate }: FooterProps) {
   return (
     <footer
       ref={sectionRef}
-      className="bg-black border-t border-white/5 text-white mt-auto relative overflow-hidden"
+      className="bg-background border-t border-border text-foreground mt-auto relative overflow-hidden"
     >
       {/* Gold ambient glow */}
       <div className="absolute top-0 right-0 w-64 h-64 opacity-[0.03] pointer-events-none"
@@ -77,7 +77,7 @@ export function Footer({ onNavigate }: FooterProps) {
             <div className="flex flex-col leading-tight mb-4">
               <span className="text-lg sm:text-xl font-bold tracking-tight text-white">Eiger Marvel</span>
               <span className="text-xs sm:text-sm font-semibold"
-                style={{ background: `linear-gradient(135deg, ${GOLD}, oklch(0.87 0.13 85))`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+                style={{ background: `linear-gradient(135deg, ${GOLD}, var(--color-gold-200))`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
               >
                 Exceed Your Expectations
               </span>

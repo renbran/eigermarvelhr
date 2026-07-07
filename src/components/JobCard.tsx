@@ -42,15 +42,15 @@ export function JobCard({ job, matchScore, isPremium, onViewDetails, onApply, co
                 src={companyLogo} 
                 alt={`${job.employerName || 'Company'} logo`}
                 className="w-full h-full object-contain relative z-10 group-hover:scale-110 transition-transform duration-300 drop-shadow-2xl"
-                style={{ filter: 'brightness(0) invert(1) drop-shadow(0 0 8px rgba(214, 184, 92, 0.3))' }}
+                style={{ filter: 'brightness(0) invert(1) drop-shadow(0 0 8px rgba(var(--gold-rgb), 0.3))' }}
               />
             ) : (
               <Briefcase size={32} weight="bold" className="text-background relative z-10" />
             )}
             <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" 
-                 style={{ 
-                   boxShadow: 'inset 0 0 20px rgba(214, 184, 92, 0.2), 0 0 15px rgba(214, 184, 92, 0.15)' 
-                 }} 
+                   style={{ 
+                    boxShadow: 'inset 0 0 20px rgba(var(--gold-rgb), 0.2), 0 0 15px rgba(var(--gold-rgb), 0.15)' 
+                  }} 
             />
           </div>
           <div className="flex-1 min-w-0">

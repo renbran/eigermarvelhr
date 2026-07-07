@@ -268,13 +268,13 @@ export default function IndexPage() {
                 className="timeline-line"
                 x1="0" y1="10"
                 x2="100" y2="10"
-                stroke="oklch(0.82 0.12 85)"
+                stroke="var(--color-gold-300)"
                 strokeWidth="2"
                 strokeDasharray="200"
                 strokeDashoffset="200"
               />
-              <circle className="timeline-dot" cx="0" cy="10" r="6" fill="oklch(0.82 0.12 85)" />
-              <circle className="timeline-dot" cx="100" cy="10" r="6" fill="oklch(0.82 0.12 85)" />
+              <circle className="timeline-dot" cx="0" cy="10" r="6" fill="var(--color-gold-300)" />
+              <circle className="timeline-dot" cx="100" cy="10" r="6" fill="var(--color-gold-300)" />
             </svg>
           </div>
         </div>
@@ -337,15 +337,15 @@ export default function IndexPage() {
                 className="timeline-line"
                 x1="0" y1="20"
                 x2="400" y2="20"
-                stroke="oklch(0.82 0.12 85)"
+                stroke="var(--color-gold-300)"
                 strokeWidth="2"
                 strokeDasharray="300"
                 strokeDashoffset="300"
               />
-              <circle className="timeline-dot" cx="0" cy="20" r="8" fill="oklch(0.82 0.12 85)" />
-              <circle className="timeline-dot" cx="133" cy="20" r="8" fill="oklch(0.82 0.12 85)" />
-              <circle className="timeline-dot" cx="266" cy="20" r="8" fill="oklch(0.82 0.12 85)" />
-              <circle className="timeline-dot" cx="400" cy="20" r="8" fill="oklch(0.82 0.12 85)" />
+              <circle className="timeline-dot" cx="0" cy="20" r="8" fill="var(--color-gold-300)" />
+              <circle className="timeline-dot" cx="133" cy="20" r="8" fill="var(--color-gold-300)" />
+              <circle className="timeline-dot" cx="266" cy="20" r="8" fill="var(--color-gold-300)" />
+              <circle className="timeline-dot" cx="400" cy="20" r="8" fill="var(--color-gold-300)" />
             </svg>
             <div className="grid grid-cols-4 gap-8 mt-6">
               <div>
@@ -435,12 +435,12 @@ export default function IndexPage() {
             <svg className="w-full h-64" viewBox="0 0 800 200">
               {[...Array(20)].map((_, i) => (
                 <g key={i}>
-                  <circle cx={Math.random() * 800} cy={Math.random() * 200} r="4" fill="oklch(0.82 0.12 85)" opacity="0.6" />
+                  <circle cx={Math.random() * 800} cy={Math.random() * 200} r="4" fill="var(--color-gold-300)" opacity="0.6" />
                   <line
                     className="network-line"
                     x1={Math.random() * 800} y1={Math.random() * 200}
                     x2={Math.random() * 800} y2={Math.random() * 200}
-                    stroke="oklch(0.82 0.12 85)"
+                    stroke="var(--color-gold-300)"
                     strokeWidth="0.5"
                     strokeDasharray="50"
                     strokeDashoffset="50"
