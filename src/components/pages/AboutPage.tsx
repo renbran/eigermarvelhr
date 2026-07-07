@@ -111,7 +111,7 @@ export function AboutPage() {
               className="absolute inset-0 pointer-events-none"
               style={{
                 background:
-                  'linear-gradient(to top, rgba(7,8,15,0.45) 0%, transparent 50%)',
+                  'linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%)',
               }}
             />
             <div className="absolute bottom-4 left-4 right-4 text-xs uppercase tracking-[0.14em] text-amber-300 font-semibold">
@@ -190,7 +190,7 @@ export function AboutPage() {
           </div>
           <div
             className="relative rounded-3xl overflow-hidden border border-amber-500/25"
-            style={{ boxShadow: '0 0 60px rgba(184,145,44,0.08)' }}
+            style={{ boxShadow: '0 0 60px rgba(var(--gold-rgb), 0.08)' }}
           >
             <img
               src={TEAM_IMAGE}
@@ -203,7 +203,7 @@ export function AboutPage() {
               className="absolute inset-0 pointer-events-none"
               style={{
                 background:
-                  'linear-gradient(to top, rgba(7,8,15,0.55) 0%, transparent 45%)',
+                  'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 45%)',
               }}
             />
             <div className="absolute bottom-6 left-6 right-6 text-center sm:text-left">
