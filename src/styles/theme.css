@@ -204,6 +204,27 @@
     /* Focus ring */
     --color-focus-ring: var(--color-accent-9);
 
+    /* Gold brand colors */
+    --gold-50: oklch(0.95 0.04 85);
+    --gold-100: oklch(0.92 0.15 85);
+    --gold-200: oklch(0.87 0.13 85);
+    --gold-300: oklch(0.82 0.12 85);
+    --gold-400: oklch(0.78 0.11 85);
+    --gold-500: oklch(0.72 0.09 85);
+    --gold-600: #B8912C;
+    --gold-700: #8A6B1F;
+    --gold-rgb: 214, 184, 92;
+
+    --color-gold-50: var(--gold-50);
+    --color-gold-100: var(--gold-100);
+    --color-gold-200: var(--gold-200);
+    --color-gold-300: var(--gold-300);
+    --color-gold-400: var(--gold-400);
+    --color-gold-500: var(--gold-500);
+    --color-gold-600: var(--gold-600);
+    --color-gold-700: var(--gold-700);
+    --color-gold-rgb: var(--gold-rgb);
+
     /* Fonts */
     --font-sans-serif: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -214,10 +235,61 @@
   }
 
   [data-theme="light"] {
+    /* Radix Colors: Light slate palette */
+    --slate-1: #fbfcfd;
+    --slate-2: #f8f9fa;
+    --slate-3: #f1f3f5;
+    --slate-4: #eceef0;
+    --slate-5: #e6e8eb;
+    --slate-6: #dfe3e6;
+    --slate-7: #d7dbdf;
+    --slate-8: #c1c8cd;
+    --slate-9: #889096;
+    --slate-10: #7e868c;
+    --slate-11: #687076;
+    --slate-12: #11181c;
+
+    /* Radix Colors: Light blue palette */
+    --blue-1: #fbfdff;
+    --blue-2: #f4faff;
+    --blue-3: #e6f4fe;
+    --blue-4: #d5efff;
+    --blue-5: #c2e5ff;
+    --blue-6: #acd8fc;
+    --blue-7: #8ec8f6;
+    --blue-8: #5eb1ef;
+    --blue-9: #0090ff;
+    --blue-10: #0588f0;
+    --blue-11: #0d74ce;
+    --blue-12: #113264;
+
+    /* Radix Colors: Light violet palette */
+    --violet-1: #fdfcfe;
+    --violet-2: #faf8ff;
+    --violet-3: #f4f0fe;
+    --violet-4: #ebe4ff;
+    --violet-5: #e1d9ff;
+    --violet-6: #d4cafe;
+    --violet-7: #c2b5f5;
+    --violet-8: #aa99ec;
+    --violet-9: #6e56cf;
+    --violet-10: #654dc4;
+    --violet-11: #6550b9;
+    --violet-12: #2f265f;
+
+    /* Neutral (slate) — automatically resolves via var() from :root mappings */
+    /* Accent (blue) — automatically resolves via var() from :root mappings */
+    /* Accent-secondary (violet) — automatically resolves via var() from :root mappings */
+
+    /* Foreground colors */
     --color-fg: var(--color-neutral-12);
     --color-fg-secondary: var(--color-neutral-a11);
+
+    /* Background colors */
     --color-bg: #ffffff;
     --color-bg-inset: var(--color-neutral-2);
     --color-bg-overlay: #ffffff;
+
+    /* Gold stays consistent across themes (brand identity) */
   }
 }
