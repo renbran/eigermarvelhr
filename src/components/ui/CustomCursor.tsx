@@ -4,8 +4,8 @@ import { useEffect, useRef } from 'react'
 import { gsap } from '@/lib/gsap'
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
-const GOLD = '#D4A84B'
-const GOLD_DIM = 'rgba(212,168,75,0.45)'
+const GOLD = 'var(--color-gold-200)'
+const GOLD_DIM = 'rgba(var(--gold-rgb), 0.45)'
 const WHITE = 'rgba(255,255,255,0.90)'
 
 // ─── Cursor states ────────────────────────────────────────────────────────────

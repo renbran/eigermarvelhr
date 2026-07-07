@@ -69,20 +69,20 @@ export function FloatingCTA({
           padding: '14px 24px',
           borderRadius: 50,
           background:
-            'linear-gradient(135deg, oklch(0.82 0.12 85), oklch(0.72 0.09 85))',
+            'linear-gradient(135deg, var(--color-gold-300), var(--color-gold-500))',
           color: '#070707',
           fontWeight: 600,
           fontSize: 14,
           textDecoration: 'none',
           letterSpacing: '0.02em',
-          boxShadow: '0 4px 24px oklch(0.82 0.12 85 / 0.3)',
+          boxShadow: '0 4px 24px rgba(var(--gold-rgb), 0.3)',
           transition: 'transform 0.3s ease, box-shadow 0.3s ease',
           cursor: 'pointer',
         }}
         onMouseEnter={(e) => {
           gsap.to(e.currentTarget, {
             scale: 1.08,
-            boxShadow: '0 8px 40px oklch(0.82 0.12 85 / 0.5)',
+            boxShadow: '0 8px 40px rgba(var(--gold-rgb), 0.5)',
             duration: 0.3,
             ease: 'power2.out',
           })
@@ -90,7 +90,7 @@ export function FloatingCTA({
         onMouseLeave={(e) => {
           gsap.to(e.currentTarget, {
             scale: 1,
-            boxShadow: '0 4px 24px oklch(0.82 0.12 85 / 0.3)',
+            boxShadow: '0 4px 24px rgba(var(--gold-rgb), 0.3)',
             duration: 0.3,
             ease: 'power2.out',
           })

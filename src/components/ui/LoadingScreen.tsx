@@ -207,7 +207,7 @@ export function LoadingScreen({ minDuration = 2800, onComplete }: LoadingScreenP
               maxWidth: 340,
               height: 1,
               background:
-                'linear-gradient(90deg, transparent 0%, #B8912C 20%, #D4A84B 50%, #B8912C 80%, transparent 100%)',
+                'linear-gradient(90deg, transparent 0%, var(--color-gold-600) 20%, var(--color-gold-200) 50%, var(--color-gold-600) 80%, transparent 100%)',
               margin: '10px 0',
               transformOrigin: 'center',
             }}
@@ -221,7 +221,7 @@ export function LoadingScreen({ minDuration = 2800, onComplete }: LoadingScreenP
               fontSize: 'clamp(1.4rem, 4vw, 2.2rem)',
               fontWeight: 700,
               letterSpacing: '0.42em',
-              background: 'linear-gradient(135deg, #B8912C 0%, #D4A84B 50%, #B8912C 100%)',
+              background: 'linear-gradient(135deg, var(--color-gold-600) 0%, var(--color-gold-200) 50%, var(--color-gold-600) 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -261,7 +261,7 @@ export function LoadingScreen({ minDuration = 2800, onComplete }: LoadingScreenP
             right: 0,
             height: 2,
             background:
-              'linear-gradient(90deg, transparent 0%, #B8912C 30%, #D4A84B 50%, #B8912C 70%, transparent 100%)',
+              'linear-gradient(90deg, transparent 0%, var(--color-gold-600) 30%, var(--color-gold-200) 50%, var(--color-gold-600) 70%, transparent 100%)',
             pointerEvents: 'none',
           }}
         />

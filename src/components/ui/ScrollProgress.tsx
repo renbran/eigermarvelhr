@@ -17,7 +17,7 @@ export function ScrollProgress({
   color,
   height = 2,
   zIndex = 9999,
-  gradient = 'linear-gradient(90deg, oklch(0.72 0.09 85), oklch(0.87 0.13 85), oklch(0.72 0.09 85))',
+  gradient = 'linear-gradient(90deg, var(--color-gold-500), var(--color-gold-200), var(--color-gold-500))',
 }: ScrollProgressProps) {
   const barRef = useRef<HTMLDivElement>(null)
 
