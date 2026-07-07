@@ -248,6 +248,18 @@
     --slate-10: #7e868c;
     --slate-11: #687076;
     --slate-12: #11181c;
+    --slate-a1:  rgba(17, 24, 28, 0.012);
+    --slate-a2:  rgba(17, 24, 28, 0.024);
+    --slate-a3:  rgba(17, 24, 28, 0.055);
+    --slate-a4:  rgba(17, 24, 28, 0.078);
+    --slate-a5:  rgba(17, 24, 28, 0.106);
+    --slate-a6:  rgba(17, 24, 28, 0.133);
+    --slate-a7:  rgba(17, 24, 28, 0.169);
+    --slate-a8:  rgba(17, 24, 28, 0.267);
+    --slate-a9:  rgba(17, 24, 28, 0.447);
+    --slate-a10: rgba(17, 24, 28, 0.498);
+    --slate-a11: rgba(17, 24, 28, 0.608);
+    --slate-a12: rgba(17, 24, 28, 0.933);
 
     /* Radix Colors: Light blue palette */
     --blue-1: #fbfdff;
@@ -281,15 +293,71 @@
     /* Accent (blue) — automatically resolves via var() from :root mappings */
     /* Accent-secondary (violet) — automatically resolves via var() from :root mappings */
 
-    /* Foreground colors */
     --color-fg: var(--color-neutral-12);
-    --color-fg-secondary: var(--color-neutral-a11);
+    --color-fg-secondary: var(--color-neutral-11);
 
-    /* Background colors */
     --color-bg: #ffffff;
     --color-bg-inset: var(--color-neutral-2);
     --color-bg-overlay: #ffffff;
+  }
 
-    /* Gold stays consistent across themes (brand identity) */
+  [data-theme="dark"] {
+    --slate-1: #151718;
+    --slate-2: #1a1d1e;
+    --slate-3: #202425;
+    --slate-4: #26292b;
+    --slate-5: #2b2f31;
+    --slate-6: #313538;
+    --slate-7: #3a3f42;
+    --slate-8: #4c5155;
+    --slate-9: #697177;
+    --slate-10: #787f85;
+    --slate-11: #9ba1a6;
+    --slate-12: #ecedee;
+    --slate-a1:  rgba(255, 255, 255, 0);
+    --slate-a2:  rgba(255, 255, 255, 0);
+    --slate-a3:  rgba(255, 255, 255, 0);
+    --slate-a4:  rgba(255, 255, 255, 0);
+    --slate-a5:  rgba(255, 255, 255, 0);
+    --slate-a6:  rgba(255, 255, 255, 0.008);
+    --slate-a7:  rgba(255, 255, 255, 0.055);
+    --slate-a8:  rgba(255, 255, 255, 0.133);
+    --slate-a9:  rgba(255, 255, 255, 0.298);
+    --slate-a10: rgba(255, 255, 255, 0.357);
+    --slate-a11: rgba(255, 255, 255, 0.553);
+    --slate-a12: rgba(255, 255, 255, 0.875);
+
+    --blue-1: #0d1520;
+    --blue-2: #0f1a2d;
+    --blue-3: #0f2847;
+    --blue-4: #0f355e;
+    --blue-5: #134272;
+    --blue-6: #1a518a;
+    --blue-7: #2365a7;
+    --blue-8: #3281c9;
+    --blue-9: #0090ff;
+    --blue-10: #009cff;
+    --blue-11: #70b9ff;
+    --blue-12: #c2e2ff;
+
+    --violet-1: #14121f;
+    --violet-2: #1b152b;
+    --violet-3: #251942;
+    --violet-4: #2f1e56;
+    --violet-5: #39246a;
+    --violet-6: #462d7e;
+    --violet-7: #583896;
+    --violet-8: #6d48b2;
+    --violet-9: #6e56cf;
+    --violet-10: #7c66dc;
+    --violet-11: #9e8cfc;
+    --violet-12: #e3d9ff;
+
+    --color-fg: var(--color-neutral-12);
+    --color-fg-secondary: var(--color-neutral-11);
+
+    --color-bg: var(--color-neutral-1);
+    --color-bg-inset: #000000;
+    --color-bg-overlay: var(--color-neutral-3);
   }
 }
