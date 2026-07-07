@@ -123,7 +123,7 @@ export function LoadingScreen({ minDuration = 2800, onComplete }: LoadingScreenP
             position: 'absolute',
             inset: 0,
             background:
-              'radial-gradient(ellipse 70% 55% at 50% 46%, rgba(184,145,44,0.07) 0%, transparent 70%)',
+              'radial-gradient(ellipse 70% 55% at 50% 46%, rgba(var(--gold-rgb), 0.07) 0%, transparent 70%)',
             animation: 'em-pulse-glow 3.5s ease-in-out infinite',
             pointerEvents: 'none',
           }}
@@ -136,8 +136,8 @@ export function LoadingScreen({ minDuration = 2800, onComplete }: LoadingScreenP
             position: 'absolute',
             inset: 0,
             backgroundImage:
-              'linear-gradient(rgba(184,145,44,0.04) 1px, transparent 1px),' +
-              'linear-gradient(90deg, rgba(184,145,44,0.04) 1px, transparent 1px)',
+'linear-gradient(rgba(var(--gold-rgb), 0.04) 1px, transparent 1px),' +
+  'linear-gradient(90deg, rgba(var(--gold-rgb), 0.04) 1px, transparent 1px)',
             backgroundSize: '64px 64px',
             pointerEvents: 'none',
           }}
@@ -151,7 +151,7 @@ export function LoadingScreen({ minDuration = 2800, onComplete }: LoadingScreenP
             width: 280,
             height: 280,
             borderRadius: '50%',
-            border: '1px solid rgba(184,145,44,0.10)',
+            border: '1px solid rgba(var(--gold-rgb), 0.10)',
             animation: 'em-spin-slow 12s linear infinite',
             pointerEvents: 'none',
           }}
@@ -163,7 +163,7 @@ export function LoadingScreen({ minDuration = 2800, onComplete }: LoadingScreenP
             width: 200,
             height: 200,
             borderRadius: '50%',
-            border: '1px solid rgba(184,145,44,0.07)',
+            border: '1px solid rgba(var(--gold-rgb), 0.07)',
             animation: 'em-spin-slow 8s linear infinite reverse',
             pointerEvents: 'none',
           }}

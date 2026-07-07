@@ -91,15 +91,14 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Global network SVG overlay */}
-      <svg className="absolute inset-0 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-        {/* Example of a few animated lines – in production replace with generated map */}
-        <line className="network-line" x1="10" y1="20" x2="90" y2="80" stroke="#00ffff" strokeWidth="0.2" />
-        <line className="network-line" x1="20" y1="80" x2="80" y2="20" stroke="#ff00ff" strokeWidth="0.2" />
+      <svg className="absolute inset-0 pointer-events-none opacity-30" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <line className="network-line" x1="10" y1="20" x2="90" y2="80" stroke="var(--color-accent, #0090ff)" strokeWidth="0.2" />
+        <line className="network-line" x1="20" y1="80" x2="80" y2="20" stroke="var(--color-gold-400, #C9A14A)" strokeWidth="0.2" />
       </svg>
 
       {/* Hero content */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center px-4">
-        <h1 ref={titleRef} className="text-6xl md:text-8xl font-bold text-white leading-tight">
+        <h1 ref={titleRef} className="text-6xl md:text-8xl font-bold text-foreground leading-tight">
           {/* Split characters for animation */}
           {`We connect the world's best talent`.split('').map((ch, i) => (
             <span key={i} className="inline-block char">
@@ -107,13 +106,13 @@ const Hero: React.FC = () => {
             </span>
           ))}
         </h1>
-        <p ref={subtitleRef} className="mt-6 max-w-2xl text-lg text-gray-300">
+        <p ref={subtitleRef} className="mt-6 max-w-2xl text-lg text-muted-foreground">
           Premium executive recruitment powered by cutting‑edge technology and a global talent network.
         </p>
         <a
           ref={ctaRef}
           href="#contact"
-          className="mt-8 inline-block rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-sm font-medium text-white shadow-lg transition-transform hover:scale-105"
+          className="mt-8 inline-block rounded-full bg-gradient-to-r from-gold-400 to-gold-600 px-8 py-3 text-sm font-medium text-black shadow-lg shadow-gold-400/30 transition-all duration-300 hover:scale-105 hover:shadow-gold-400/50"
         >
           Get Started
         </a>

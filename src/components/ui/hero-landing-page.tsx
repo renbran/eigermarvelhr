@@ -310,7 +310,7 @@ export function HeroLandingPage({
               {/* Staggered word animation for subtitle */}
               <motion.p
                 variants={itemVariants}
-                className="text-lg sm:text-xl text-[#b8b8b8] max-w-2xl mb-10 leading-relaxed font-light"
+                className="text-lg sm:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed font-light"
               >
                 {description}
               </motion.p>
@@ -381,7 +381,7 @@ export function HeroLandingPage({
                   <div className="text-4xl sm:text-5xl font-light text-white mb-2 tracking-tight">
                     <AnimatedStatCounter value={stat.value} suffix={stat.suffix} />
                   </div>
-                  <div className="text-sm text-[#b8b8b8] font-medium uppercase tracking-wider">
+                  <div className="text-sm text-muted-foreground font-medium uppercase tracking-wider">
                     {stat.label}
                   </div>
                 </motion.div>
