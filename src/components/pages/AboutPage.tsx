@@ -2,10 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { gsap } from '@/lib/gsap'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 
-const ABOUT_IMAGE =
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1773004927/kqfgbohxmyhrwveyatrv.png'
-const TEAM_IMAGE =
-  'https://res.cloudinary.com/dsl5fhclj/image/upload/v1772950950/kworkq32aawqd2dfspcx.png'
+const ABOUT_IMAGE = '/images/about/about-image.png'
+const TEAM_IMAGE = '/images/about/team.png'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -20,7 +18,7 @@ const values = [
   {
     title: 'Integrity',
     desc: 'We operate with complete transparency in every engagement — from pricing to candidate matching to compliance reporting. No hidden terms, no surprises.',
-    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?fm=jpg&w=1200&q=80',
+    image: '/images/about/integrity.jpg',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-7 h-7">
         <path d="M20 6L6 14v5c0 9.5 5.5 18.5 14 22 8.5-3.5 14-12.5 14-22v-5L20 6z" stroke="currentColor" strokeWidth="1.8" fill="none" />
@@ -31,7 +29,7 @@ const values = [
   {
     title: 'Speed',
     desc: '7–14 day candidate deployment is not a goal — it is our standard. We have built systems, processes, and a talent network engineered for velocity without compromise.',
-    image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?fm=jpg&w=1200&q=80',
+    image: '/images/about/speed.jpg',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-7 h-7">
         <circle cx="20" cy="20" r="14" stroke="currentColor" strokeWidth="1.8" />
@@ -42,7 +40,7 @@ const values = [
   {
     title: 'Compliance First',
     desc: 'Every payroll, every visa, every contract — validated against WPS, MOHRE, and UAE labour law before execution. Zero penalty tolerance is our operating principle.',
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?fm=jpg&w=1200&q=80',
+    image: '/images/about/compliance.jpg',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-7 h-7">
         <rect x="8" y="6" width="24" height="28" rx="3" stroke="currentColor" strokeWidth="1.8" />
@@ -53,7 +51,7 @@ const values = [
   {
     title: 'Partnership',
     desc: 'We do not just fill roles — we embed in your operations. Our account managers learn your business, your culture, and your workforce rhythm to deliver precision outcomes.',
-    image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?fm=jpg&w=1200&q=80',
+    image: '/images/about/partnership.jpg',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-7 h-7">
         <circle cx="14" cy="15" r="4" stroke="currentColor" strokeWidth="1.8" />
@@ -113,7 +111,7 @@ function PageHero({ reducedMotion }: { reducedMotion: boolean }) {
       <div className="absolute inset-0">
         <img
           ref={imgRef}
-          src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?fm=jpg&w=2400&q=80"
+          src="/images/about/hero.jpg"
           alt=""
           className="w-full h-full object-cover will-change-transform"
           aria-hidden="true"
