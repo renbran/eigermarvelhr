@@ -126,7 +126,7 @@ export function ServicesSection() {
       <div
         className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(184,145,44,0.06) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(var(--gold-rgb), 0.06) 0%, transparent 70%)',
           filter: 'blur(40px)',
         }}
         aria-hidden="true"

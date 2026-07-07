@@ -130,15 +130,15 @@ function IndustryCard({
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center"
               style={{
-                background: industry.gold
-                  ? 'color-mix(in oklab, var(--color-accent) 12%, transparent)'
-                  : 'color-mix(in oklab, oklch(0.5 0.15 260) 12%, transparent)',
-                border: industry.gold
-                  ? '1px solid color-mix(in oklab, var(--color-accent) 20%, transparent)'
-                  : '1px solid color-mix(in oklab, oklch(0.5 0.15 260) 20%, transparent)',
+              background: industry.gold
+                ? 'color-mix(in oklab, var(--color-accent) 12%, transparent)'
+                : 'color-mix(in oklab, var(--color-accent-8) 15%, transparent)',
+              border: industry.gold
+                ? '1px solid color-mix(in oklab, var(--color-accent) 20%, transparent)'
+                : '1px solid color-mix(in oklab, var(--color-accent-8) 25%, transparent)',
               }}
             >
-              <Icon size={20} weight="bold" color={industry.gold ? 'var(--color-accent)' : '#6B9FD4'} />
+              <Icon size={20} weight="bold" color={industry.gold ? 'var(--color-accent)' : 'var(--color-accent-9)'} />
             </div>
           </div>
 
@@ -147,11 +147,11 @@ function IndustryCard({
             style={{
               background: industry.gold
                 ? 'color-mix(in oklab, var(--color-accent) 10%, transparent)'
-                : 'color-mix(in oklab, oklch(0.5 0.15 260) 10%, transparent)',
+                : 'color-mix(in oklab, var(--color-accent-8) 15%, transparent)',
               border: industry.gold
                 ? '1px solid color-mix(in oklab, var(--color-accent) 20%, transparent)'
-                : '1px solid color-mix(in oklab, oklch(0.5 0.15 260) 18%, transparent)',
-              color: industry.gold ? 'var(--color-accent)' : '#6B9FD4',
+                : '1px solid color-mix(in oklab, var(--color-accent-8) 25%, transparent)',
+              color: industry.gold ? 'var(--color-accent)' : 'var(--color-accent-11)',
             }}
           >
             {industry.stat}
@@ -247,7 +247,7 @@ function IndustryCard({
         style={{
           background: industry.gold
             ? 'linear-gradient(90deg, var(--color-accent), var(--color-accent), transparent)'
-            : 'linear-gradient(90deg, #4A7EC8, #6B9FD4, transparent)',
+            : 'linear-gradient(90deg, var(--color-accent-11), var(--color-accent-9), transparent)',
         }}
       />
     </div>

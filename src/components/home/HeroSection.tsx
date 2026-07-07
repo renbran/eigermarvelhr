@@ -428,8 +428,8 @@ function Seq0Content({
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement
-                  el.style.borderColor = 'rgba(184,145,44,0.35)'
-                  el.style.background = 'rgba(184,145,44,0.05)'
+                  el.style.borderColor = 'rgba(var(--gold-rgb), 0.35)'
+                  el.style.background = 'rgba(var(--gold-rgb), 0.05)'
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget as HTMLElement
@@ -563,7 +563,7 @@ function Seq1Content({
           className="group relative overflow-hidden text-black font-bold h-auto py-3.5 px-7 rounded-md border-none"
           style={{
             background: `linear-gradient(135deg, ${GOLD.base} 0%, ${GOLD.light} 50%, ${GOLD.base} 100%)`,
-            boxShadow: `0 0 36px ${GOLD.glow}, 0 0 12px rgba(184,145,44,0.2)`,
+            boxShadow: `0 0 36px ${GOLD.glow}, 0 0 12px rgba(var(--gold-rgb), 0.2)`,
           }}
         >
           <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />

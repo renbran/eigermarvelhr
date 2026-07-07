@@ -27,7 +27,7 @@ function ParticleCloud({ gold }: { gold: boolean }) {
   return (
     <points ref={pointsRef} geometry={geometry}>
       <pointsMaterial
-        color={gold ? 'var(--color-gold-200)' : '#4A7EC8'}
+        color={gold ? 'var(--color-gold-200)' : 'var(--color-accent-8)'}
         size={0.055}
         transparent
         opacity={0.45}
