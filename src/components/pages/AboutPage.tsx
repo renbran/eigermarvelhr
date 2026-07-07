@@ -65,7 +65,7 @@ export function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary">
       {/* Hero with full-bleed video */}
-      <HeroVideoPlayer videoId={VIDEO_ID}>
+      <HeroVideoPlayer videoId={VIDEO_ID} fallbackSrc={ABOUT_IMAGE}>
         <div className="flex items-center gap-3 mb-4">
           <span className="h-px w-8 bg-accent/70" />
           <span className="text-xs uppercase tracking-[0.18em] font-semibold text-accent">Our Story</span>
