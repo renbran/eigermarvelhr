@@ -9,8 +9,8 @@ export function HeroDemoPage() {
         description="AI-powered recruitment connecting exceptional talent with leading UAE companies. Gold-standard placement in hours, not months."
         ctaLabel="Explore Opportunities"
         secondaryCtaLabel="Hire Top Talent"
-        onCtaClick={() => console.log('CTA clicked')}
-        onSecondaryCtaClick={() => console.log('Secondary CTA clicked')}
+        onCtaClick={undefined}
+        onSecondaryCtaClick={undefined}
       />
     </div>
   )
