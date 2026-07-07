@@ -24,10 +24,10 @@ const SLIDE_PATHS = Array.from({ length: 8 }, (_, i) => `/images/slides/slide-${
 const SLIDE2_PATHS = Array.from({ length: 8 }, (_, i) => `/images/slides2/slide2-${String(i + 1).padStart(2, '0')}.webp`)
 
 const GOLD = {
-  base: '#B8912C',
-  light: '#D4A84B',
-  glow: 'rgba(184,145,44,0.35)',
-  text: 'rgba(212,168,72,0.92)',
+  base: 'var(--color-gold-600)',
+  light: 'var(--color-gold-200)',
+  glow: 'rgba(var(--gold-rgb), 0.35)',
+  text: 'rgba(var(--gold-rgb), 0.92)',
 }
 
 interface SlideshowHeroProps {

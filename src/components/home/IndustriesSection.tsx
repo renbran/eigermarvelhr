@@ -190,7 +190,7 @@ function IndustryCard({
                 <span
                   className="flex-shrink-0 w-1 h-1 rounded-full"
                   style={{
-                    background: industry.gold ? '#B8912C' : '#4A7EC8',
+                    background: industry.gold ? 'var(--color-gold-600)' : '#4A7EC8',
                   }}
                 />
                 {role}
