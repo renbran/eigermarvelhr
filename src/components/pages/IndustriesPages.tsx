@@ -34,7 +34,7 @@ export function IndustriesPages({ onNavigate: _onNavigate }: { onNavigate?: (pag
       <PremiumBackground variant="editorial" />
       {/* Hero */}
       <section className="relative py-20 sm:py-28 px-4 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 30%, rgba(184,145,44,0.06) 0%, transparent 70%)' }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 30%, rgba(var(--gold-rgb), 0.06) 0%, transparent 70%)' }} />
         <div className="max-w-4xl mx-auto text-center relative">
           <div className="flex items-center justify-center gap-3 mb-4">
             <span className="h-px w-8 bg-accent/50" />
