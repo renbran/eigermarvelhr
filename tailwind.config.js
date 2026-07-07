@@ -86,6 +86,17 @@ const defaultTheme = {
         overlay: "var(--color-bg-overlay)",
       },
       "focus-ring": "var(--color-focus-ring)",
+      gold: {
+        50: "var(--color-gold-50)",
+        100: "var(--color-gold-100)",
+        200: "var(--color-gold-200)",
+        300: "var(--color-gold-300)",
+        400: "var(--color-gold-400)",
+        500: "var(--color-gold-500)",
+        600: "var(--color-gold-600)",
+        700: "var(--color-gold-700)",
+        rgb: "var(--color-gold-rgb)",
+      },
     },
     borderRadius: {
       sm: "var(--radius-sm)",
