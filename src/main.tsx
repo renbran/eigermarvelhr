@@ -6,8 +6,6 @@ import { ErrorFallback } from './ErrorFallback.tsx'
 import { ThemeProvider } from './providers/ThemeProvider'
 
 import "./main.css"
-import "./styles/theme.css"
-import "./index.css"
 
 // Register service worker for PWA support
 if ('serviceWorker' in navigator) {
