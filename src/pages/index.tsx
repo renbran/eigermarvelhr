@@ -9,6 +9,7 @@ import { LiveJobsSection } from '@/components/home/LiveJobsSection'
 import { TalentTechSection } from '@/components/home/TalentTechSection'
 import { ServicesSection } from '@/components/home/ServicesSection'
 import { PremiumSection } from '@/components/home/PremiumSection'
+import { partnerLogos } from '@/lib/company-logos'
 
 import '../main'
 
@@ -410,10 +411,14 @@ export default function IndexPage() {
             </p>
           </div>
           <div className="narrative-logos">
-            {[...Array(8)].map((_, i) => (
+            {partnerLogos.slice(0, 8).map((logo, i) => (
               <div key={i} className="narrative-logo">
                 <div className="narrative-logo-placeholder">
-                  <span className="text-2xl font-bold text-gray-500">LOGO</span>
+                  <img
+                    src={logo.src}
+                    alt={logo.name}
+                    className="w-12 h-12 sm:w-16 sm:h-16 object-contain opacity-50 group-hover:opacity-80 transition-opacity duration-300"
+                  />
                 </div>
               </div>
             ))}
